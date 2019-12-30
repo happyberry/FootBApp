@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <tabs>
+    <Tab text="Pokaż wszytko">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="690.0" prefWidth="990.0">
+               <children>
+                  <SplitMenuButton layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Wybierz tablicę">
+                    <items>
+                      <MenuItem fx:id="itemPilkarze" mnemonicParsing="false" onAction="#showPilkarze" text="Pilkarze" />
+                      <MenuItem fx:id="itemKluby" mnemonicParsing="false" onAction="#showKluby" text="Kluby" />
+                    </items>
+                  </SplitMenuButton>
+                  <TableView fx:id="tablePilkarze" layoutX="14.0" layoutY="66.0" prefHeight="463.0" prefWidth="756.0" visible="false">
+                  </TableView>
+                   <TableView fx:id="tableKluby" layoutX="14.0" layoutY="66.0" prefHeight="578.0" prefWidth="969.0">
+                     <columns>
+                     </columns></TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Untitled Tab 2">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

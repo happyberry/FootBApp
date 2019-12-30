@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Label layoutX="279.0" layoutY="14.0" text="Piłkarze" />
+      <TableView layoutX="22.0" layoutY="40.0" prefHeight="186.0" prefWidth="555.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Imię" />
+          <TableColumn prefWidth="75.0" text="Nazwisko" />
+            <TableColumn prefWidth="95.33332824707031" text="Data urodzenia" />
+            <TableColumn prefWidth="95.33332824707031" text="Pozycja" />
+            <TableColumn prefWidth="106.666748046875" text="Wartość rynkowa" />
+            <TableColumn prefWidth="106.666748046875" text="Pensja" />
+        </columns>
+      </TableView>
+      <Label layoutX="173.0" layoutY="260.0" text="Trener" textAlignment="RIGHT" />
+      <Label layoutX="155.0" layoutY="309.0" text="Właściciel" textAlignment="RIGHT" />
+      <Label layoutX="159.0" layoutY="359.0" text=" Stadion" textAlignment="RIGHT" />
+      <TextArea layoutX="221.0" layoutY="250.0" prefHeight="37.0" prefWidth="207.0" />
+      <TextArea layoutX="221.0" layoutY="299.0" prefHeight="17.0" prefWidth="207.0" />
+      <TextArea layoutX="221.0" layoutY="349.0" prefHeight="17.0" prefWidth="207.0" />
+      <Label layoutX="179.0" layoutY="405.0" text="Liga" textAlignment="RIGHT" />
+      <TextArea layoutX="221.0" layoutY="395.0" prefHeight="17.0" prefWidth="207.0" />
+      <Button layoutX="287.0" layoutY="452.0" mnemonicParsing="false" onAction="#hideWindow" text="Powrót" />
+   </children>
+</AnchorPane>

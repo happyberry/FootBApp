@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="697.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <tabs>
+    <Tab text="Strona Główna">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ComboBox layoutX="34.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="La Liga" />
+                              <String fx:value="Serie A" />
+                              <String fx:value="Premier League" />
+                              <String fx:value="Wszystkie" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
+                  <TableView layoutX="14.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
+                    <columns>
+                      <TableColumn prefWidth="212.66669178009033" text="Nazwa klubu" />
+                      <TableColumn prefWidth="113.33332824707031" text="Liczba punktów" />
+                    </columns>
+                  </TableView>
+                  <TableView layoutX="359.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Nazwisko" />
+                      <TableColumn prefWidth="75.0" text="Klub" />
+                        <TableColumn prefWidth="173.33340454101562" text="Liczba goli" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="154.0" layoutY="56.0" text="Tabela">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="454.0" layoutY="52.0" text="Ranking strzelców">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Ligi">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+      <Tab fx:id="tabKluby" closable="false" onSelectionChanged="#fillKluby" text="Kluby">
+         <content>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="566.0" prefWidth="690.0">
+               <children>
+                  <TableView fx:id="tableKluby" layoutX="15.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="669.0">
+                    <columns>
+                    </columns>
+                  </TableView>
+                  <Button layoutX="424.0" layoutY="23.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="15.0" layoutY="23.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy klub" />
+                  <Button layoutX="512.0" layoutY="23.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Piłkarze" onSelectionChanged="#fillPilkarze">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="tablePilkarze" layoutX="21.0" layoutY="56.0" prefHeight="484.0" prefWidth="660.0" />
+               </children></AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Transfery">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Trenerzy">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Mecze">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Gole">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Sędziowie">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Właściciele">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
