@@ -51,7 +51,9 @@ public class InsertKlubController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        controller.fillKluby();
+        //controller.fillKluby();
+        Kluby addedClub = new Kluby(name, year, league);
+        controller.addToTable(controller.getTableKluby(), addedClub);
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }

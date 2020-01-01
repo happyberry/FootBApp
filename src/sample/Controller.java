@@ -37,6 +37,13 @@ public class Controller {
     @FXML
     private TableView tableWlasciciele;
 
+    public TableView getTableKluby() {
+        return tableKluby;
+    }
+
+    public TableView getTablePilkarze() {
+        return tablePilkarze;
+    }
 
     public void fillKluby() throws SQLException {
 
@@ -72,6 +79,7 @@ public class Controller {
             editKlubController.controller = this;
 
             Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
+            editKlubController.klub = klub;
 
             editKlubController.textFieldClubName.setText(klub.getNazwaKlubu());
             editKlubController.oldName = klub.getNazwaKlubu();
@@ -229,5 +237,17 @@ public class Controller {
         clubColumn.setPrefWidth(100.0);
 
         tablePilkarze.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthDateColumn, posColumn, priceColumn, salaryColumn, clubColumn);
+    }
+
+    public void addToTable(TableView tabela, Object byt) {
+        tabela.getItems().add(byt);
+    }
+
+    public void removeFromTable(TableView tabela, Object byt) {
+        tabela.getItems().remove(byt);
+    }
+
+    public void updateInTable(TableView tabela, Object byt) {
+
     }
 }

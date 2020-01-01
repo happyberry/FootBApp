@@ -16,6 +16,7 @@ public class EditKlubController {
     public Connection connection;
     public Controller controller;
     public String oldName;
+    public Kluby klub;
 
     @FXML
     public ComboBox comboBoxLeague;
@@ -49,7 +50,9 @@ public class EditKlubController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        controller.fillKluby();
+        //controller.fillKluby();
+        controller.removeFromTable(controller.getTableKluby(), klub);
+
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }
@@ -67,7 +70,10 @@ public class EditKlubController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        controller.fillKluby();
+        //controller.fillKluby();
+        Kluby nowyKlub = new Kluby(name, year, league);
+        controller.removeFromTable(controller.getTableKluby(), klub);
+        controller.addToTable(controller.getTableKluby(), nowyKlub);
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }
