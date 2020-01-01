@@ -40,8 +40,7 @@ public class Main extends Application {
             System.exit(-1);
         }
         System.out.println("Polaczono z baza danych");
-        controller.initializePilkarze();
-        controller.initializeKluby();
+
 
         Connection finalCon = connection;
         EventHandler quitHandler = new EventHandler<WindowEvent>() {

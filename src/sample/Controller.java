@@ -26,25 +26,23 @@ public class Controller {
     private TableView tablePilkarze;
     @FXML
     private TableView tableKluby;
+    @FXML
+    private TableView tableGole;
+    @FXML
+    private TableView tableMecze;
+    @FXML
+    private TableView tableSedziowie;
+    @FXML
+    private TableView tableStadiony;
+    @FXML
+    private TableView tableTransfery;
+    @FXML
+    private TableView tableTrenerzy;
+    @FXML
+    private TableView tableWlasciciele;
 
 
-    public void initializeKluby() throws SQLException {
 
-        TableColumn nameColumn = new TableColumn("Nazwa klubu");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
-        nameColumn.setPrefWidth(220.0);
-
-        TableColumn yearColumn = new TableColumn("Rok zalozenia");
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("rokZalozenia"));
-        yearColumn.setPrefWidth(110.0);
-
-        TableColumn ligueColumn = new TableColumn("Nazwa Ligi");
-        ligueColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaLigi"));
-        ligueColumn.setPrefWidth(290.0);
-
-        tableKluby.getColumns().addAll(nameColumn, yearColumn, ligueColumn);
-
-    }
 
     public void fillKluby() throws SQLException {
 
@@ -63,17 +61,6 @@ public class Controller {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }
-    }
-
-    public void showKluby(ActionEvent event) throws SQLException {
-        fillKluby();
-        hideAll();
-        tableKluby.setVisible(true);
-    }
-
-    public void hideAll() {
-        tablePilkarze.setVisible(false);
-        tableKluby.setVisible(false);
     }
 
     public void openEditKlub(ActionEvent event) throws IOException {
@@ -99,10 +86,6 @@ public class Controller {
 
             stage.show();
         }
-    }
-
-    public void hideWindow(ActionEvent event) {
-        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     public void openInsertKlub(ActionEvent event) throws IOException {
@@ -144,43 +127,6 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void initializePilkarze() throws SQLException {
-        TableColumn idColumn = new TableColumn("id");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idPilkarza"));
-        idColumn.setPrefWidth(5.0);
-        idColumn.setVisible(false);
-
-        TableColumn nameColumn = new TableColumn("Imie");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        nameColumn.setPrefWidth(100.0);
-
-        TableColumn surnameColumn = new TableColumn("Nazwisko");
-        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
-        surnameColumn.setPrefWidth(100.0);
-
-        TableColumn birthDateColumn = new TableColumn("Data urodzenia");
-        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("dataUrodzenia"));
-        birthDateColumn.setPrefWidth(100.0);
-
-        TableColumn posColumn = new TableColumn("Pozycja");
-        posColumn.setCellValueFactory(new PropertyValueFactory<>("pozycja"));
-        posColumn.setPrefWidth(80.0);
-
-        TableColumn priceColumn = new TableColumn("Wartość rynkowa");
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("wartoscRynkowa"));
-        priceColumn.setPrefWidth(100.0);
-
-        TableColumn salaryColumn = new TableColumn("Pensja");
-        salaryColumn.setCellValueFactory(new PropertyValueFactory<>("pensja"));
-        salaryColumn.setPrefWidth(80.0);
-
-        TableColumn clubColumn = new TableColumn("Nazwa klubu");
-        clubColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
-        clubColumn.setPrefWidth(100.0);
-
-        tablePilkarze.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthDateColumn, posColumn, priceColumn, salaryColumn, clubColumn);
     }
 
     public void fillPilkarze() throws SQLException {
@@ -233,10 +179,61 @@ public class Controller {
         }*/
     }
 
-    public void showPilkarze(ActionEvent event) throws SQLException {
-        fillPilkarze();
-        hideAll();
-        tablePilkarze.setVisible(true);
+    public void hideAll() {
+        tablePilkarze.setVisible(false);
+        tableKluby.setVisible(false);
     }
+    public void initializeKluby() throws SQLException {
 
+        TableColumn nameColumn = new TableColumn("Nazwa klubu");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
+        nameColumn.setPrefWidth(220.0);
+
+        TableColumn yearColumn = new TableColumn("Rok zalozenia");
+        yearColumn.setCellValueFactory(new PropertyValueFactory<>("rokZalozenia"));
+        yearColumn.setPrefWidth(110.0);
+
+        TableColumn ligueColumn = new TableColumn("Nazwa Ligi");
+        ligueColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaLigi"));
+        ligueColumn.setPrefWidth(290.0);
+
+        tableKluby.getColumns().addAll(nameColumn, yearColumn, ligueColumn);
+
+    }
+    public void initializePilkarze() throws SQLException {
+        TableColumn idColumn = new TableColumn("id");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("idPilkarza"));
+        idColumn.setPrefWidth(5.0);
+        idColumn.setVisible(false);
+
+        TableColumn nameColumn = new TableColumn("Imie");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
+        nameColumn.setPrefWidth(100.0);
+
+        TableColumn surnameColumn = new TableColumn("Nazwisko");
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
+        surnameColumn.setPrefWidth(100.0);
+
+        TableColumn birthDateColumn = new TableColumn("Data urodzenia");
+        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("dataUrodzenia"));
+        birthDateColumn.setPrefWidth(100.0);
+
+        TableColumn posColumn = new TableColumn("Pozycja");
+        posColumn.setCellValueFactory(new PropertyValueFactory<>("pozycja"));
+        posColumn.setPrefWidth(80.0);
+
+        TableColumn priceColumn = new TableColumn("Wartość rynkowa");
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("wartoscRynkowa"));
+        priceColumn.setPrefWidth(100.0);
+
+        TableColumn salaryColumn = new TableColumn("Pensja");
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<>("pensja"));
+        salaryColumn.setPrefWidth(80.0);
+
+        TableColumn clubColumn = new TableColumn("Nazwa klubu");
+        clubColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
+        clubColumn.setPrefWidth(100.0);
+
+        tablePilkarze.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthDateColumn, posColumn, priceColumn, salaryColumn, clubColumn);
+    }
 }
