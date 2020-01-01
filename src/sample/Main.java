@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FXMLLoader firstLoader = new FXMLLoader(getClass().getResource("mainView.fxml"));
+        FXMLLoader firstLoader = new FXMLLoader(getClass().getResource("scenes/mainView.fxml"));
         Parent root = firstLoader.load();
         Controller controller = firstLoader.getController();
         primaryStage.setTitle("FootballApp");

@@ -15,7 +15,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="697.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <tabs>
-      <Tab text="Pulpit">
+      <Tab closable="false" text="Pulpit">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -55,7 +55,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Ligi">
+      <Tab closable="false" text="Ligi">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -66,7 +66,7 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nową ligę" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -95,11 +95,11 @@
                   </TableView>
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy klub" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab onSelectionChanged="#fillPilkarze" text="Piłkarze">
+      <Tab closable="false" onSelectionChanged="#fillPilkarze" text="Piłkarze">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -147,16 +147,16 @@
                         </TableColumn>
                      </columns></TableView>
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj piłkarza" />
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Transfery">
+      <Tab closable="false" text="Transfery">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze2" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableTransfery" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu" />
                         <TableColumn prefWidth="153.99993896484375" text="Klub sprzedający" />
@@ -170,11 +170,11 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Trenerzy">
+      <Tab closable="false" text="Trenerzy">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze3" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableTrenerzy" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="48.000000953674316" text="ID" />
                         <TableColumn prefWidth="149.33331680297852" text="Imię" />
@@ -187,11 +187,11 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Mecze">
+      <Tab closable="false" text="Mecze">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze4" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableMecze" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="42.666687965393066" text="ID" />
                         <TableColumn prefWidth="108.00000381469727" text="Data" />
@@ -203,15 +203,15 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj mecz" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Gole">
+      <Tab closable="false" text="Gole">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze5" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableGole" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="62.666653633117676" text="GolID" />
                         <TableColumn prefWidth="66.66666412353516" text="MeczID" />
@@ -222,15 +222,15 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj gol" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Sędziowie">
+      <Tab closable="false" text="Sędziowie">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze6" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableSedziowie" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="45.33334445953369" text="ID" />
                         <TableColumn prefWidth="169.99997329711914" text="Imię" />
@@ -240,15 +240,15 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj sędziego" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMore" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Właściciele">
+      <Tab closable="false" text="Właściciele">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze7" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableWlasciciele" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="75.0" text="ID" visible="false" />
                         <TableColumn prefWidth="135.33331775665283" text="Imię" />
@@ -261,11 +261,11 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab text="Stadiony">
+      <Tab closable="false" text="Stadiony">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze71" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableStadiony" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
                         <TableColumn prefWidth="75.0" text="ID" visible="false" />
                         <TableColumn prefWidth="135.33331775665283" text="Nazwa" />

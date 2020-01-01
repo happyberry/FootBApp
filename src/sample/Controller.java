@@ -1,12 +1,8 @@
 package sample;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -42,8 +38,6 @@ public class Controller {
     private TableView tableWlasciciele;
 
 
-
-
     public void fillKluby() throws SQLException {
 
         tableKluby.getItems().clear();
@@ -67,7 +61,7 @@ public class Controller {
 
         if(tableKluby.getSelectionModel().getSelectedItem() != null) {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("editKlub.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editKlub.fxml"));
 
             Stage stage = new Stage();
             stage.setTitle("Edytuj");
@@ -90,7 +84,7 @@ public class Controller {
 
     public void openInsertKlub(ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("insertKlub.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertKlub.fxml"));
 
         Stage stage = new Stage();
         stage.setTitle("Dodaj");
@@ -116,10 +110,10 @@ public class Controller {
         }*/
     }
 
-    public void openMore(ActionEvent event) {
+    public void openMoreKlub(ActionEvent event) {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("moreKlub.fxml"));
+            root = FXMLLoader.load(getClass().getResource("scenes/moreKlub.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Real Madryt");
             stage.setScene(new Scene(root, 600, 500));
