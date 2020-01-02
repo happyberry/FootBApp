@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="105.0" layoutY="40.0" text="Data" />
+      <ComboBox fx:id="comboBoxDay" layoutX="151.0" layoutY="36.0" prefHeight="25.0" prefWidth="81.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="01" />
+               <String fx:value="02" />
+               <String fx:value="03" />
+               <String fx:value="04" />
+               <String fx:value="05" />
+               <String fx:value="06" />
+               <String fx:value="07" />
+               <String fx:value="08" />
+               <String fx:value="09" />
+               <String fx:value="10" />
+               <String fx:value="11" />
+               <String fx:value="12" />
+               <String fx:value="13" />
+               <String fx:value="14" />
+               <String fx:value="15" />
+               <String fx:value="16" />
+               <String fx:value="17" />
+               <String fx:value="18" />
+               <String fx:value="19" />
+               <String fx:value="20" />
+               <String fx:value="21" />
+               <String fx:value="22" />
+               <String fx:value="23" />
+               <String fx:value="24" />
+               <String fx:value="25" />
+               <String fx:value="26" />
+               <String fx:value="27" />
+               <String fx:value="28" />
+               <String fx:value="29" />
+               <String fx:value="30" />
+               <String fx:value="31" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+      <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
+      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
+      <ComboBox fx:id="comboBoxMonth" layoutX="246.0" layoutY="36.0" prefHeight="25.0" prefWidth="104.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="01" />
+               <String fx:value="02" />
+               <String fx:value="03" />
+               <String fx:value="04" />
+               <String fx:value="05" />
+               <String fx:value="06" />
+               <String fx:value="07" />
+               <String fx:value="08" />
+               <String fx:value="09" />
+               <String fx:value="10" />
+               <String fx:value="11" />
+               <String fx:value="12" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+      <ComboBox fx:id="comboBoxYear" layoutX="364.0" layoutY="36.0" prefHeight="25.0" prefWidth="81.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="1970" />
+               <String fx:value="1971" />
+               <String fx:value="1972" />
+               <String fx:value="1973" />
+               <String fx:value="1974" />
+               <String fx:value="1975" />
+               <String fx:value="1976" />
+               <String fx:value="1977" />
+               <String fx:value="1978" />
+               <String fx:value="1979" />
+               <String fx:value="1980" />
+               <String fx:value="1981" />
+               <String fx:value="1982" />
+               <String fx:value="1983" />
+               <String fx:value="1984" />
+               <String fx:value="1985" />
+               <String fx:value="1986" />
+               <String fx:value="1987" />
+               <String fx:value="1988" />
+               <String fx:value="1989" />
+               <String fx:value="1990" />
+               <String fx:value="1991" />
+               <String fx:value="1992" />
+               <String fx:value="1993" />
+               <String fx:value="1994" />
+               <String fx:value="1995" />
+               <String fx:value="1996" />
+               <String fx:value="1997" />
+               <String fx:value="1998" />
+               <String fx:value="1999" />
+               <String fx:value="2000" />
+               <String fx:value="2001" />
+               <String fx:value="2002" />
+               <String fx:value="2003" />
+               <String fx:value="2004" />
+               <String fx:value="2005" />
+               <String fx:value="2006" />
+               <String fx:value="2007" />
+               <String fx:value="2008" />
+               <String fx:value="2009" />
+               <String fx:value="2010" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+      <Label layoutX="69.0" layoutY="80.0" text="Gospodarze" />
+      <ComboBox fx:id="comboBoxGosp" layoutX="151.0" layoutY="76.0" prefHeight="25.0" prefWidth="149.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="bramkarz" />
+               <String fx:value="napastnik" />
+               <String fx:value="obrońca" />
+               <String fx:value="pomocnik" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+      <Label layoutX="63.0" layoutY="200.0" text="Wynik gości" />
+      <Label layoutX="31.0" layoutY="160.0" text="Wynik gospodarzy" />
+      <Label layoutX="95.0" layoutY="120.0" text="Goście" />
+      <TextField fx:id="sixthTF" layoutX="151.0" layoutY="196.0" />
+      <TextField fx:id="fifthTF" layoutX="151.0" layoutY="156.0" />
+      <ComboBox fx:id="comboBoxGosc" layoutX="151.0" layoutY="116.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0">
+      </ComboBox>
+      <Label layoutX="63.0" layoutY="243.0" text="Sędzia" />
+      <Button layoutX="445.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Usuń" />
+   </children>
+</AnchorPane>

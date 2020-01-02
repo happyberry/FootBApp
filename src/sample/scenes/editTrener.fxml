@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="secondTF" layoutX="151.0" layoutY="36.0" />
+      <TextField fx:id="thirdTF" layoutX="151.0" layoutY="76.0" />
+      <Label layoutX="89.0" layoutY="40.0" text="Imię" />
+      <Label layoutX="64.0" layoutY="80.0" text="Nazwisko" />
+      <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
+      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
+      <Label layoutX="47.0" layoutY="119.0" text="Pochodzenie" />
+      <TextField fx:id="fourthTF" layoutX="151.0" layoutY="115.0" />
+      <Label layoutX="47.0" layoutY="159.0" text="Nazwa klubu" />
+      <ComboBox fx:id="comboBoxClub" layoutX="150.0" layoutY="155.0" prefWidth="150.0" />
+      <Button layoutX="447.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Usuń" />
+   </children>
+</AnchorPane>
