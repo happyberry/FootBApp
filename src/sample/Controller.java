@@ -45,23 +45,58 @@ public class Controller {
         return tablePilkarze;
     }
 
+    public TableView getTableGole() {
+        return tableGole;
+    }
+
+    public TableView getTableMecze() {
+        return tableMecze;
+    }
+
+    public TableView getTableSedziowie() {
+        return tableSedziowie;
+    }
+
+    public TableView getTableStadiony() {
+        return tableStadiony;
+    }
+
+    public TableView getTableTransfery() {
+        return tableTransfery;
+    }
+
+    public TableView getTableTrenerzy() {
+        return tableTrenerzy;
+    }
+
+    public TableView getTableWlasciciele() {
+        return tableWlasciciele;
+    }
+
     public void fillKluby() throws SQLException {
 
-        tableKluby.getItems().clear();
+        if (tableKluby.getItems().size() != 0) return;
+        //tableKluby.getItems().clear();
         String SQL = "SELECT * from KLUBY";
-        ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
-        try {
-            while (rs.next()) {
-                //Iterate Row
-                Kluby klub = new Kluby(rs.getString("nazwa_klubu"), rs.getString("rok_zalozenia"), rs.getString("nazwa_ligi"));
-                //String rowdata[] = {klub.getNazwaKlubu(), klub.getRokZalozenia(), klub.getNazwaLigi()};
-                //System.out.println(Arrays.toString(rowdata));
-                tableKluby.getItems().add(klub);
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        //Iterate Row
+                        Kluby klub = new Kluby(rs.getString("nazwa_klubu"), rs.getString("rok_zalozenia"), rs.getString("nazwa_ligi"));
+                        //String rowdata[] = {klub.getNazwaKlubu(), klub.getRokZalozenia(), klub.getNazwaLigi()};
+                        //System.out.println(Arrays.toString(rowdata));
+                        tableKluby.getItems().add(klub);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
+        };
+        new Thread(r).start();
     }
 
     public void openEditKlub(ActionEvent event) throws IOException {
@@ -133,22 +168,30 @@ public class Controller {
 
     public void fillPilkarze() throws SQLException {
 
-        tablePilkarze.getItems().clear();
+        if (tablePilkarze.getItems().size() != 0) return;
+        //tablePilkarze.getItems().clear();
         String SQL = "SELECT * from PILKARZE";
-        ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
-        try {
-            while (rs.next()) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
 
-                Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
-                        rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
-                        rs.getString("wartosc_rynkowa"), rs.getString("pensja"), rs.getString("nazwa_klubu"));
+                        Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
+                                rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
+                                rs.getString("wartosc_rynkowa"), rs.getString("pensja"), rs.getString("nazwa_klubu"));
 
-                tablePilkarze.getItems().add(kopacz);
+                        tablePilkarze.getItems().add(kopacz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
+        };
+        new Thread(r).start();
+
 
         /*tablePilkarze.getItems().clear();
         ObservableList<ObservableList> data;
@@ -191,9 +234,6 @@ public class Controller {
         tabela.getItems().remove(byt);
     }
 
-    public void updateInTable(TableView tabela, Object byt) {
-
-    }
 
     public void hideAll() {
         tablePilkarze.setVisible(false);

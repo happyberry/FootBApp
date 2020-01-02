@@ -27,16 +27,23 @@ public class InsertKlubController {
         System.out.println(connection);
         comboBoxLeague.getItems().clear();
         String SQL = "SELECT DISTINCT NAZWA_LIGI from KLUBY";
-        ResultSet rs = null;
-        try {
-            rs = connection.createStatement().executeQuery(SQL);
-            while (rs.next()) {
-                comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = connection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
+                    }
+                }
+                catch(SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Picking Ligue Names");
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error on Picking Ligue Names");
-        }
+        };
+        new Thread(r).start();
     }
 
     public void saveHandler(ActionEvent event) throws SQLException {
@@ -48,12 +55,12 @@ public class InsertKlubController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO KLUBY VALUES ('" + name + "', " + year + ", '" + league + "')");
+            Kluby addedClub = new Kluby(name, year, league);
+            controller.addToTable(controller.getTableKluby(), addedClub);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //controller.fillKluby();
-        Kluby addedClub = new Kluby(name, year, league);
-        controller.addToTable(controller.getTableKluby(), addedClub);
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }
