@@ -68,6 +68,7 @@ public class EditKlubController {
         String name = textFieldClubName.getText();
         String year = textFieldYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
+        if (league == null) league = comboBoxLeague.getPromptText();
         int yearInt;
         try {
             yearInt = Integer.parseInt(year);

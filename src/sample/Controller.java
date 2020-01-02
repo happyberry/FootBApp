@@ -37,6 +37,14 @@ public class Controller {
     @FXML
     private TableView tableWlasciciele;
 
+    private boolean pilkarzeJuzWczytani = false;
+    private boolean klubyJuzWczytane = false;
+    private boolean goleJuzWczytane = false;
+    private boolean meczeJuzWczytane = false;
+    private boolean sedziowieJuzWczytani = false;
+    private boolean stadionyJuzWczytane = false;
+    private boolean transferyJuzWczytane = false;
+
     public TableView getTableKluby() {
         return tableKluby;
     }
@@ -75,8 +83,8 @@ public class Controller {
 
     public void fillKluby() throws SQLException {
 
-        if (tableKluby.getItems().size() != 0) return;
-        //tableKluby.getItems().clear();
+        if (klubyJuzWczytane) return;
+        klubyJuzWczytane = true;
         String SQL = "SELECT * from KLUBY";
         Runnable r = new Runnable() {
             @Override
@@ -170,8 +178,8 @@ public class Controller {
 
     public void fillPilkarze() throws SQLException {
 
-        if (tablePilkarze.getItems().size() != 0) return;
-        //tablePilkarze.getItems().clear();
+        if (pilkarzeJuzWczytani) return;
+        pilkarzeJuzWczytani = true;
         String SQL = "SELECT * from PILKARZE";
         Runnable r = new Runnable() {
             @Override
