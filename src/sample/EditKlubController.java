@@ -68,7 +68,21 @@ public class EditKlubController {
         String name = textFieldClubName.getText();
         String year = textFieldYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
-        if(league == null) league = comboBoxLeague.getPromptText();
+        int yearInt;
+        try {
+            yearInt = Integer.parseInt(year);
+        } catch (NumberFormatException e) {
+            System.out.println("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            return;
+        }
+        if (yearInt <= 1800) {
+            System.out.println("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            return;
+        }
+        if (name.length() > 40) {
+            System.out.println("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            return;
+        }
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = '" + league + "'"

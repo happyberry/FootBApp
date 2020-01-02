@@ -13,7 +13,7 @@
       <Label layoutX="67.0" layoutY="44.0" text="Nazwa klubu" />
       <Label layoutX="64.0" layoutY="91.0" text="Rok założenia" />
       <Label layoutX="82.0" layoutY="132.0" text="Nazwa ligi" />
-      <ComboBox fx:id="comboBoxLeague" layoutX="151.0" layoutY="128.0" onMouseClicked="#initializeOptions" prefHeight="39.0" prefWidth="166.0">
+      <ComboBox fx:id="comboBoxLeague" layoutX="151.0" layoutY="128.0" prefHeight="39.0" prefWidth="166.0">
       </ComboBox>
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
       <Button layoutX="423.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteHandler" text="Usuń klub" />

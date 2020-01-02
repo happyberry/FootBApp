@@ -115,6 +115,7 @@ public class Controller {
 
             Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
             editKlubController.klub = klub;
+            editKlubController.initializeOptions();
 
             editKlubController.textFieldClubName.setText(klub.getNazwaKlubu());
             editKlubController.oldName = klub.getNazwaKlubu();
@@ -136,6 +137,7 @@ public class Controller {
 
         insertKlubController.connection = mainConnection;
         insertKlubController.controller = this;
+        insertKlubController.initializeOptions();
         //System.out.println(mainConnection);
         //System.out.println(insertKlubController.connection);
 

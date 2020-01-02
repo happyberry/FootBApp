@@ -26,7 +26,7 @@ public class InsertKlubController {
 
         System.out.println(connection);
         comboBoxLeague.getItems().clear();
-        String SQL = "SELECT DISTINCT NAZWA_LIGI from KLUBY";
+        String SQL = "SELECT NAZWA_LIGI from LIGI";
 
         Runnable r = new Runnable() {
             @Override
@@ -52,12 +52,31 @@ public class InsertKlubController {
         String year = clubYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
         System.out.println(name + " " + year + " " + league);
+        int yearInt;
         try {
+            yearInt = Integer.parseInt(year);
+        } catch (NumberFormatException e) {
+            System.out.println("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            return;
+        }
+        if (yearInt <= 1800) {
+            System.out.println("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            return;
+        }
+        if (name.length() > 40) {
+            System.out.println("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            return;
+        }
+        if (league == null) {
+            System.out.println("[NAZWA LIGI] Wybierz ligę, do której należy klub");
+            return;
+        }
+        try {
+            Kluby addedClub = new Kluby(name, year, league);
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO KLUBY VALUES ('" + name + "', " + year + ", '" + league + "')");
-            Kluby addedClub = new Kluby(name, year, league);
             controller.addToTable(controller.getTableKluby(), addedClub);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //controller.fillKluby();
