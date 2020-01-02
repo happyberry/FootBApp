@@ -15,7 +15,7 @@
       <Label layoutX="89.0" layoutY="40.0" text="Imię" />
       <Label layoutX="64.0" layoutY="80.0" text="Nazwisko" />
       <Label layoutX="39.0" layoutY="120.0" text="Data urodzenia" />
-      <ComboBox fx:id="comboBoxBDay" layoutX="151.0" layoutY="116.0" prefHeight="25.0" prefWidth="81.0">
+      <ComboBox fx:id="comboBoxBDay" layoutX="151.0" layoutY="116.0" prefHeight="25.0" prefWidth="81.0" promptText="Dzień">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="01" />
@@ -53,9 +53,8 @@
          </items>
       </ComboBox>
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
-      <Button layoutX="445.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteHandler" text="Usuń" />
       <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
-      <ComboBox fx:id="comboBoxBMonth" layoutX="246.0" layoutY="116.0" prefHeight="25.0" prefWidth="104.0">
+      <ComboBox fx:id="comboBoxBMonth" layoutX="246.0" layoutY="116.0" prefHeight="25.0" prefWidth="104.0" promptText="Miesiąc">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="01" />
@@ -73,7 +72,7 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <ComboBox fx:id="comboBoxBYear" layoutX="364.0" layoutY="116.0" prefHeight="25.0" prefWidth="81.0">
+      <ComboBox fx:id="comboBoxBYear" layoutX="364.0" layoutY="116.0" prefHeight="25.0" prefWidth="81.0" promptText="Rok">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="1970" />
@@ -121,7 +120,7 @@
          </items>
       </ComboBox>
       <Label layoutX="81.0" layoutY="160.0" text="Pozycja" />
-      <ComboBox fx:id="comboBoxPos" layoutX="151.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0">
+      <ComboBox fx:id="comboBoxPos" layoutX="151.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz pozycję">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="bramkarz" />
@@ -136,7 +135,7 @@
       <Label layoutX="55.0" layoutY="280.0" text="Nazwa klubu" />
       <TextField fx:id="sixthTF" layoutX="151.0" layoutY="196.0" />
       <TextField fx:id="seventhTF" layoutX="151.0" layoutY="236.0" />
-      <ComboBox fx:id="comboBoxLeague" layoutX="151.0" layoutY="276.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0">
+      <ComboBox fx:id="comboBoxLeague" layoutX="151.0" layoutY="276.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub">
       </ComboBox>
    </children>
 </AnchorPane>

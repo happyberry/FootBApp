@@ -29,7 +29,7 @@ public class EditKlubController {
 
         //System.out.println(connection);
         comboBoxLeague.getItems().clear();
-        String SQL = "SELECT DISTINCT NAZWA_LIGI from KLUBY";
+        String SQL = "SELECT DISTINCT NAZWA_LIGI from LIGI";
         ResultSet rs = null;
         try {
             rs = connection.createStatement().executeQuery(SQL);

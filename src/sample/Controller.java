@@ -181,6 +181,20 @@ public class Controller {
         }*/
     }
 
+
+
+    public void addToTable(TableView tabela, Object byt) {
+        tabela.getItems().add(byt);
+    }
+
+    public void removeFromTable(TableView tabela, Object byt) {
+        tabela.getItems().remove(byt);
+    }
+
+    public void updateInTable(TableView tabela, Object byt) {
+
+    }
+
     public void hideAll() {
         tablePilkarze.setVisible(false);
         tableKluby.setVisible(false);
@@ -237,17 +251,5 @@ public class Controller {
         clubColumn.setPrefWidth(100.0);
 
         tablePilkarze.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthDateColumn, posColumn, priceColumn, salaryColumn, clubColumn);
-    }
-
-    public void addToTable(TableView tabela, Object byt) {
-        tabela.getItems().add(byt);
-    }
-
-    public void removeFromTable(TableView tabela, Object byt) {
-        tabela.getItems().remove(byt);
-    }
-
-    public void updateInTable(TableView tabela, Object byt) {
-
     }
 }
