@@ -226,6 +226,22 @@ public class Controller {
         }*/
     }
 
+    public void openInsertPilkarz(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertPilkarz.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertPilkarzController insertPilkarzController = loader.<InsertPilkarzController>getController();
+
+        insertPilkarzController.connection = mainConnection;
+        insertPilkarzController.controller = this;
+        insertPilkarzController.initializeOptions();
+
+        stage.show();
+    }
+
 
 
     public void addToTable(TableView tabela, Object byt) {
