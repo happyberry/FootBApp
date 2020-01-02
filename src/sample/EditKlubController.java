@@ -29,17 +29,23 @@ public class EditKlubController {
 
         //System.out.println(connection);
         comboBoxLeague.getItems().clear();
-        String SQL = "SELECT DISTINCT NAZWA_LIGI from LIGI";
-        ResultSet rs = null;
-        try {
-            rs = connection.createStatement().executeQuery(SQL);
-            while (rs.next()) {
-                comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
+        String SQL = "SELECT NAZWA_LIGI from LIGI";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                ResultSet rs = null;
+                try {
+                    rs = connection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Picking Ligue Names");
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error on Picking Ligue Names");
-        }
+        };
+        new Thread(r).start();
     }
 
     public void deleteHandler(ActionEvent event) throws SQLException {
@@ -47,11 +53,11 @@ public class EditKlubController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM KLUBY WHERE nazwa_klubu = '" + oldName + "'");
+            controller.removeFromTable(controller.getTableKluby(), klub);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //controller.fillKluby();
-        controller.removeFromTable(controller.getTableKluby(), klub);
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
@@ -67,13 +73,13 @@ public class EditKlubController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = '" + league + "'"
                     + " WHERE nazwa_klubu = '" + oldName + "'");
+            Kluby nowyKlub = new Kluby(name, year, league);
+            controller.removeFromTable(controller.getTableKluby(), klub);
+            controller.addToTable(controller.getTableKluby(), nowyKlub);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //controller.fillKluby();
-        Kluby nowyKlub = new Kluby(name, year, league);
-        controller.removeFromTable(controller.getTableKluby(), klub);
-        controller.addToTable(controller.getTableKluby(), nowyKlub);
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
     }

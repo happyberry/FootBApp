@@ -11,6 +11,13 @@
       <change afterPath="$PROJECT_DIR$/src/sample/scenes/editTrener.fxml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/sample/scenes/editWlasciciel.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootP/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FootP/sample/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootP/sample/EditKlubController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FootP/sample/EditKlubController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FootP/sample/InsertKlubController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FootP/sample/InsertKlubController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/EditKlubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/EditKlubController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/InsertKlubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/InsertKlubController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -278,6 +285,7 @@
       <workItem from="1577899635076" duration="4710000" />
       <workItem from="1577904559184" duration="5298000" />
       <workItem from="1577911290052" duration="5316000" />
+      <workItem from="1577977378551" duration="3283000" />
     </task>
     <servers />
   </component>
