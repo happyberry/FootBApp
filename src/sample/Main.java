@@ -52,6 +52,7 @@ public class Main extends Application {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println("Odłączono od bazy danych");
+                System.exit(0);
             }
         };
 

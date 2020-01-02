@@ -25,7 +25,6 @@ public class Pilkarze {
       nazwaKlubu = nazwa_klubu;
   }
 
-
   public String getIdPilkarza() {
     return idPilkarza;
   }
