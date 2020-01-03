@@ -4,8 +4,8 @@ package sample;
 public class Stadiony {
 
   private String nazwa;
-  private String rokZbudowania;
-  private String pojemnosc;
+  private Integer rokZbudowania;
+  private Integer pojemnosc;
   private String miasto;
   private String nazwaKlubu;
 
@@ -19,20 +19,20 @@ public class Stadiony {
   }
 
 
-  public String getRokZbudowania() {
+  public Integer getRokZbudowania() {
     return rokZbudowania;
   }
 
-  public void setRokZbudowania(String rokZbudowania) {
+  public void setRokZbudowania(Integer rokZbudowania) {
     this.rokZbudowania = rokZbudowania;
   }
 
 
-  public String getPojemnosc() {
+  public Integer getPojemnosc() {
     return pojemnosc;
   }
 
-  public void setPojemnosc(String pojemnosc) {
+  public void setPojemnosc(Integer pojemnosc) {
     this.pojemnosc = pojemnosc;
   }
 

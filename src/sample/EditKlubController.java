@@ -98,7 +98,7 @@ public class EditKlubController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = '" + league + "'"
                     + " WHERE nazwa_klubu = '" + oldName + "'");
-            Kluby nowyKlub = new Kluby(name, year, league);
+            Kluby nowyKlub = new Kluby(name, yearInt, league);
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.addToTable(controller.getTableKluby(), nowyKlub);
         } catch (SQLException e) {

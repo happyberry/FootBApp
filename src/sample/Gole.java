@@ -6,11 +6,11 @@ public class Gole {
   private String golId;
   private String meczId;
   private String idPilkarza;
-  private String minuta;
+  private Integer minuta;
   private String czySamobojczy;
   private String czyDlaGospodarzy;
 
-  public Gole(String id, String mecz, String idpilkarza, String minuta, String czysam, String czygosp){
+  public Gole(String id, String mecz, String idpilkarza, Integer minuta, String czysam, String czygosp){
     golId = id;
     meczId = mecz;
     idPilkarza = idpilkarza;
@@ -46,11 +46,11 @@ public class Gole {
   }
 
 
-  public String getMinuta() {
+  public Integer getMinuta() {
     return minuta;
   }
 
-  public void setMinuta(String minuta) {
+  public void setMinuta(Integer minuta) {
     this.minuta = minuta;
   }
 

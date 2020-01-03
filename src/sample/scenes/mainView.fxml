@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -74,8 +75,16 @@
                       </items>
                   </ComboBox>
                   <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />
-                  <TableView fx:id="tableSearch" layoutX="11.0" layoutY="315.0" prefHeight="240.0" prefWidth="675.0" />
-                  <Button layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" style="-fx-background-color: #00c000;" text="Wyszukaj" />
+                  <TableView fx:id="tableSearch" layoutX="11.0" layoutY="221.0" prefHeight="334.0" prefWidth="675.0" />
+                  <Button layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" style="-fx-background-color: #00c000;" text="Wyszukaj" />
+                  <Label fx:id="labelA" layoutX="15.0" layoutY="60.0" text="Label" visible="false" />
+                  <Label fx:id="labelB" layoutX="15.0" layoutY="100.0" text="Label" visible="false" />
+                  <Label fx:id="labelC" layoutX="15.0" layoutY="140.0" text="Label" visible="false" />
+                  <Label fx:id="labelD" layoutX="15.0" layoutY="180.0" text="Label" visible="false" />
+                  <TextField fx:id="textFieldA" layoutX="140.0" layoutY="56.0" visible="false" />
+                  <TextField fx:id="textFieldB" layoutX="140.0" layoutY="96.0" visible="false" />
+                  <TextField fx:id="textFieldC" layoutX="140.0" layoutY="136.0" visible="false" />
+                  <TextField fx:id="textFieldD" layoutX="140.0" layoutY="176.0" visible="false" />
                </children>
             </AnchorPane>
          </content>

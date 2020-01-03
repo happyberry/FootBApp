@@ -4,10 +4,10 @@ package sample;
 public class Kluby {
 
   private String nazwaKlubu;
-  private String rokZalozenia;
+  private Integer rokZalozenia;
   private String nazwaLigi;
 
-  public Kluby(String nazwaKlubu, String rokZalozenia, String nazwaLigi) {
+  public Kluby(String nazwaKlubu, Integer rokZalozenia, String nazwaLigi) {
     this.nazwaKlubu = nazwaKlubu;
     this.rokZalozenia = rokZalozenia;
     this.nazwaLigi = nazwaLigi;
@@ -22,11 +22,11 @@ public class Kluby {
   }
 
 
-  public String getRokZalozenia() {
+  public Integer getRokZalozenia() {
     return rokZalozenia;
   }
 
-  public void setRokZalozenia(String rokZalozenia) {
+  public void setRokZalozenia(Integer rokZalozenia) {
     this.rokZalozenia = rokZalozenia;
   }
 

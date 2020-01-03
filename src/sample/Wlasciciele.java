@@ -6,7 +6,7 @@ public class Wlasciciele {
   private String idWlasciciela;
   private String imie;
   private String nazwisko;
-  private String majatek;
+  private Double majatek;
   private String nazwaKlubu;
 
 
@@ -37,11 +37,11 @@ public class Wlasciciele {
   }
 
 
-  public String getMajatek() {
+  public Double getMajatek() {
     return majatek;
   }
 
-  public void setMajatek(String majatek) {
+  public void setMajatek(Double majatek) {
     this.majatek = majatek;
   }
 

@@ -3,18 +3,18 @@ package sample;
 
 public class Transfery {
 
-  private String kwotaTransferu;
+  private Double kwotaTransferu;
   private String klubSprzedajacy;
   private String idPilkarza;
   private java.sql.Date dataTransferu;
   private String klubKupujacy;
 
 
-  public String getKwotaTransferu() {
+  public Double getKwotaTransferu() {
     return kwotaTransferu;
   }
 
-  public void setKwotaTransferu(String kwotaTransferu) {
+  public void setKwotaTransferu(Double kwotaTransferu) {
     this.kwotaTransferu = kwotaTransferu;
   }
 

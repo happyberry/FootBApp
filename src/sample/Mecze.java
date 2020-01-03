@@ -7,12 +7,12 @@ public class Mecze {
   private java.sql.Date data;
   private String gospodarze;
   private String goscie;
-  private String wynikGospodarzy;
-  private String wynikGosci;
+  private Integer wynikGospodarzy;
+  private Integer wynikGosci;
   private String idSedziego;
 
   public Mecze (String mId, java.sql.Date date, String gosp, String gosc,
-                String wgosp, String wgosci, String idS){
+                Integer wgosp, Integer wgosci, String idS){
     meczId = mId;
     data = date;
     gospodarze = gosp;
@@ -58,20 +58,20 @@ public class Mecze {
   }
 
 
-  public String getWynikGospodarzy() {
+  public Integer getWynikGospodarzy() {
     return wynikGospodarzy;
   }
 
-  public void setWynikGospodarzy(String wynikGospodarzy) {
+  public void setWynikGospodarzy(Integer wynikGospodarzy) {
     this.wynikGospodarzy = wynikGospodarzy;
   }
 
 
-  public String getWynikGosci() {
+  public Integer getWynikGosci() {
     return wynikGosci;
   }
 
-  public void setWynikGosci(String wynikGosci) {
+  public void setWynikGosci(Integer wynikGosci) {
     this.wynikGosci = wynikGosci;
   }
 
