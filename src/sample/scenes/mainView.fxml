@@ -19,7 +19,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox layoutX="34.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
+                  <ComboBox layoutX="19.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
                               <String fx:value="La Liga" />
@@ -55,6 +55,31 @@
                </children></AnchorPane>
       </content>
     </Tab>
+      <Tab closable="false" text="Wyszukaj">
+         <content>
+            <AnchorPane fx:id="anchorPaneSearch" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="comboBoxTable" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Klub" />
+                              <String fx:value="Liga" />
+                              <String fx:value="Mecz" />
+                              <String fx:value="Piłkarz" />
+                              <String fx:value="Sędzia" />
+                              <String fx:value="Stadion" />
+                              <String fx:value="Trener" />
+                              <String fx:value="Właściciel" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
+                  <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />
+                  <TableView fx:id="tableSearch" layoutX="11.0" layoutY="315.0" prefHeight="240.0" prefWidth="675.0" />
+                  <Button layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" style="-fx-background-color: #00c000;" text="Wyszukaj" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
       <Tab closable="false" onSelectionChanged="#fillLigi" text="Ligi">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

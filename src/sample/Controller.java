@@ -40,7 +40,13 @@ public class Controller {
     @FXML
     private TableView tableLigi;
     @FXML
+    private TableView tableSearch;
+    @FXML
     private TableColumn tableColumnWartosc;
+    @FXML
+    private ComboBox comboBoxTable;
+    @FXML
+    private AnchorPane anchorPaneSearch;
 
     private boolean pilkarzeJuzWczytani = false;
     private boolean klubyJuzWczytane = false;
@@ -476,6 +482,217 @@ public class Controller {
 
     public void removeFromTable(TableView tabela, Object byt) {
         tabela.getItems().remove(byt);
+    }
+
+    public void fillSearchEngine (ActionEvent event) {
+        String table = (String) comboBoxTable.getSelectionModel().getSelectedItem();
+        if (table == null) {return;}
+
+
+        if(table.equals("Klub")){
+            Label labelNazwa = new Label("Nazwa klubu");
+            labelNazwa.setLayoutX(30);
+            labelNazwa.setLayoutY(60);
+            Label labelLiga = new Label("Liga");
+            labelLiga.setLayoutX(30);
+            labelLiga.setLayoutY(100);
+
+            TextField textFieldNazwa = new TextField();
+            textFieldNazwa.setLayoutX(140);
+            textFieldNazwa.setLayoutY(56);
+            TextField textFieldLiga = new TextField();
+            textFieldLiga.setLayoutX(140);
+            textFieldLiga.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(labelLiga, labelNazwa, textFieldLiga, textFieldNazwa);
+        }
+
+        if (table.equals("Liga")){
+            Label labelNazwa = new Label("Nazwa ligi");
+            labelNazwa.setLayoutX(30);
+            labelNazwa.setLayoutY(60);
+            Label labelKraj = new Label("Kraj");
+            labelKraj.setLayoutX(30);
+            labelKraj.setLayoutY(100);
+
+            TextField textFieldNazwa = new TextField();
+            textFieldNazwa.setLayoutX(140);
+            textFieldNazwa.setLayoutY(56);
+            TextField textFieldKraj = new TextField();
+            textFieldKraj.setLayoutX(140);
+            textFieldKraj.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(labelNazwa, labelKraj, textFieldNazwa, textFieldKraj);
+        }
+
+        if (table.equals("Mecz")) {
+            Label labelData = new Label("Data");
+            labelData.setLayoutX(30);
+            labelData.setLayoutY(60);
+            Label labelKlub = new Label("Nazwa klubu");
+            labelKlub.setLayoutX(30);
+            labelKlub.setLayoutY(100);
+
+            TextField textFieldData = new TextField();
+            textFieldData.setPromptText("YYYY-MM-DD");
+            textFieldData.setLayoutX(140);
+            textFieldData.setLayoutY(56);
+            TextField textFieldKlub = new TextField();
+            textFieldKlub.setLayoutX(140);
+            textFieldKlub.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(labelData, labelKlub, textFieldData, textFieldKlub);
+        }
+
+        if (table.equals("Piłkarz")) {
+            Label labelNazwisko = new Label("Nazwisko");
+            labelNazwisko.setLayoutX(30);
+            labelNazwisko.setLayoutY(60);
+            Label labelKlub = new Label("Nazwa klubu");
+            labelKlub.setLayoutX(30);
+            labelKlub.setLayoutY(100);
+            Label labelData = new Label("Data urodzenia");
+            labelData.setLayoutX(30);
+            labelData.setLayoutY(140);
+            Label labelPos = new Label("Pozycja");
+            labelPos.setLayoutX(30);
+            labelPos.setLayoutY(180);
+
+            TextField textFieldNazwisko = new TextField();
+            textFieldNazwisko.setLayoutX(140);
+            textFieldNazwisko.setLayoutY(56);
+            TextField textFieldKlub = new TextField();
+            textFieldKlub.setLayoutX(140);
+            textFieldKlub.setLayoutY(96);
+            TextField textFieldData = new TextField();
+            textFieldData.setPromptText("YYYY-MM-DD");
+            textFieldData.setLayoutX(140);
+            textFieldData.setLayoutY(136);
+            TextField textFieldPos = new TextField();
+            textFieldPos.setLayoutX(140);
+            textFieldPos.setLayoutY(176);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(labelNazwisko, labelData, labelPos,labelKlub);
+            anchorPaneSearch.getChildren().addAll(textFieldNazwisko, textFieldKlub, textFieldPos, textFieldData);
+        }
+
+        if (table.equals("Sędzia")) {
+            Label labelNazwisko = new Label("Nazwisko");
+            labelNazwisko.setLayoutX(30);
+            labelNazwisko.setLayoutY(60);
+            Label labelKraj = new Label("Kraj");
+            labelKraj.setLayoutX(30);
+            labelKraj.setLayoutY(100);
+
+            TextField textFieldNazwisko = new TextField();
+            textFieldNazwisko.setLayoutX(140);
+            textFieldNazwisko.setLayoutY(56);
+            TextField textFieldKraj = new TextField();
+            textFieldKraj.setLayoutX(140);
+            textFieldKraj.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(textFieldNazwisko, textFieldKraj, labelKraj, labelNazwisko);
+
+        }
+
+        if (table.equals("Stadion")) {
+            Label labelNazwa = new Label("Nazwa");
+            labelNazwa.setLayoutX(30);
+            labelNazwa.setLayoutY(60);
+            Label labelMiasto = new Label("Miasto");
+            labelMiasto.setLayoutX(30);
+            labelMiasto.setLayoutY(100);
+            Label labelKlub = new Label("Nazwa klubu");
+            labelKlub.setLayoutX(30);
+            labelKlub.setLayoutY(140);
+
+            TextField textFieldNazwa = new TextField();
+            textFieldNazwa.setLayoutX(140);
+            textFieldNazwa.setLayoutY(56);
+            TextField textFieldMiasto = new TextField();
+            textFieldMiasto.setLayoutX(140);
+            textFieldMiasto.setLayoutY(96);
+            TextField textFieldKlub = new TextField();
+            textFieldKlub.setLayoutX(140);
+            textFieldKlub.setLayoutY(136);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(textFieldKlub, textFieldMiasto, textFieldNazwa, labelKlub, labelMiasto, labelNazwa);
+        }
+
+        if (table.equals("Trener")) {
+            Label labelNazwisko = new Label("Nazwisko");
+            labelNazwisko.setLayoutX(30);
+            labelNazwisko.setLayoutY(60);
+            Label labelKlub = new Label("Nazwa klubu");
+            labelKlub.setLayoutX(30);
+            labelKlub.setLayoutY(100);
+
+            TextField textFieldNazwisko = new TextField();
+            textFieldNazwisko.setLayoutX(140);
+            textFieldNazwisko.setLayoutY(56);
+            TextField textFieldKlub = new TextField();
+            textFieldKlub.setLayoutX(140);
+            textFieldKlub.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(textFieldNazwisko, textFieldKlub, labelKlub, labelNazwisko);
+        }
+
+        if (table.equals("Właściciel")) {
+            Label labelNazwisko = new Label("Nazwisko");
+            labelNazwisko.setLayoutX(30);
+            labelNazwisko.setLayoutY(60);
+            Label labelKlub = new Label("Nazwa klubu");
+            labelKlub.setLayoutX(30);
+            labelKlub.setLayoutY(100);
+
+            TextField textFieldNazwisko = new TextField();
+            textFieldNazwisko.setLayoutX(140);
+            textFieldNazwisko.setLayoutY(56);
+            TextField textFieldKlub = new TextField();
+            textFieldKlub.setLayoutX(140);
+            textFieldKlub.setLayoutY(96);
+
+            anchorPaneSearch.getChildren().clear();
+            anchorPaneSearch.getChildren().addAll(textFieldNazwisko, textFieldKlub, labelKlub, labelNazwisko);
+        }
+
+    }
+    public void showResults (ActionEvent event) {
+        String table = (String) comboBoxTable.getSelectionModel().getSelectedItem();
+        if (table == null) {return;}
+
+        if(table.equals("Klub")){
+
+            tableSearch.getColumns().clear();
+            tableSearch.getColumns().addAll(tableKluby.getColumns());
+        }
+        if (table.equals("Liga")){
+
+            tableSearch.getColumns().clear();
+            tableSearch.getColumns().addAll(tableLigi.getColumns());
+        }
+        if (table.equals("Piłkarz")) {
+
+        }
+        if (table.equals("Sędzia")) {
+
+        }
+        if (table.equals("Stadion")) {
+
+        }
+        if (table.equals("Trener")) {
+
+        }
+        if (table.equals("Właściciel")) {
+
+        }
     }
 
 
