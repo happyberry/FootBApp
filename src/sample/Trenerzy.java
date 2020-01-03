@@ -9,6 +9,14 @@ public class Trenerzy {
   private String pochodzenie;
   private String nazwaKlubu;
 
+  public Trenerzy(String idTrenera, String imie, String nazwisko, String kraj, String klub) {
+    this.idTrenera = idTrenera;
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.pochodzenie = kraj;
+    this.nazwaKlubu = klub;
+  }
+
 
   public String getIdTrenera() {
     return idTrenera;
