@@ -72,9 +72,9 @@
                             </cellValueFactory>
                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nową ligę" />
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertLiga" text="Dodaj nową ligę" />
+                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditLiga" text="Edytuj wpis" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -113,42 +113,42 @@
                <children>
                   <TableView fx:id="tablePilkarze" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="28.666687965393066" text="ID">
+                        <TableColumn prefWidth="28.666687965393066" text="ID" visible="false">
                             <cellValueFactory>
                                 <PropertyValueFactory property="idPilkarza" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="121.33331680297852" text="Imię">
+                        <TableColumn prefWidth="106.00002765655518" text="Imię">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imie" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="123.99995422363281" text="Nazwisko">
+                        <TableColumn prefWidth="119.3333511352539" text="Nazwisko">
                             <cellValueFactory>
                                 <PropertyValueFactory property="nazwisko" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="93.3333740234375" text="Data urodzenia">
+                        <TableColumn prefWidth="93.33335876464844" text="Data urodzenia">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dataUrodzenia" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="60.00006103515625" text="Pozycja">
+                        <TableColumn prefWidth="78.66668701171875" text="Pozycja">
                             <cellValueFactory>
                                 <PropertyValueFactory property="pozycja" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="110.66665649414062" text="Wartość rynkowa">
+                        <TableColumn fx:id="tableColumnWartosc" prefWidth="103.33334350585938" text="Wartość rynkowa">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wartoscRynkowa" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="90.0" text="Pensja">
+                        <TableColumn prefWidth="75.33331298828125" text="Pensja">
                             <cellValueFactory>
                                 <PropertyValueFactory property="pensja" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="43.33331298828125" text="Nazwa klubu">
+                        <TableColumn prefWidth="92.6666259765625" text="Nazwa klubu">
                             <cellValueFactory>
                                 <PropertyValueFactory property="nazwaKlubu" />
                             </cellValueFactory>
@@ -168,10 +168,9 @@
                      <columns>
                         <TableColumn minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu" />
                         <TableColumn prefWidth="153.99993896484375" text="Klub sprzedający" />
-                        <TableColumn minWidth="0.6666259765625" prefWidth="13.99993896484375" text="Id piłkarza" />
-                        <TableColumn prefWidth="116.66668701171875" text="Data transferu" />
-                        <TableColumn prefWidth="152.00003051757812" text="Klub kupujący" />
-                        <TableColumn prefWidth="118.66668701171875" text="Nazwisko piłkarza" />
+                        <TableColumn minWidth="0.6666259765625" prefWidth="113.33331298828125" text="Id piłkarza" />
+                        <TableColumn prefWidth="120.66668701171875" text="Data transferu" />
+                        <TableColumn prefWidth="152.6666259765625" text="Klub kupujący" />
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy transfer" />
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
@@ -184,7 +183,7 @@
                <children>
                   <TableView fx:id="tableTrenerzy" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="48.000000953674316" text="ID" />
+                        <TableColumn prefWidth="48.000000953674316" text="ID" visible="false" />
                         <TableColumn prefWidth="149.33331680297852" text="Imię" />
                         <TableColumn prefWidth="153.3333282470703" text="Nazwisko" />
                         <TableColumn prefWidth="143.33331298828125" text="Pochodzenie" />
@@ -292,35 +291,35 @@
                <children>
                   <TableView fx:id="tableSedziowie" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="45.33334445953369" text="ID">
+                        <TableColumn prefWidth="45.33334445953369" text="ID" visible="false">
                             <cellValueFactory>
                                 <PropertyValueFactory property="idSedziego" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="169.99997329711914" text="Imię">
+                        <TableColumn prefWidth="182.66669178009033" text="Imię">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imie" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="171.9999542236328" text="Nazwisko">
+                        <TableColumn prefWidth="192.66664123535156" text="Nazwisko">
                             <cellValueFactory>
                                 <PropertyValueFactory property="nazwisko" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="97.33331298828125" text="Wiek">
+                        <TableColumn prefWidth="102.0" text="Wiek">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wiek" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="189.33334350585938" text="Pochodzenie">
+                        <TableColumn prefWidth="194.00003051757812" text="Pochodzenie">
                             <cellValueFactory>
                                 <PropertyValueFactory property="pochodzenie" />
                             </cellValueFactory>
                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj sędziego" />
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertSedzia" text="Dodaj sędziego" />
+                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditSedzia" text="Edytuj wpis" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>

@@ -6,10 +6,10 @@ public class Sedziowie {
   private String idSedziego;
   private String imie;
   private String nazwisko;
-  private String wiek;
+  private Integer wiek;
   private String pochodzenie;
 
-  public Sedziowie(String id, String imie, String nazwisko, String wiek, String kraj) {
+  public Sedziowie(String id, String imie, String nazwisko, Integer wiek, String kraj) {
     idSedziego = id;
     this.imie = imie;
     this.nazwisko = nazwisko;
@@ -45,11 +45,11 @@ public class Sedziowie {
   }
 
 
-  public String getWiek() {
+  public Integer getWiek() {
     return wiek;
   }
 
-  public void setWiek(String wiek) {
+  public void setWiek(Integer wiek) {
     this.wiek = wiek;
   }
 

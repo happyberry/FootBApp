@@ -116,6 +116,12 @@ public class InsertPilkarzController {
             System.out.println("[POZYCJA] Podaj pozycję, na której gra piłkarz");
             return;
         }
+
+        if (wartosc == "") {
+            System.out.println("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
+            return;
+        }
+
         double wartoscRynkowa;
         try {
             wartoscRynkowa = Double.parseDouble(wartosc);

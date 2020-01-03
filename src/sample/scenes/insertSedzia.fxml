@@ -1,21 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertSedziaController">
    <children>
-      <TextField fx:id="secondTF" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="thirdTF" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="textFieldImie" layoutX="151.0" layoutY="36.0" />
+      <TextField fx:id="textFieldNazwisko" layoutX="151.0" layoutY="76.0" />
       <Label layoutX="89.0" layoutY="40.0" text="Imię" />
       <Label layoutX="64.0" layoutY="80.0" text="Nazwisko" />
       <Label layoutX="87.0" layoutY="119.0" text="Wiek" />
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
-      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
+      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveHandler" text="Zapisz zmiany" />
       <Label layoutX="44.0" layoutY="159.0" text="Pochodzenie" />
-      <TextField fx:id="fourthTF" layoutX="151.0" layoutY="115.0" />
-      <TextField fx:id="fifthTF" layoutX="151.0" layoutY="155.0" />
+      <TextField fx:id="textFieldWiek" layoutX="151.0" layoutY="115.0" />
+      <ComboBox fx:id="comboBoxKraj" layoutX="150.0" layoutY="155.0" prefWidth="150.0" promptText="Wybierz kraj">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Anglia" />
+               <String fx:value="Austria" />
+               <String fx:value="Belgia" />
+               <String fx:value="Bułgaria" />
+               <String fx:value="Chorwacja" />
+               <String fx:value="Cypr" />
+               <String fx:value="Czechy" />
+               <String fx:value="Dania" />
+               <String fx:value="Estonia" />
+               <String fx:value="Finlandia" />
+               <String fx:value="Francja" />
+               <String fx:value="Grecja" />
+               <String fx:value="Hiszpania" />
+               <String fx:value="Holandia" />
+               <String fx:value="Irlandia" />
+               <String fx:value="Litwa" />
+               <String fx:value="Luksemburg" />
+               <String fx:value="Łotwa" />
+               <String fx:value="Malta" />
+               <String fx:value="Niemcy" />
+               <String fx:value="Polska" />
+               <String fx:value="Portugalia" />
+               <String fx:value="Rosja" />
+               <String fx:value="Rumunia" />
+               <String fx:value="Słowacja" />
+               <String fx:value="Słowenia" />
+               <String fx:value="Szwecja" />
+               <String fx:value="Węgry" />
+               <String fx:value="Włochy"/>
+            </FXCollections>
+         </items>
+      </ComboBox>
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
    </children>
 </AnchorPane>

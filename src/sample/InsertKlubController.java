@@ -86,7 +86,7 @@ public class InsertKlubController {
         try {
             Kluby addedClub = new Kluby(name, year, league);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO KLUBY VALUES ('" + name + "', " + year + ", '" + league + "')");
+            statement.executeUpdate("INSERT INTO KLUBY VALUES('" + name + "', " + year + ", '" + league + "')");
             controller.addToTable(controller.getTableKluby(), addedClub);
         } catch (Exception e) {
             e.printStackTrace();

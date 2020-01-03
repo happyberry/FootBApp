@@ -82,14 +82,17 @@ public class EditPilkarzController {
             System.out.println("[IMIE] Podaj imie zawodnika");
             return;
         }
+
         String nazwisko = textFieldNazwisko.getText();
         if (nazwisko.equals("")) {
             System.out.println("[NAZWISKO] Podaj nazwisko zawodnika");
             return;
         }
+
         String year = (String) comboBoxBYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxBMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxBDay.getSelectionModel().getSelectedItem();
+
         if (year == null) {
             year = comboBoxBYear.getPromptText();
         }
@@ -100,19 +103,28 @@ public class EditPilkarzController {
         if (day == null) {
             day = comboBoxBDay.getPromptText();
             if(day.length() == 1){day = '0' + day;}
+
         }
         Date date = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
+
         String pozycja = (String) comboBoxPos.getSelectionModel().getSelectedItem();
         if(pozycja == null){
             pozycja = comboBoxPos.getPromptText();
         }
+
         String wartosc = textFieldWartosc.getText().replaceAll(" ", "");
         wartosc = wartosc.replaceFirst(",", ".");
+        if (wartosc == "") {
+            System.out.println("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
+            return;
+        }
+
         String pensja = null;
         if (!textFieldPensja.getText().equals("")) {
             pensja = textFieldPensja.getText().replaceAll(" ", "");
             pensja = pensja.replaceFirst(",", ".");
         }
+
         String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
         if(klub == null){
             klub = comboBoxClub.getPromptText();
@@ -141,6 +153,7 @@ public class EditPilkarzController {
                 return;
             }
         }
+
         double wartoscRynkowa;
         try {
             wartoscRynkowa = Double.parseDouble(wartosc);
@@ -152,6 +165,7 @@ public class EditPilkarzController {
             System.out.println("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
             return;
         }
+
         if (pensja != null) {
             double doublePensja;
             try {

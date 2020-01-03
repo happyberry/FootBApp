@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +39,8 @@ public class Controller {
     private TableView tableWlasciciele;
     @FXML
     private TableView tableLigi;
+    @FXML
+    private TableColumn tableColumnWartosc;
 
     private boolean pilkarzeJuzWczytani = false;
     private boolean klubyJuzWczytane = false;
@@ -187,6 +190,7 @@ public class Controller {
 
         if (pilkarzeJuzWczytani) return;
         pilkarzeJuzWczytani = true;
+
         String SQL = "SELECT * from PILKARZE";
         Runnable r = new Runnable() {
             @Override
@@ -338,6 +342,46 @@ public class Controller {
         new Thread(r).start();
     }
 
+    public void openEditLiga(ActionEvent event) throws IOException {
+
+        if(tableLigi.getSelectionModel().getSelectedItem() != null) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editLiga.fxml"));
+
+            Stage stage = new Stage();
+            stage.setTitle("Edytuj");
+            stage.setScene(new Scene((AnchorPane) loader.load()));
+            EditLigaController editLigaController = loader.<EditLigaController>getController();
+
+            editLigaController.connection = mainConnection;
+            editLigaController.controller = this;
+
+            Ligi liga = (Ligi) tableLigi.getSelectionModel().getSelectedItem();
+            editLigaController.liga = liga;
+
+            editLigaController.textFieldName.setText(liga.getNazwaLigi());
+            editLigaController.comboBoxKraj.setPromptText(liga.getKraj());
+
+            stage.show();
+        }
+    }
+
+    public void openInsertLiga(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertLiga.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertLigaController insertLigaController = loader.<InsertLigaController>getController();
+
+        insertLigaController.connection = mainConnection;
+        insertLigaController.controller = this;
+
+        stage.show();
+
+    }
+
     public void fillSedziowie() throws SQLException {
 
         if (sedziowieJuzWczytani) return;
@@ -351,7 +395,7 @@ public class Controller {
                     while (rs.next()) {
                         //Iterate Row
                         Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3),
-                                rs.getString(4), rs.getString(5));
+                                rs.getInt(4), rs.getString(5));
                         tableSedziowie.getItems().add(sedzia);
                     }
                 } catch (Exception e) {
@@ -361,6 +405,44 @@ public class Controller {
             }
         };
         new Thread(r).start();
+    }
+
+    public void openEditSedzia(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editSedzia.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditSedziaController editSedziaController = loader.<EditSedziaController>getController();
+
+        editSedziaController.connection = mainConnection;
+        editSedziaController.controller = this;
+
+        Sedziowie sedzia = (Sedziowie) tableSedziowie.getSelectionModel().getSelectedItem();
+        editSedziaController.sedzia = sedzia;
+
+        editSedziaController.textFieldImie.setText(sedzia.getImie());
+        editSedziaController.textFieldNazwisko.setText(sedzia.getNazwisko());
+        editSedziaController.textFieldWiek.setText(String.valueOf(sedzia.getWiek()));
+        editSedziaController.comboBoxKraj.setPromptText(sedzia.getPochodzenie());
+
+        stage.show();
+    }
+
+    public void openInsertSedzia(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertSedzia.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertSedziaController insertSedziaController = loader.<InsertSedziaController>getController();
+
+        insertSedziaController.connection = mainConnection;
+        insertSedziaController.controller = this;
+
+        stage.show();
     }
 
     public void fillGole() throws SQLException {
