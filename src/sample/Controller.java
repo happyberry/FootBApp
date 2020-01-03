@@ -62,6 +62,7 @@ public class Controller {
     private boolean trenerzyJuzWczytani = false;
     private boolean stadionyJuzWczytane = false;
     private boolean transferyJuzWczytane = false;
+    private boolean wlascicieleJuzWczytani = false;
 
     public TableView getTableKluby() {
         return tableKluby;
@@ -546,6 +547,72 @@ public class Controller {
         insertTrenerController.connection = mainConnection;
         insertTrenerController.controller = this;
         insertTrenerController.initializeOptions();
+
+        stage.show();
+    }
+
+    public void fillWlasciciele() throws SQLException {
+
+        if (wlascicieleJuzWczytani) return;
+        wlascicieleJuzWczytani = true;
+        String SQL = "SELECT * from WLASCICIELE";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Wlasciciele wlasciciel = new Wlasciciele(rs.getString(1), rs.getString(2), rs.getString(3),
+                                rs.getDouble(4), rs.getString(5));
+                        tableWlasciciele.getItems().add(wlasciciel);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void openEditWlasciciel(ActionEvent event) throws IOException {
+
+        if (tableWlasciciele.getSelectionModel().getSelectedItem() == null) return;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editWlasciciel.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditWlascicielController editWlascicielController = loader.<EditWlascicielController>getController();
+
+        editWlascicielController.connection = mainConnection;
+        editWlascicielController.controller = this;
+
+        Wlasciciele wlasciciel = (Wlasciciele) tableWlasciciele.getSelectionModel().getSelectedItem();
+        editWlascicielController.wlasciciel = wlasciciel;
+
+        editWlascicielController.initializeOptions();
+        editWlascicielController.secondTF.setText(wlasciciel.getImie());
+        editWlascicielController.thirdTF.setText(wlasciciel.getNazwisko());
+        editWlascicielController.fourthTF.setText(String.valueOf(wlasciciel.getMajatek()));
+        editWlascicielController.comboBoxClub.setPromptText(wlasciciel.getNazwaKlubu());
+
+        stage.show();
+    }
+
+    public void openInsertWlasciciel(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertWlasciciel.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertWlascicielController insertWlascicielController = loader.<InsertWlascicielController>getController();
+
+        insertWlascicielController.connection = mainConnection;
+        insertWlascicielController.controller = this;
+        insertWlascicielController.initializeOptions();
 
         stage.show();
     }

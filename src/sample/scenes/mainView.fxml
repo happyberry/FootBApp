@@ -377,20 +377,40 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Właściciele">
+      <Tab closable="false" onSelectionChanged="#fillWlasciciele" text="Właściciele">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableWlasciciele" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="ID" visible="false" />
-                        <TableColumn prefWidth="135.33331775665283" text="Imię" />
-                        <TableColumn prefWidth="160.00001525878906" text="Nazwisko" />
-                        <TableColumn prefWidth="169.3333740234375" text="Majątek" />
-                        <TableColumn prefWidth="210.00003051757812" text="Nazwa klubu" />
+                         <TableColumn prefWidth="45.33334445953369" text="ID" visible="false">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="idWlasciciela" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="182.66669178009033" text="Imię">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="imie" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="192.66664123535156" text="Nazwisko">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="nazwisko" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="102.0" text="Majątek">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="majatek" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="194.00003051757812" text="Klub">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="nazwaKlubu" />
+                             </cellValueFactory>
+                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj właściciela" />
-                  <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertWlasciciel" text="Dodaj właściciela" />
+                  <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditWlasciciel" text="Edytuj wpis" />
                </children></AnchorPane>
          </content>
       </Tab>

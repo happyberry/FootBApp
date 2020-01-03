@@ -9,6 +9,14 @@ public class Wlasciciele {
   private Double majatek;
   private String nazwaKlubu;
 
+  public Wlasciciele(String id, String imie, String nazwisko, Double majatek, String klub) {
+    this.idWlasciciela = id;
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.majatek = majatek;
+    this.nazwaKlubu = klub;
+  }
+
 
   public String getIdWlasciciela() {
     return idWlasciciela;
