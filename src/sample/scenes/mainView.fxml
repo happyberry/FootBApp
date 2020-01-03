@@ -237,7 +237,7 @@
                                  <PropertyValueFactory property="pochodzenie" />
                              </cellValueFactory>
                          </TableColumn>
-                         <TableColumn prefWidth="169.0" text="Nazwa trenowanego klubu">
+                         <TableColumn prefWidth="163.99993896484375" text="Nazwa trenowanego klubu">
                              <cellValueFactory>
                                  <PropertyValueFactory property="nazwaKlubu" />
                              </cellValueFactory>
@@ -387,7 +387,7 @@
                         <TableColumn prefWidth="135.33331775665283" text="Imię" />
                         <TableColumn prefWidth="160.00001525878906" text="Nazwisko" />
                         <TableColumn prefWidth="169.3333740234375" text="Majątek" />
-                        <TableColumn prefWidth="210.00003051757812" text="Nazwa klubu" />
+                        <TableColumn prefWidth="205.33334350585938" text="Nazwa klubu" />
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj właściciela" />
                   <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />

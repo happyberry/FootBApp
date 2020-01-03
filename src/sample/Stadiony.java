@@ -9,8 +9,16 @@ public class Stadiony {
   private String miasto;
   private String nazwaKlubu;
 
+    public Stadiony(String nazwa, Integer rok, int capacity, String miasto, String nazwaKlubu) {
+      this.nazwa = nazwa;
+      rokZbudowania = rok;
+      pojemnosc = capacity;
+      this.miasto = miasto;
+      this.nazwaKlubu = nazwaKlubu;
+    }
 
-  public String getNazwa() {
+
+    public String getNazwa() {
     return nazwa;
   }
 
