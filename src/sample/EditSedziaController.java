@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -33,8 +32,35 @@ public class EditSedziaController {
 
         labelWarning.setVisible(false);
         String imie = textFieldImie.getText();
+        if (imie.equals("")) {
+            System.out.println("[IMIE] Podaj imię sędziego");
+            return;
+        }
+        if (imie.length() > 40) {
+            System.out.println("[IMIE] Imię zbyt długie");
+            return;
+        }
         String nazwisko = textFieldNazwisko.getText();
+        if (nazwisko.equals("")) {
+            System.out.println("[NAZWISKO] Podaj nazwisko sędziego");
+            return;
+        }
+        if (nazwisko.length() > 40) {
+            System.out.println("[NAZWISKO] Nazwisko zbyt długie");
+            return;
+        }
         String wiek = textFieldWiek.getText();
+        int wiekInt;
+        try {
+            wiekInt = Integer.parseInt(wiek);
+        } catch (NumberFormatException e) {
+            System.out.println("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            return;
+        }
+        if (wiekInt < 20 || wiekInt > 60) {
+            System.out.println("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            return;
+        }
         String kraj = (String) comboBoxKraj.getSelectionModel().getSelectedItem();
 
         if (kraj == null) {

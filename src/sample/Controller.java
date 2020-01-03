@@ -54,6 +54,7 @@ public class Controller {
     private boolean goleJuzWczytane = false;
     private boolean meczeJuzWczytane = false;
     private boolean sedziowieJuzWczytani = false;
+    private boolean trenerzyJuzWczytani = false;
     private boolean stadionyJuzWczytane = false;
     private boolean transferyJuzWczytane = false;
 
@@ -415,6 +416,8 @@ public class Controller {
 
     public void openEditSedzia(ActionEvent event) throws IOException {
 
+        if (tableSedziowie.getSelectionModel().getSelectedItem() == null) return;
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editSedzia.fxml"));
 
         Stage stage = new Stage();
@@ -474,6 +477,72 @@ public class Controller {
             }
         };
         new Thread(r).start();
+    }
+
+    public void fillTrenerzy() throws SQLException {
+
+        if (trenerzyJuzWczytani) return;
+        trenerzyJuzWczytani = true;
+        String SQL = "SELECT * from TRENERZY";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Trenerzy trener = new Trenerzy(rs.getString(1), rs.getString(2), rs.getString(3),
+                                rs.getString(4), rs.getString(5));
+                        tableTrenerzy.getItems().add(trener);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void openEditTrener(ActionEvent event) throws IOException {
+
+        if (tableTrenerzy.getSelectionModel().getSelectedItem() == null) return;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editTrener.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditTrenerController editTrenerController = loader.<EditTrenerController>getController();
+
+        editTrenerController.connection = mainConnection;
+        editTrenerController.controller = this;
+
+        Trenerzy trener = (Trenerzy) tableTrenerzy.getSelectionModel().getSelectedItem();
+        editTrenerController.trener = trener;
+
+        editTrenerController.initializeOptions();
+        editTrenerController.secondTF.setText(trener.getImie());
+        editTrenerController.thirdTF.setText(trener.getNazwisko());
+        editTrenerController.comboBoxKraj.setPromptText(trener.getPochodzenie());
+        editTrenerController.comboBoxClub.setPromptText(trener.getNazwaKlubu());
+
+        stage.show();
+    }
+
+    public void openInsertTrener(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertTrener.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertTrenerController insertTrenerController = loader.<InsertTrenerController>getController();
+
+        insertTrenerController.connection = mainConnection;
+        insertTrenerController.controller = this;
+        insertTrenerController.initializeOptions();
+
+        stage.show();
     }
 
     public void addToTable(TableView tabela, Object byt) {

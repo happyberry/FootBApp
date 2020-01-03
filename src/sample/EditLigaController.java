@@ -46,6 +46,27 @@ public class EditLigaController {
 
         labelWarning.setVisible(false);
         String name = textFieldName.getText();
+        if (!name.equals(liga.getNazwaLigi())) {
+            if (name.equals("")) {
+                labelWarning.setText("Podaj nazwę ligi");
+                labelWarning.setVisible(true);
+                return;
+            }
+            if (name.length() > 40) {
+                labelWarning.setText("Nazwa ligi powinna być krótsza niż 40 znaków");
+                labelWarning.setVisible(true);
+                return;
+            }
+            for (Object o: controller.getTableLigi().getItems()) {
+                Ligi liga = (Ligi) o;
+                if (name.equals(liga.getNazwaLigi())) {
+                    labelWarning.setText("Taka liga już istnieje!");
+                    labelWarning.setVisible(true);
+                    return;
+                }
+            }
+        }
+
         String country = (String) comboBoxKraj.getSelectionModel().getSelectedItem();
 
         if (country == null) {
