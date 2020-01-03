@@ -237,7 +237,7 @@
                                  <PropertyValueFactory property="pochodzenie" />
                              </cellValueFactory>
                          </TableColumn>
-                         <TableColumn prefWidth="169.0" text="Nazwa trenowanego klubu">
+                         <TableColumn prefWidth="163.99993896484375" text="Nazwa trenowanego klubu">
                              <cellValueFactory>
                                  <PropertyValueFactory property="nazwaKlubu" />
                              </cellValueFactory>

@@ -9,16 +9,17 @@ public class Wlasciciele {
   private Double majatek;
   private String nazwaKlubu;
 
-  public Wlasciciele(String id, String imie, String nazwisko, Double majatek, String klub) {
-    this.idWlasciciela = id;
-    this.imie = imie;
-    this.nazwisko = nazwisko;
-    this.majatek = majatek;
-    this.nazwaKlubu = klub;
-  }
+
+  public Wlasciciele(String id, String imie, String nazwisko, double majatek, String nazwa) {
+      idWlasciciela = id;
+      this.imie = imie;
+      this.nazwisko = nazwisko;
+      this.majatek = majatek;
+      nazwaKlubu = nazwa;
+    }
 
 
-  public String getIdWlasciciela() {
+    public String getIdWlasciciela() {
     return idWlasciciela;
   }
 
