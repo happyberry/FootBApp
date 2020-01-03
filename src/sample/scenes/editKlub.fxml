@@ -18,5 +18,6 @@
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
       <Button layoutX="423.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteHandler" text="Usuń klub" />
       <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
    </children>
 </AnchorPane>

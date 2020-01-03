@@ -55,14 +55,22 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab closable="false" text="Ligi">
+      <Tab closable="false" onSelectionChanged="#fillLigi" text="Ligi">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tablePilkarze1" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
+                  <TableView fx:id="tableLigi" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="321.3333330154419" text="Nazwa ligi" />
-                        <TableColumn prefWidth="353.3333435058594" text="Kraj" />
+                        <TableColumn prefWidth="320" text="Nazwa ligi">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="nazwaLigi" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="353" text="Kraj">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="kraj" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nową ligę" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
@@ -105,12 +113,12 @@
                <children>
                   <TableView fx:id="tablePilkarze" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="28.666687965393066" text="ID" >
+                        <TableColumn prefWidth="28.666687965393066" text="ID">
                             <cellValueFactory>
                                 <PropertyValueFactory property="idPilkarza" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="121.33331680297852" text="Imię" >
+                        <TableColumn prefWidth="121.33331680297852" text="Imię">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imie" />
                             </cellValueFactory>
@@ -146,7 +154,7 @@
                             </cellValueFactory>
                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" text="Edytuj wpis" />
+                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditPilkarz" text="Edytuj wpis" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertPilkarz" text="Dodaj piłkarza" />
                </children></AnchorPane>
@@ -187,19 +195,47 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Mecze">
+      <Tab closable="false" onSelectionChanged="#fillMecze" text="Mecze">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableMecze" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="42.666687965393066" text="ID" />
-                        <TableColumn prefWidth="108.00000381469727" text="Data" />
-                        <TableColumn prefWidth="138.00001525878906" text="Gospodarze" />
-                        <TableColumn prefWidth="139.99993896484375" text="Goście" />
-                        <TableColumn prefWidth="115.33340454101562" text="Wynik gospodarzy" />
-                        <TableColumn prefWidth="80.66668701171875" text="Wynik gości" />
-                        <TableColumn prefWidth="50.66668701171875" text="Id sędziego" />
+                        <TableColumn prefWidth="42.0" text="ID" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="meczId" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="121.0" text="Data">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="data" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="169.0" text="Gospodarze">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="gospodarze" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="164.0" text="Goście">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="goscie" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="126.0" text="Wynik gospodarzy">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="wynikGospodarzy" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="93.0" text="Wynik gości">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="wynikGosci" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="0.0" prefWidth="0.0" text="Id sędziego" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idSedziego" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj mecz" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
@@ -207,18 +243,42 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Gole">
+      <Tab closable="false" onSelectionChanged="#fillGole" text="Gole">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableGole" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="62.666653633117676" text="GolID" />
-                        <TableColumn prefWidth="66.66666412353516" text="MeczID" />
-                        <TableColumn prefWidth="63.333282470703125" text="PiłkID" />
-                        <TableColumn prefWidth="249.33338928222656" text="Minuta" />
-                        <TableColumn prefWidth="251.3332977294922" text="Samobójczy" />
-                        <TableColumn prefWidth="209.33334350585938" text="Dla gospodarzy" />
+                        <TableColumn prefWidth="62.666653633117676" text="GolID" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="golId" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="66.66666412353516" text="MeczID" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="meczId" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="63.333282470703125" text="PiłkID" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idPilkarza" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="238.00000476837158" text="Minuta">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="minuta" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="221.3332977294922" text="Samobójczy">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="czySamobojczy" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="214.00009155273438" text="Dla gospodarzy">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="czyDlaGospodarzy" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj gol" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
@@ -226,17 +286,37 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Sędziowie">
+      <Tab closable="false" onSelectionChanged="#fillSedziowie" text="Sędziowie">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableSedziowie" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="45.33334445953369" text="ID" />
-                        <TableColumn prefWidth="169.99997329711914" text="Imię" />
-                        <TableColumn prefWidth="171.9999542236328" text="Nazwisko" />
-                        <TableColumn prefWidth="97.33331298828125" text="Wiek" />
-                        <TableColumn prefWidth="189.33334350585938" text="Pochodzenie" />
+                        <TableColumn prefWidth="45.33334445953369" text="ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idSedziego" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="169.99997329711914" text="Imię">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="imie" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="171.9999542236328" text="Nazwisko">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="nazwisko" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="97.33331298828125" text="Wiek">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="wiek" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="189.33334350585938" text="Pochodzenie">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="pochodzenie" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj sędziego" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />

@@ -4,14 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.*;
 
-public class InsertPilkarzController {
+public class EditPilkarzController {
 
     public Connection connection;
     public Controller controller;
+    public Pilkarze pilkarz;
+
     @FXML
     public ComboBox comboBoxClub;
     @FXML
@@ -30,6 +33,8 @@ public class InsertPilkarzController {
     public TextField textFieldWartosc;
     @FXML
     public TextField textFieldPensja;
+    @FXML
+    public Label labelWarning;
 
 
     public void initializeOptions() {
@@ -56,8 +61,22 @@ public class InsertPilkarzController {
         new Thread(r).start();
     }
 
-    public void saveHandler(ActionEvent event) throws SQLException {
+    public void deleteHandler(ActionEvent event) throws SQLException {
 
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM PILKARZE WHERE ID_PILKARZA = " + pilkarz.getIdPilkarza());
+            controller.removeFromTable(controller.getTablePilkarze(), pilkarz);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+
+    }
+
+    public void editHandler(ActionEvent event) throws SQLException {
+
+        labelWarning.setVisible(false);
         String imie = textFieldImie.getText();
         if (imie.equals("")) {
             System.out.println("[IMIE] Podaj imie zawodnika");
@@ -71,12 +90,22 @@ public class InsertPilkarzController {
         String year = (String) comboBoxBYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxBMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxBDay.getSelectionModel().getSelectedItem();
-        if (year == null || month == null || day == null) {
-            System.out.println("[DATA URODZENIA] Podaj pełną datę urodzenia");
-            return;
+        if (year == null) {
+            year = comboBoxBYear.getPromptText();
+        }
+        if (month == null) {
+            month = comboBoxBMonth.getPromptText();
+            if(month.length() == 1){month = '0' + month;}
+        }
+        if (day == null) {
+            day = comboBoxBDay.getPromptText();
+            if(day.length() == 1){day = '0' + day;}
         }
         Date date = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
-        String pozycje = (String) comboBoxPos.getSelectionModel().getSelectedItem();
+        String pozycja = (String) comboBoxPos.getSelectionModel().getSelectedItem();
+        if(pozycja == null){
+            pozycja = comboBoxPos.getPromptText();
+        }
         String wartosc = textFieldWartosc.getText().replaceAll(" ", "");
         wartosc = wartosc.replaceFirst(",", ".");
         String pensja = null;
@@ -84,12 +113,12 @@ public class InsertPilkarzController {
             pensja = textFieldPensja.getText().replaceAll(" ", "");
             pensja = pensja.replaceFirst(",", ".");
         }
-        String klub = null;
-        System.out.println("KLUB: " + comboBoxClub.getSelectionModel().getSelectedItem());
-        if (comboBoxClub.getSelectionModel().getSelectedItem() != null) {
-            klub = comboBoxClub.getSelectionModel().getSelectedItem().toString();
-            klub = "'" + klub + "'";
+        String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
+        if(klub == null){
+            klub = comboBoxClub.getPromptText();
         }
+        klub = "'" + klub + "'";
+
         if (imie.length() > 40) {
             System.out.println("[IMIE] Imię zbyt długie, skróć do 40 znaków");
             return;
@@ -111,10 +140,6 @@ public class InsertPilkarzController {
                 System.out.println("[DATA URODZENIA] Błędny dzień miesiąca");
                 return;
             }
-        }
-        if (pozycje == null) {
-            System.out.println("[POZYCJA] Podaj pozycję, na której gra piłkarz");
-            return;
         }
         double wartoscRynkowa;
         try {
@@ -140,25 +165,20 @@ public class InsertPilkarzController {
                 return;
             }
         }
-        if (klub != null && klub.length() > 40) {
-            System.out.println("[NAZWA KLUBU] Nazwa klubu zbyt długa");
-            return;
-        }
 
+        System.out.println(imie + " " + nazwisko + " " + year + "-" + month + "-" + day + " " + pozycja + " " + wartosc + " " + pensja + " " + klub);
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO PILKARZE VALUES (null, '" + imie + "', '" + nazwisko + "', Date '" +
-                    year + "-" + month + "-" + day + "', '" + pozycje + "', " + wartosc + ", " + pensja + ", " + klub + ")");
-            ResultSet rs = statement.executeQuery("select id_pilkarza_seq.currval from dual");
-            rs.next();
-            Pilkarze addedPilkarz = new Pilkarze(rs.getString(1), imie, nazwisko, date, pozycje, Double.parseDouble(wartosc),
-                    Double.parseDouble(pensja), klub);
-            controller.addToTable(controller.getTablePilkarze(), addedPilkarz);
+            statement.executeUpdate("UPDATE PILKARZE SET imie = '" + imie + "', nazwisko = '" + nazwisko + "', DATA_URODZENIA = DATE '"
+                    + year + "-" + month + "-" + day + "', POZYCJA = '" + pozycja + "', WARTOSC_RYNKOWA = " + wartosc + ", PENSJA = " + pensja
+                    + ", NAZWA_KLUBU = " + klub + "  WHERE ID_PILKARZA = " + pilkarz.getIdPilkarza());
+            Pilkarze nowyPilkarz = new Pilkarze(pilkarz.getIdPilkarza(), imie, nazwisko, date, pozycja, wartoscRynkowa, Double.parseDouble(pensja), klub.substring(1,klub.length()-1));
+            controller.removeFromTable(controller.getTablePilkarze(), pilkarz);
+            controller.addToTable(controller.getTablePilkarze(), nowyPilkarz);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
-
     }
 
     public void hideWindow(ActionEvent event) {

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
@@ -24,6 +25,8 @@ public class EditKlubController {
     public TextField textFieldClubName;
     @FXML
     public TextField textFieldYear;
+    @FXML
+    public Label labelWarning;
 
     public void initializeOptions() {
 
@@ -65,6 +68,7 @@ public class EditKlubController {
 
     public void editHandler(ActionEvent event) throws SQLException {
 
+        labelWarning.setVisible(false);
         String name = textFieldClubName.getText();
         String year = textFieldYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
@@ -74,14 +78,20 @@ public class EditKlubController {
             yearInt = Integer.parseInt(year);
         } catch (NumberFormatException e) {
             System.out.println("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            labelWarning.setText("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            labelWarning.setVisible(true);
             return;
         }
         if (yearInt <= 1800) {
             System.out.println("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            labelWarning.setText("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            labelWarning.setVisible(true);
             return;
         }
         if (name.length() > 40) {
             System.out.println("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            labelWarning.setText("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            labelWarning.setVisible(true);
             return;
         }
         try {

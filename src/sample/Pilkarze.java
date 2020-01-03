@@ -10,11 +10,11 @@ public class Pilkarze {
   private String nazwisko;
   private java.sql.Date dataUrodzenia;
   private String pozycja;
-  private String wartoscRynkowa;
-  private String pensja;
+  private Double wartoscRynkowa;
+  private Double pensja;
   private String nazwaKlubu;
 
-  public Pilkarze(String id_pilkarza, String imie, String nazwisko, Date data_urodzenia, String pozycja, String wartosc_rynkowa, String pensja, String nazwa_klubu) {
+  public Pilkarze(String id_pilkarza, String imie, String nazwisko, Date data_urodzenia, String pozycja, Double wartosc_rynkowa, Double pensja, String nazwa_klubu) {
       idPilkarza = id_pilkarza;
       this.imie = imie;
       this.nazwisko = nazwisko;
@@ -71,20 +71,20 @@ public class Pilkarze {
   }
 
 
-  public String getWartoscRynkowa() {
+  public Double getWartoscRynkowa() {
     return wartoscRynkowa;
   }
 
-  public void setWartoscRynkowa(String wartoscRynkowa) {
+  public void setWartoscRynkowa(Double wartoscRynkowa) {
     this.wartoscRynkowa = wartoscRynkowa;
   }
 
 
-  public String getPensja() {
+  public Double getPensja() {
     return pensja;
   }
 
-  public void setPensja(String pensja) {
+  public void setPensja(Double pensja) {
     this.pensja = pensja;
   }
 

@@ -9,6 +9,14 @@ public class Sedziowie {
   private String wiek;
   private String pochodzenie;
 
+  public Sedziowie(String id, String imie, String nazwisko, String wiek, String kraj) {
+    idSedziego = id;
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.wiek = wiek;
+    pochodzenie = kraj;
+  }
+
 
   public String getIdSedziego() {
     return idSedziego;

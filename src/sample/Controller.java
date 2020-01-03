@@ -36,9 +36,12 @@ public class Controller {
     private TableView tableTrenerzy;
     @FXML
     private TableView tableWlasciciele;
+    @FXML
+    private TableView tableLigi;
 
     private boolean pilkarzeJuzWczytani = false;
     private boolean klubyJuzWczytane = false;
+    private boolean ligiJuzWczytane = false;
     private boolean goleJuzWczytane = false;
     private boolean meczeJuzWczytane = false;
     private boolean sedziowieJuzWczytani = false;
@@ -79,6 +82,10 @@ public class Controller {
 
     public TableView getTableWlasciciele() {
         return tableWlasciciele;
+    }
+
+    public TableView getTableLigi() {
+        return tableLigi;
     }
 
     public void fillKluby() throws SQLException {
@@ -190,7 +197,7 @@ public class Controller {
 
                         Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
                                 rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
-                                rs.getString("wartosc_rynkowa"), rs.getString("pensja"), rs.getString("nazwa_klubu"));
+                                rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
 
                         tablePilkarze.getItems().add(kopacz);
                     }
@@ -234,6 +241,38 @@ public class Controller {
         }*/
     }
 
+    public void openEditPilkarz(ActionEvent event) throws IOException {
+
+        if(tablePilkarze.getSelectionModel().getSelectedItem() != null) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editPilkarz.fxml"));
+
+            Stage stage = new Stage();
+            stage.setTitle("Edytuj");
+            stage.setScene(new Scene((AnchorPane) loader.load()));
+            EditPilkarzController editPilkarzController = loader.<EditPilkarzController>getController();
+
+            editPilkarzController.connection = mainConnection;
+            editPilkarzController.controller = this;
+
+            Pilkarze pilkarz = (Pilkarze) tablePilkarze.getSelectionModel().getSelectedItem();
+            editPilkarzController.pilkarz = pilkarz;
+            editPilkarzController.initializeOptions();
+
+            editPilkarzController.textFieldImie.setText(pilkarz.getImie());
+            editPilkarzController.textFieldNazwisko.setText(pilkarz.getNazwisko());
+            editPilkarzController.comboBoxBYear.setPromptText(String.valueOf(pilkarz.getDataUrodzenia().getYear()+1900));
+            editPilkarzController.comboBoxBMonth.setPromptText(String.valueOf(pilkarz.getDataUrodzenia().getMonth()+1));
+            editPilkarzController.comboBoxBDay.setPromptText(String.valueOf(pilkarz.getDataUrodzenia().getDate()));
+            editPilkarzController.comboBoxPos.setPromptText(pilkarz.getPozycja());
+            editPilkarzController.textFieldWartosc.setText(String.valueOf(pilkarz.getWartoscRynkowa()));
+            editPilkarzController.textFieldPensja.setText(String.valueOf(pilkarz.getPensja().toString()));
+            editPilkarzController.comboBoxClub.setPromptText(pilkarz.getNazwaKlubu());
+
+            stage.show();
+        }
+    }
+
     public void openInsertPilkarz(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertPilkarz.fxml"));
@@ -250,7 +289,104 @@ public class Controller {
         stage.show();
     }
 
+    public void fillMecze() throws SQLException {
 
+        if (meczeJuzWczytane) return;
+        meczeJuzWczytane = true;
+        String SQL = "SELECT * from MECZE";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        //Iterate Row
+                        Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3),
+                                rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                        tableMecze.getItems().add(mecz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void fillLigi() throws SQLException {
+
+        if (ligiJuzWczytane) return;
+        ligiJuzWczytane = true;
+        String SQL = "SELECT * from LIGI";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        //Iterate Row
+                        Ligi liga = new Ligi(rs.getString(1), rs.getString(2));
+                        tableLigi.getItems().add(liga);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void fillSedziowie() throws SQLException {
+
+        if (sedziowieJuzWczytani) return;
+        sedziowieJuzWczytani = true;
+        String SQL = "SELECT * from SEDZIOWIE";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        //Iterate Row
+                        Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3),
+                                rs.getString(4), rs.getString(5));
+                        tableSedziowie.getItems().add(sedzia);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void fillGole() throws SQLException {
+
+        if (goleJuzWczytane) return;
+        goleJuzWczytane = true;
+        String SQL = "SELECT * from GOLE";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        //Iterate Row
+                        Gole gol = new Gole(rs.getString(1), rs.getString(2), rs.getString(3),
+                                rs.getString(4), rs.getString(5), rs.getString(6));
+                        tableGole.getItems().add(gol);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
 
     public void addToTable(TableView tabela, Object byt) {
         tabela.getItems().add(byt);

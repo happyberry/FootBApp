@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertKlubController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertKlubController">
     <children>
         <TextField fx:id="clubName" layoutX="151.0" layoutY="40.0" />
         <TextField fx:id="clubYear" layoutX="151.0" layoutY="87.0" />
@@ -19,5 +17,6 @@
         </ComboBox>
       <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
       <Button layoutX="496.0" layoutY="360.0" mnemonicParsing="false" onAction="#saveHandler" text="Zapisz zmiany" />
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
     </children>
 </AnchorPane>

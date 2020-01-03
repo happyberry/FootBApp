@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
@@ -21,6 +22,8 @@ public class InsertKlubController {
     public TextField clubName;
     @FXML
     public TextField clubYear;
+    @FXML
+    public Label labelWarning;
 
     public void initializeOptions() {
 
@@ -48,6 +51,7 @@ public class InsertKlubController {
 
     public void saveHandler(ActionEvent event) throws SQLException {
 
+        labelWarning.setVisible(false);
         String name = clubName.getText();
         String year = clubYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
@@ -57,18 +61,26 @@ public class InsertKlubController {
             yearInt = Integer.parseInt(year);
         } catch (NumberFormatException e) {
             System.out.println("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            labelWarning.setText("[ROK ZALOZENIA] Podaj liczbę całkowitą");
+            labelWarning.setVisible(true);
             return;
         }
         if (yearInt <= 1800) {
             System.out.println("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            labelWarning.setText("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
+            labelWarning.setVisible(true);
             return;
         }
         if (name.length() > 40) {
             System.out.println("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            labelWarning.setText("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
+            labelWarning.setVisible(true);
             return;
         }
         if (league == null) {
             System.out.println("[NAZWA LIGI] Wybierz ligę, do której należy klub");
+            labelWarning.setText("[NAZWA LIGI] Wybierz ligę, do której należy klub");
+            labelWarning.setVisible(true);
             return;
         }
         try {

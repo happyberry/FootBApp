@@ -8,10 +8,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditPilkarzController">
    <children>
-      <TextField fx:id="secondTF" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="thirdTF" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="textFieldImie" layoutX="151.0" layoutY="36.0" />
+      <TextField fx:id="textFieldNazwisko" layoutX="151.0" layoutY="76.0" />
       <Label layoutX="89.0" layoutY="40.0" text="Imię" />
       <Label layoutX="64.0" layoutY="80.0" text="Nazwisko" />
       <Label layoutX="39.0" layoutY="120.0" text="Data urodzenia" />
@@ -134,9 +134,10 @@
       <Label layoutX="33.0" layoutY="200.0" text="Wartość rynkowa" />
       <Label layoutX="84.0" layoutY="239.0" text="Pensja" />
       <Label layoutX="55.0" layoutY="280.0" text="Nazwa klubu" />
-      <TextField fx:id="sixthTF" layoutX="151.0" layoutY="196.0" />
-      <TextField fx:id="seventhTF" layoutX="151.0" layoutY="236.0" />
-      <ComboBox fx:id="comboBoxLeague" layoutX="151.0" layoutY="276.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0">
+      <TextField fx:id="textFieldWartosc" layoutX="151.0" layoutY="196.0" />
+      <TextField fx:id="textFieldPensja" layoutX="151.0" layoutY="236.0" />
+      <ComboBox fx:id="comboBoxClub" layoutX="151.0" layoutY="276.0" prefHeight="25.0" prefWidth="149.0">
       </ComboBox>
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
    </children>
 </AnchorPane>
