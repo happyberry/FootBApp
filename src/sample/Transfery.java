@@ -1,6 +1,8 @@
 package sample;
 
 
+import java.sql.Date;
+
 public class Transfery {
 
   private Double kwotaTransferu;
@@ -8,6 +10,16 @@ public class Transfery {
   private String idPilkarza;
   private java.sql.Date dataTransferu;
   private String klubKupujacy;
+  private String danePilkarza;
+
+  public Transfery(double kwota, String sprzedajacy, String id, Date data, String kupujacy, String dane) {
+    kwotaTransferu = kwota;
+    klubSprzedajacy = sprzedajacy;
+    idPilkarza = id;
+    dataTransferu = data;
+    klubKupujacy = kupujacy;
+    danePilkarza = dane;
+  }
 
 
   public Double getKwotaTransferu() {
@@ -54,4 +66,11 @@ public class Transfery {
     this.klubKupujacy = klubKupujacy;
   }
 
+  public String getDanePilkarza() {
+    return danePilkarza;
+  }
+
+  public void setDanePilkarza(String danePilkarza) {
+    this.danePilkarza = danePilkarza;
+  }
 }

@@ -132,29 +132,30 @@ public class Controller {
 
     public void openEditKlub(ActionEvent event) throws IOException {
 
-        if(tableKluby.getSelectionModel().getSelectedItem() != null) {
+        if(tableKluby.getSelectionModel().getSelectedItem() == null) {return;}
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editKlub.fxml"));
 
-            Stage stage = new Stage();
-            stage.setTitle("Edytuj");
-            stage.setScene(new Scene((AnchorPane) loader.load()));
-            EditKlubController editKlubController = loader.<EditKlubController>getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editKlub.fxml"));
 
-            editKlubController.connection = mainConnection;
-            editKlubController.controller = this;
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditKlubController editKlubController = loader.<EditKlubController>getController();
 
-            Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
-            editKlubController.klub = klub;
-            editKlubController.initializeOptions();
+        editKlubController.connection = mainConnection;
+        editKlubController.controller = this;
 
-            editKlubController.textFieldClubName.setText(klub.getNazwaKlubu());
-            editKlubController.oldName = klub.getNazwaKlubu();
-            editKlubController.textFieldYear.setText(String.valueOf(klub.getRokZalozenia()));
-            editKlubController.comboBoxLeague.setPromptText(klub.getNazwaLigi());
+        Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
+        editKlubController.klub = klub;
+        editKlubController.initializeOptions();
 
-            stage.show();
-        }
+        editKlubController.textFieldClubName.setText(klub.getNazwaKlubu());
+        editKlubController.oldName = klub.getNazwaKlubu();
+        editKlubController.textFieldYear.setText(String.valueOf(klub.getRokZalozenia()));
+        editKlubController.comboBoxLeague.setPromptText(klub.getNazwaLigi());
+
+        stage.show();
+
     }
 
     public void openInsertKlub(ActionEvent event) throws IOException {
@@ -186,17 +187,41 @@ public class Controller {
         }*/
     }
 
-    public void openMoreKlub(ActionEvent event) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("scenes/moreKlub.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Real Madryt");
-            stage.setScene(new Scene(root, 600, 500));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void openMoreKlub(ActionEvent event) throws IOException {
+        if (tableKluby.getSelectionModel().getSelectedItem() == null) {return;}
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/moreKlub.fxml"));
+
+        Stage stage = new Stage();
+        Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        stage.setTitle(klub.getNazwaKlubu() + " - dodatkowe informacje");
+        stage.show();
+
+        MoreKlubController moreKlubController = loader.<MoreKlubController>getController();
+
+        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'";
+        moreKlubController.tablePilkarze.getItems().clear();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
+                                rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
+                                rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
+
+                        moreKlubController.tablePilkarze.getItems().add(kopacz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+
     }
 
     public void fillPilkarze() throws SQLException {
@@ -211,7 +236,6 @@ public class Controller {
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
-
                         Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
                                 rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
                                 rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
@@ -331,6 +355,40 @@ public class Controller {
         new Thread(r).start();
     }
 
+    public void openMoreMecz(ActionEvent event) throws IOException {
+        if (tableMecze.getSelectionModel().getSelectedItem() == null) {return;}
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/moreMecz.fxml"));
+
+        Stage stage = new Stage();
+        Mecze mecz = (Mecze) tableMecze.getSelectionModel().getSelectedItem();
+        stage.setTitle("Dodatkowe informacje");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        stage.show();
+
+        MoreMeczController moreMeczController = loader.<MoreMeczController>getController();
+
+        String SQL = "SELECT * from GOLE where MECZ_ID = " + mecz.getMeczId();
+        moreMeczController.tableGole.getItems().clear();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Gole gol = new Gole(rs.getString(1), rs.getString(2), rs.getString(3),
+                                rs.getInt(4), rs.getString(5), rs.getString(6));
+                        moreMeczController.tableGole.getItems().add(gol);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+
+    }
+
     public void fillLigi() throws SQLException {
 
         if (ligiJuzWczytane) return;
@@ -393,6 +451,40 @@ public class Controller {
 
         stage.show();
 
+    }
+
+    public void openMoreLiga(ActionEvent event) throws IOException {
+
+        if (tableLigi.getSelectionModel().getSelectedItem() == null) {return;}
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/moreLiga.fxml"));
+
+        Stage stage = new Stage();
+        Ligi liga = (Ligi) tableLigi.getSelectionModel().getSelectedItem();
+        stage.setTitle(liga.getNazwaLigi() + " - dodatkowe informacje");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        stage.show();
+
+        MoreLigaController moreLigaController = loader.<MoreLigaController>getController();
+
+        String SQL = "SELECT * from KLUBY where NAZWA_LIGI = '" + liga.getNazwaLigi() + "'";
+        moreLigaController.tableKluby.getItems().clear();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Kluby klub = new Kluby(rs.getString("nazwa_klubu"), rs.getInt("rok_zalozenia"), rs.getString("nazwa_ligi"));
+                        moreLigaController.tableKluby.getItems().add(klub);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
     }
 
     public void fillSedziowie() throws SQLException {
@@ -615,6 +707,32 @@ public class Controller {
         insertWlascicielController.initializeOptions();
 
         stage.show();
+    }
+
+    public void fillTransfery() throws SQLException {
+
+        if (transferyJuzWczytane) return;
+        transferyJuzWczytane = true;
+
+        String SQL = "SELECT KWOTA_TRANSFERU, KLUB_SPRZEDAJACY, TRANSFERY.ID_PILKARZA, DATA_TRANSFERU, KLUB_KUPUJACY, " +
+                " P.IMIE || ' ' || P.NAZWISKO from TRANSFERY JOIN PILKARZE P on TRANSFERY.ID_PILKARZA = P.ID_PILKARZA";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Transfery transfer = new Transfery(rs.getDouble(1), rs.getString(2), rs.getString(3),
+                                rs.getDate(4), rs.getString(5), rs.getString(6));
+                        tableTransfery.getItems().add(transfer);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
     }
 
     public void addToTable(TableView tabela, Object byt) {

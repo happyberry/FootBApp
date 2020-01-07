@@ -4,30 +4,59 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MoreKlubController">
    <children>
-      <Label layoutX="279.0" layoutY="14.0" text="Piłkarze" />
-      <TableView layoutX="22.0" layoutY="40.0" prefHeight="186.0" prefWidth="555.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Imię" />
-          <TableColumn prefWidth="75.0" text="Nazwisko" />
-            <TableColumn prefWidth="95.33332824707031" text="Data urodzenia" />
-            <TableColumn prefWidth="95.33332824707031" text="Pozycja" />
-            <TableColumn prefWidth="106.666748046875" text="Wartość rynkowa" />
-            <TableColumn prefWidth="106.666748046875" text="Pensja" />
-        </columns>
-      </TableView>
-      <Label layoutX="173.0" layoutY="260.0" text="Trener" textAlignment="RIGHT" />
-      <Label layoutX="155.0" layoutY="309.0" text="Właściciel" textAlignment="RIGHT" />
-      <Label layoutX="159.0" layoutY="359.0" text=" Stadion" textAlignment="RIGHT" />
-      <TextArea layoutX="221.0" layoutY="250.0" prefHeight="37.0" prefWidth="207.0" />
-      <TextArea layoutX="221.0" layoutY="299.0" prefHeight="17.0" prefWidth="207.0" />
-      <TextArea layoutX="221.0" layoutY="349.0" prefHeight="17.0" prefWidth="207.0" />
-      <Label layoutX="179.0" layoutY="405.0" text="Liga" textAlignment="RIGHT" />
-      <TextArea layoutX="221.0" layoutY="395.0" prefHeight="17.0" prefWidth="207.0" />
-      <Button layoutX="287.0" layoutY="452.0" mnemonicParsing="false" onAction="#hideWindow" text="Powrót" />
+      <Label layoutX="289.0" layoutY="24.0" text="Lista zawodników">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TableView fx:id="tablePilkarze" layoutX="11.0" layoutY="52.0" prefHeight="372.0" prefWidth="675.0">
+          <columns>
+              <TableColumn prefWidth="28.666687965393066" text="ID" visible="false">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="idPilkarza" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="106.00002765655518" text="Imię">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="imie" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="119.3333511352539" text="Nazwisko">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="nazwisko" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="93.33335876464844" text="Data urodzenia">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="dataUrodzenia" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="78.66668701171875" text="Pozycja">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="pozycja" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn fx:id="tableColumnWartosc" prefWidth="103.33334350585938" text="Wartość rynkowa">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="wartoscRynkowa" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="75.33331298828125" text="Pensja">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="pensja" />
+                  </cellValueFactory>
+              </TableColumn>
+              <TableColumn prefWidth="92.6666259765625" text="Nazwa klubu">
+                  <cellValueFactory>
+                      <PropertyValueFactory property="nazwaKlubu" />
+                  </cellValueFactory>
+              </TableColumn>
+          </columns></TableView>
+      <Button layoutX="321.0" layoutY="441.0" mnemonicParsing="false" onAction="#hideWindow" text="Powrót" />
    </children>
 </AnchorPane>

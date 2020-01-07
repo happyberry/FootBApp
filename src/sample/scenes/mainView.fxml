@@ -108,7 +108,7 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertLiga" text="Dodaj nową ligę" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditLiga" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreLiga" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -194,17 +194,42 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Transfery">
+      <Tab closable="false" onSelectionChanged="#fillTransfery" text="Transfery">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableTransfery" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu" />
-                        <TableColumn prefWidth="153.99993896484375" text="Klub sprzedający" />
-                        <TableColumn minWidth="0.6666259765625" prefWidth="113.33331298828125" text="Id piłkarza" />
-                        <TableColumn prefWidth="120.66668701171875" text="Data transferu" />
-                        <TableColumn prefWidth="152.6666259765625" text="Klub kupujący" />
+                        <TableColumn minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="kwotaTransferu" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="153.99993896484375" text="Klub sprzedający">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="klubSprzedajacy" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="0.6666259765625" prefWidth="113.33331298828125" text="Id piłkarza" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="idPilkarza" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="120.66668701171875" text="Data transferu">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="dataTransferu" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="152.6666259765625" text="Klub kupujący">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="klubKupujacy" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="111.99993896484375" text="Dane piłkarza">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="danePilkarza" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy transfer" />
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
@@ -292,7 +317,7 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj mecz" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreMecz" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
@@ -334,8 +359,7 @@
                         </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj gol" />
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
                </children></AnchorPane>
          </content>
       </Tab>

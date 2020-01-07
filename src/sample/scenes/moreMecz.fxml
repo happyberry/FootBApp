@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MoreMeczController">
+   <children>
+      <Label layoutX="318.0" layoutY="23.0" text="Lista goli">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TableView fx:id="tableGole" layoutX="11.0" layoutY="61.0" prefHeight="371.0" prefWidth="675.0">
+        <columns>
+            <TableColumn prefWidth="62.666653633117676" text="GolID" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="golId" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="66.66666412353516" text="MeczID" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="meczId" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="63.333282470703125" text="PiłkID" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="idPilkarza" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="238.00000476837158" text="Minuta">
+                <cellValueFactory>
+                    <PropertyValueFactory property="minuta" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="221.3332977294922" text="Samobójczy">
+                <cellValueFactory>
+                    <PropertyValueFactory property="czySamobojczy" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="214.00009155273438" text="Dla gospodarzy">
+                <cellValueFactory>
+                    <PropertyValueFactory property="czyDlaGospodarzy" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Button layoutX="321.0" layoutY="444.0" mnemonicParsing="false" onAction="#hideWindow" text="Powrót" />
+   </children>
+</AnchorPane>
