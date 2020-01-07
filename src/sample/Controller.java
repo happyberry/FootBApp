@@ -108,7 +108,7 @@ public class Controller {
 
         if (klubyJuzWczytane) return;
         klubyJuzWczytane = true;
-        String SQL = "SELECT * from KLUBY";
+        String SQL = "SELECT * from KLUBY ORDER BY NAZWA_LIGI, NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -229,7 +229,7 @@ public class Controller {
         if (pilkarzeJuzWczytani) return;
         pilkarzeJuzWczytani = true;
 
-        String SQL = "SELECT * from PILKARZE";
+        String SQL = "SELECT * from PILKARZE ORDER BY NAZWA_KLUBU, POZYCJA, NAZWISKO";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -334,7 +334,7 @@ public class Controller {
 
         if (meczeJuzWczytane) return;
         meczeJuzWczytane = true;
-        String SQL = "SELECT * from MECZE";
+        String SQL = "SELECT * from MECZE ORDER BY DATA";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -393,7 +393,7 @@ public class Controller {
 
         if (ligiJuzWczytane) return;
         ligiJuzWczytane = true;
-        String SQL = "SELECT * from LIGI";
+        String SQL = "SELECT * from LIGI ORDER BY NAZWA_LIGI";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -491,7 +491,7 @@ public class Controller {
 
         if (sedziowieJuzWczytani) return;
         sedziowieJuzWczytani = true;
-        String SQL = "SELECT * from SEDZIOWIE";
+        String SQL = "SELECT * from SEDZIOWIE ORDER BY POCHODZENIE";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -581,7 +581,7 @@ public class Controller {
 
         if (stadionyJuzWczytane) return;
         stadionyJuzWczytane = true;
-        String SQL = "SELECT * from STADIONY";
+        String SQL = "SELECT * from STADIONY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -648,7 +648,7 @@ public class Controller {
 
         if (trenerzyJuzWczytani) return;
         trenerzyJuzWczytani = true;
-        String SQL = "SELECT * from TRENERZY";
+        String SQL = "SELECT * from TRENERZY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -714,7 +714,7 @@ public class Controller {
 
         if (wlascicieleJuzWczytani) return;
         wlascicieleJuzWczytani = true;
-        String SQL = "SELECT * from WLASCICIELE";
+        String SQL = "SELECT * from WLASCICIELE ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -782,7 +782,7 @@ public class Controller {
         transferyJuzWczytane = true;
 
         String SQL = "SELECT KWOTA_TRANSFERU, KLUB_SPRZEDAJACY, TRANSFERY.ID_PILKARZA, DATA_TRANSFERU, KLUB_KUPUJACY, " +
-                " P.IMIE || ' ' || P.NAZWISKO from TRANSFERY JOIN PILKARZE P on TRANSFERY.ID_PILKARZA = P.ID_PILKARZA";
+                " P.IMIE || ' ' || P.NAZWISKO from TRANSFERY JOIN PILKARZE P on TRANSFERY.ID_PILKARZA = P.ID_PILKARZA ORDER BY DATA_TRANSFERU";
         Runnable r = new Runnable() {
             @Override
             public void run() {

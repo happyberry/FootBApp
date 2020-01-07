@@ -34,7 +34,7 @@ public class EditStadionController {
     public void initializeOptions() {
 
         comboBoxClub.getItems().clear();
-        String SQL = "SELECT NAZWA_KLUBU from KLUBY";
+        String SQL = "SELECT NAZWA_KLUBU from KLUBY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
             public void run() {

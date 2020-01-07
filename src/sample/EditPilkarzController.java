@@ -41,7 +41,7 @@ public class EditPilkarzController {
 
         System.out.println(connection);
         comboBoxClub.getItems().clear();
-        String SQL = "SELECT NAZWA_klubu from KLUBY";
+        String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
 
         Runnable r = new Runnable() {
             @Override

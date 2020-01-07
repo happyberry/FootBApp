@@ -39,7 +39,7 @@ public class InsertPilkarzController {
 
         System.out.println(connection);
         comboBoxClub.getItems().clear();
-        String SQL = "SELECT NAZWA_klubu from KLUBY";
+        String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
 
         Runnable r = new Runnable() {
             @Override
@@ -94,7 +94,6 @@ public class InsertPilkarzController {
             pensja = pensja.replaceFirst(",", ".");
         }
         String klub = null;
-        System.out.println("KLUB: " + comboBoxClub.getSelectionModel().getSelectedItem());
         if (comboBoxClub.getSelectionModel().getSelectedItem() != null) {
             klub = comboBoxClub.getSelectionModel().getSelectedItem().toString();
             klub = "'" + klub + "'";
@@ -189,7 +188,7 @@ public class InsertPilkarzController {
             ResultSet rs = statement.executeQuery("select id_pilkarza_seq.currval from dual");
             rs.next();
             Pilkarze addedPilkarz = new Pilkarze(rs.getString(1), imie, nazwisko, date, pozycje, Double.parseDouble(wartosc),
-                    Double.parseDouble(pensja), klub);
+                    Double.parseDouble(pensja), klub.substring(1, klub.length() - 1));
             controller.addToTable(controller.getTablePilkarze(), addedPilkarz);
         } catch (SQLException e) {
             e.printStackTrace();
