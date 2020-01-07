@@ -34,19 +34,27 @@ public class InsertSedziaController {
         String imie = textFieldImie.getText();
         if (imie.equals("")) {
             System.out.println("[IMIE] Podaj imię sędziego");
+            labelWarning.setText("[IMIE] Podaj imię sędziego");
+            labelWarning.setVisible(true);
             return;
         }
         if (imie.length() > 40) {
             System.out.println("[IMIE] Imię zbyt długie");
+            labelWarning.setText("[IMIE] Imię zbyt długie");
+            labelWarning.setVisible(true);
             return;
         }
         String nazwisko = textFieldNazwisko.getText();
         if (nazwisko.equals("")) {
             System.out.println("[NAZWISKO] Podaj nazwisko sędziego");
+            labelWarning.setText("[NAZWISKO] Podaj nazwisko sędziego");
+            labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
             System.out.println("[NAZWISKO] Nazwisko zbyt długie");
+            labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie");
+            labelWarning.setVisible(true);
             return;
         }
         String wiek = textFieldWiek.getText();
@@ -55,15 +63,21 @@ public class InsertSedziaController {
             wiekInt = Integer.parseInt(wiek);
         } catch (NumberFormatException e) {
             System.out.println("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            labelWarning.setText("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            labelWarning.setVisible(true);
             return;
         }
         if (wiekInt < 20 || wiekInt > 60) {
             System.out.println("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            labelWarning.setText("[WIEK] Podaj wiek jako liczbę całkowitą z zakresu 20-60");
+            labelWarning.setVisible(true);
             return;
         }
         String kraj = (String) comboBoxKraj.getSelectionModel().getSelectedItem();
         if (kraj == null) {
             System.out.println("[KRAJ] Wybierz kraj pochodzenia");
+            labelWarning.setText("[KRAJ] Wybierz kraj pochodzenia");
+            labelWarning.setVisible(true);
             return;
         }
 

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.*;
@@ -30,6 +31,8 @@ public class InsertPilkarzController {
     public TextField textFieldWartosc;
     @FXML
     public TextField textFieldPensja;
+    @FXML
+    public Label labelWarning;
 
 
     public void initializeOptions() {
@@ -61,11 +64,15 @@ public class InsertPilkarzController {
         String imie = textFieldImie.getText();
         if (imie.equals("")) {
             System.out.println("[IMIE] Podaj imie zawodnika");
+            labelWarning.setText("[IMIE] Podaj imie zawodnika");
+            labelWarning.setVisible(true);
             return;
         }
         String nazwisko = textFieldNazwisko.getText();
         if (nazwisko.equals("")) {
             System.out.println("[NAZWISKO] Podaj nazwisko zawodnika");
+            labelWarning.setText("[NAZWISKO] Podaj nazwisko zawodnika");
+            labelWarning.setVisible(true);
             return;
         }
         String year = (String) comboBoxBYear.getSelectionModel().getSelectedItem();
@@ -73,6 +80,8 @@ public class InsertPilkarzController {
         String day = (String) comboBoxBDay.getSelectionModel().getSelectedItem();
         if (year == null || month == null || day == null) {
             System.out.println("[DATA URODZENIA] Podaj pełną datę urodzenia");
+            labelWarning.setText("[DATA URODZENIA] Podaj pełną datę urodzenia");
+            labelWarning.setVisible(true);
             return;
         }
         Date date = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
@@ -92,16 +101,22 @@ public class InsertPilkarzController {
         }
         if (imie.length() > 40) {
             System.out.println("[IMIE] Imię zbyt długie, skróć do 40 znaków");
+            labelWarning.setText("[IMIE] Imię zbyt długie, skróć do 40 znaków");
+            labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
             System.out.println("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
+            labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
+            labelWarning.setVisible(true);
             return;
         }
         if (Integer.parseInt(month) == 2) {
             if (Integer.parseInt(day) > 28) {
                 if (Integer.parseInt(day) > 29 || Integer.parseInt(year) % 4 != 0) {
                     System.out.println("[DATA URODZENIA] Luty ma mniej niż 30 dni");
+                    labelWarning.setText("[DATA URODZENIA] Luty ma mniej niż 30 dni");
+                    labelWarning.setVisible(true);
                     return;
                 }
             }
@@ -109,16 +124,22 @@ public class InsertPilkarzController {
         if (Integer.parseInt(month) == 4 || Integer.parseInt(month) == 6 || Integer.parseInt(month) == 9 || Integer.parseInt(month) == 11) {
             if (day.equals("31")) {
                 System.out.println("[DATA URODZENIA] Błędny dzień miesiąca");
+                labelWarning.setText("[DATA URODZENIA] Błędny dzień miesiąca");
+                labelWarning.setVisible(true);
                 return;
             }
         }
         if (pozycje == null) {
             System.out.println("[POZYCJA] Podaj pozycję, na której gra piłkarz");
+            labelWarning.setText("[POZYCJA] Podaj pozycję, na której gra piłkarz");
+            labelWarning.setVisible(true);
             return;
         }
 
         if (wartosc == "") {
             System.out.println("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
+            labelWarning.setText("");
+            labelWarning.setVisible(true);
             return;
         }
 
@@ -127,10 +148,14 @@ public class InsertPilkarzController {
             wartoscRynkowa = Double.parseDouble(wartosc);
         } catch (NumberFormatException e) {
             System.out.println("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
+            labelWarning.setVisible(true);
             return;
         }
         if (wartoscRynkowa > 9999999999.99 || wartoscRynkowa < 0) {
             System.out.println("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
+            labelWarning.setVisible(true);
             return;
         }
         if (pensja != null) {
@@ -139,15 +164,21 @@ public class InsertPilkarzController {
                 doublePensja = Double.parseDouble(pensja);
             } catch (NumberFormatException e) {
                 System.out.println("[PENSJA] Błędny format pensji");
+                labelWarning.setText("[PENSJA] Błędny format pensji");
+                labelWarning.setVisible(true);
                 return;
             }
             if (doublePensja > 9999999999.99 || doublePensja < 0) {
                 System.out.println("[PENSJA] Błędna wartość pensji");
+                labelWarning.setText("[PENSJA] Błędna wartość pensji");
+                labelWarning.setVisible(true);
                 return;
             }
         }
         if (klub != null && klub.length() > 40) {
             System.out.println("[NAZWA KLUBU] Nazwa klubu zbyt długa");
+            labelWarning.setText("[NAZWA KLUBU] Nazwa klubu zbyt długa");
+            labelWarning.setVisible(true);
             return;
         }
 

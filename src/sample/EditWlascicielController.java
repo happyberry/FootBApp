@@ -56,19 +56,27 @@ public class EditWlascicielController {
         String imie = secondTF.getText();
         if (imie.equals("")) {
             System.out.println("[IMIE] Podaj imię wlasciciela");
+            labelWarning.setText("[IMIE] Podaj imię wlasciciela");
+            labelWarning.setVisible(true);
             return;
         }
         if (imie.length() > 40) {
             System.out.println("[IMIE] Imię zbyt długie");
+            labelWarning.setText("[IMIE] Imię zbyt długie");
+            labelWarning.setVisible(true);
             return;
         }
         String nazwisko = thirdTF.getText();
         if (nazwisko.equals("")) {
             System.out.println("[NAZWISKO] Podaj nazwisko wlasciciela");
+            labelWarning.setText("[NAZWISKO] Podaj nazwisko wlasciciela");
+            labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
             System.out.println("[NAZWISKO] Nazwisko zbyt długie");
+            labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie");
+            labelWarning.setVisible(true);
             return;
         }
 
@@ -82,10 +90,14 @@ public class EditWlascicielController {
             doubleMajatek = Double.parseDouble(majatek);
         } catch (NumberFormatException e) {
             System.out.println("[MAJĄTEK] Podaj wartość majątku właściciela");
+            labelWarning.setText("[MAJĄTEK] Podaj wartość majątku właściciela");
+            labelWarning.setVisible(true);
             return;
         }
         if (doubleMajatek > 9999999999.99 || doubleMajatek < -9999999999.99) {
-            System.out.println("[MAJĄTEK] Niepoprawna wartość majątku.");
+            System.out.println("[MAJĄTEK] Niepoprawna wartość majątku");
+            labelWarning.setText("[MAJĄTEK] Niepoprawna wartość majątku");
+            labelWarning.setVisible(true);
             return;
         }
 

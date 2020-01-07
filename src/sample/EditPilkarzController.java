@@ -80,12 +80,16 @@ public class EditPilkarzController {
         String imie = textFieldImie.getText();
         if (imie.equals("")) {
             System.out.println("[IMIE] Podaj imie zawodnika");
+            labelWarning.setText("[IMIE] Podaj imie zawodnika");
+            labelWarning.setVisible(true);
             return;
         }
 
         String nazwisko = textFieldNazwisko.getText();
         if (nazwisko.equals("")) {
             System.out.println("[NAZWISKO] Podaj nazwisko zawodnika");
+            labelWarning.setText("[NAZWISKO] Podaj nazwisko zawodnika");
+            labelWarning.setVisible(true);
             return;
         }
 
@@ -116,6 +120,8 @@ public class EditPilkarzController {
         wartosc = wartosc.replaceFirst(",", ".");
         if (wartosc == "") {
             System.out.println("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
+            labelWarning.setVisible(true);
             return;
         }
 
@@ -133,16 +139,22 @@ public class EditPilkarzController {
 
         if (imie.length() > 40) {
             System.out.println("[IMIE] Imię zbyt długie, skróć do 40 znaków");
+            labelWarning.setText("[IMIE] Imię zbyt długie, skróć do 40 znaków");
+            labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
             System.out.println("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
+            labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
+            labelWarning.setVisible(true);
             return;
         }
         if (Integer.parseInt(month) == 2) {
             if (Integer.parseInt(day) > 28) {
                 if (Integer.parseInt(day) > 29 || Integer.parseInt(year) % 4 != 0) {
                     System.out.println("[DATA URODZENIA] Luty ma mniej niż 30 dni");
+                    labelWarning.setText("[DATA URODZENIA] Luty ma mniej niż 30 dni");
+                    labelWarning.setVisible(true);
                     return;
                 }
             }
@@ -150,6 +162,8 @@ public class EditPilkarzController {
         if (Integer.parseInt(month) == 4 || Integer.parseInt(month) == 6 || Integer.parseInt(month) == 9 || Integer.parseInt(month) == 11) {
             if (day.equals("31")) {
                 System.out.println("[DATA URODZENIA] Błędny dzień miesiąca");
+                labelWarning.setText("[DATA URODZENIA] Błędny dzień miesiąca");
+                labelWarning.setVisible(true);
                 return;
             }
         }
@@ -159,10 +173,14 @@ public class EditPilkarzController {
             wartoscRynkowa = Double.parseDouble(wartosc);
         } catch (NumberFormatException e) {
             System.out.println("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
+            labelWarning.setVisible(true);
             return;
         }
         if (wartoscRynkowa > 9999999999.99 || wartoscRynkowa < 0) {
             System.out.println("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
+            labelWarning.setVisible(true);
             return;
         }
 
@@ -172,10 +190,14 @@ public class EditPilkarzController {
                 doublePensja = Double.parseDouble(pensja);
             } catch (NumberFormatException e) {
                 System.out.println("[PENSJA] Błędny format pensji");
+                labelWarning.setText("[PENSJA] Błędny format pensji");
+                labelWarning.setVisible(true);
                 return;
             }
             if (doublePensja > 9999999999.99 || doublePensja < 0) {
                 System.out.println("[PENSJA] Błędna wartość pensji");
+                labelWarning.setText("[PENSJA] Błędna wartość pensji");
+                labelWarning.setVisible(true);
                 return;
             }
         }

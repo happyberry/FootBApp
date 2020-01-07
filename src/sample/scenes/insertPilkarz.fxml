@@ -137,5 +137,6 @@
       <TextField fx:id="textFieldPensja" layoutX="151.0" layoutY="236.0" />
       <ComboBox fx:id="comboBoxClub" layoutX="151.0" layoutY="276.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub">
       </ComboBox>
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
    </children>
 </AnchorPane>
