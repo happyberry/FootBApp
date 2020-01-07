@@ -414,22 +414,41 @@
                </children></AnchorPane>
          </content>
       </Tab>
-      <Tab closable="false" text="Stadiony">
+      <Tab closable="false" onSelectionChanged="#fillStadiony" text="Stadiony">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableStadiony" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="ID" visible="false" />
-                        <TableColumn prefWidth="135.33331775665283" text="Nazwa" />
-                        <TableColumn prefWidth="122.66667175292969" text="Rok zbudowania" />
-                        <TableColumn prefWidth="134.666748046875" text="Pojemność" />
-                        <TableColumn prefWidth="137.99996948242188" text="Miasto" />
-                        <TableColumn prefWidth="141.99995930989587" text="Nazwa klubu" />
+                        <TableColumn prefWidth="135.33331775665283" text="Nazwa">
+                         <cellValueFactory>
+                          <PropertyValueFactory property="nazwa" />
+                         </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="122.66667175292969" text="Rok zbudowania">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="rokZbudowania" />
+                        </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="134.666748046875" text="Pojemność">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="pojemnosc" />
+                        </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="137.99996948242188" text="Miasto">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="miasto" />
+                        </cellValueFactory>
+                         </TableColumn>
+                        <TableColumn prefWidth="141.99995930989587" text="Nazwa klubu">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="nazwaKlubu" />
+                            </cellValueFactory>
+                        </TableColumn>
                      </columns>
                   </TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy stadion" />
-                  <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertStadion" text="Dodaj nowy stadion" />
+                  <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditStadion" text="Edytuj wpis" />
                </children>
             </AnchorPane>
          </content>

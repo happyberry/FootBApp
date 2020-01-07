@@ -485,6 +485,73 @@ public class Controller {
         new Thread(r).start();
     }
 
+    public void fillStadiony() {
+
+        if (stadionyJuzWczytane) return;
+        stadionyJuzWczytane = true;
+        String SQL = "SELECT * from STADIONY";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Stadiony stadion = new Stadiony(rs.getString(1), rs.getInt(2), rs.getInt(3),
+                                rs.getString(4), rs.getString(5));
+                        tableStadiony.getItems().add(stadion);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void openEditStadion(ActionEvent event) throws IOException {
+
+        if (tableStadiony.getSelectionModel().getSelectedItem() == null) return;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editStadion.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditStadionController editStadionController = loader.<EditStadionController>getController();
+
+        editStadionController.connection = mainConnection;
+        editStadionController.controller = this;
+
+        Stadiony stadion = (Stadiony) tableStadiony.getSelectionModel().getSelectedItem();
+        editStadionController.stadion = stadion;
+
+        editStadionController.initializeOptions();
+        editStadionController.firstTF.setText(stadion.getNazwa());
+        editStadionController.secondTF.setText(String.valueOf(stadion.getRokZbudowania()));
+        editStadionController.thirdTF.setText(String.valueOf(stadion.getPojemnosc()));
+        editStadionController.fourthTF.setText(stadion.getMiasto());
+        editStadionController.comboBoxClub.setPromptText(stadion.getNazwaKlubu());
+
+        stage.show();
+    }
+
+    public void openInsertStadion(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertStadion.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertStadionController insertStadionController = loader.<InsertStadionController>getController();
+
+        insertStadionController.connection = mainConnection;
+        insertStadionController.controller = this;
+        insertStadionController.initializeOptions();
+
+        stage.show();
+    }
+
     public void fillTrenerzy() throws SQLException {
 
         if (trenerzyJuzWczytani) return;
