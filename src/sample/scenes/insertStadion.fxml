@@ -6,14 +6,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertStadionController">
    <children>
       <TextField fx:id="firstTF" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="sceondTF" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="secondTF" layoutX="151.0" layoutY="76.0" />
       <Label layoutX="70.0" layoutY="40.0" text="Nazwa" />
       <Label layoutX="42.0" layoutY="80.0" text="Rok budowy" />
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
-      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
+      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveHandler" text="Zapisz zmiany" />
       <Label layoutX="52.0" layoutY="120.0" text="Pojemność" />
       <Label layoutX="75.0" layoutY="160.0" text="Miasto" />
       <Label layoutX="47.0" layoutY="200.0" text="Nazwa klubu" />

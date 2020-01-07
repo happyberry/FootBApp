@@ -6,10 +6,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditStadionController">
    <children>
       <TextField fx:id="firstTF" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="sceondTF" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="secondTF" layoutX="151.0" layoutY="76.0" />
       <Label layoutX="70.0" layoutY="40.0" text="Nazwa" />
       <Label layoutX="42.0" layoutY="80.0" text="Rok budowy" />
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
@@ -20,6 +20,6 @@
       <TextField fx:id="thirdTF" layoutX="151.0" layoutY="116.0" />
       <TextField fx:id="fourthTF" layoutX="151.0" layoutY="156.0" />
       <ComboBox fx:id="comboBoxClub" layoutX="150.0" layoutY="196.0" prefWidth="150.0" />
-      <Button layoutX="449.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Usuń" />
+      <Button layoutX="449.0" layoutY="353.0" mnemonicParsing="false" onAction="#deleteHandler" text="Usuń" />
    </children>
 </AnchorPane>
