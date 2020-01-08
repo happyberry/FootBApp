@@ -1,11 +1,12 @@
 package sample;
 
-import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -236,6 +237,7 @@ public class Controller {
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
+                        System.out.println(rs.getString("imie"));
                         Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
                                 rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
                                 rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
@@ -827,7 +829,7 @@ public class Controller {
         tabela.getItems().remove(byt);
     }
 
-    public void fillSearchEngine (ActionEvent event) {
+    public void fillSearchEngine (Event event) {
 
         String table = (String) comboBoxTable.getSelectionModel().getSelectedItem();
         if (table == null) {return;}
@@ -963,7 +965,7 @@ public class Controller {
             if (nazwa == null || nazwa.equals("")) {nazwa = "#123456789";}
             if (liga == null || liga.equals("")) {liga = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableKluby.getColumns());
+            initializeTableColumns(tableKluby);
 
             String SQL = "SELECT * from KLUBY where NAZWA_KLUBU LIKE '%" + nazwa + "%' OR NAZWA_LIGI like '%" + liga + "%'";
             try {
@@ -986,7 +988,7 @@ public class Controller {
             if (nazwa == null || nazwa.equals("")) {nazwa = "#123456789";}
             if (kraj == null || kraj.equals("")) {kraj = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableLigi.getColumns());
+            initializeTableColumns(tableLigi);
 
             String SQL = "SELECT * from LIGI where NAZWA_LIGI LIKE '%" + nazwa + "%' OR KRAJ like '%" + kraj + "%'";
             try {
@@ -1007,7 +1009,7 @@ public class Controller {
             if (data == null || data.equals("")) {data = "1800-01-01";}
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableMecze.getColumns());
+            initializeTableColumns(tableMecze);
 
             String SQL = "SELECT * from MECZE where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
                     "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'";
@@ -1034,7 +1036,7 @@ public class Controller {
             if (dataUrodzenia == null || dataUrodzenia.equals("")) {dataUrodzenia = "1800-01-01";}
             if (pozycja == null || pozycja.equals("")) {pozycja = "#123456789";}
 
-            tableSearch.getColumns().addAll(tablePilkarze.getColumns());
+            initializeTableColumns(tablePilkarze);
 
             String SQL = "SELECT * from PILKARZE where DATA_URODZENIA = DATE '" + dataUrodzenia + "' OR NAZWA_KLUBU like '%" + nazwaKlubu +
                     "%' OR nazwisko like '%" + nazwisko + "%' OR POZYCJA like '%" + pozycja + "%'";
@@ -1059,7 +1061,7 @@ public class Controller {
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
             if (kraj == null || kraj.equals("")) {kraj = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableSedziowie.getColumns());
+            initializeTableColumns(tableSedziowie);
 
             String SQL = "SELECT * from SEDZIOWIE where NAZWISKO LIKE '%" + nazwisko + "%' OR POCHODZENIE like '%" + kraj + "%'";
             try {
@@ -1084,7 +1086,7 @@ public class Controller {
             if (miasto == null || miasto.equals("")) {miasto = "#123456789";}
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableStadiony.getColumns());
+            initializeTableColumns(tableStadiony);
 
             String SQL = "SELECT * from STADIONY where NAZWA like '%" + nazwa + "%' OR MIASTO like '%" + miasto +
                     "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
@@ -1107,7 +1109,7 @@ public class Controller {
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableTrenerzy.getColumns());
+            initializeTableColumns(tableTrenerzy);
 
             String SQL = "SELECT * from TRENERZY where NAZWISKO LIKE '%" + nazwisko + "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
             try {
@@ -1130,7 +1132,7 @@ public class Controller {
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
 
-            tableSearch.getColumns().addAll(tableWlasciciele.getColumns());
+            initializeTableColumns(tableWlasciciele);
 
             String SQL = "SELECT * from WLASCICIELE where NAZWISKO LIKE '%" + nazwisko + "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
             try {
@@ -1144,6 +1146,17 @@ public class Controller {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
             }
+        }
+    }
+
+    public void initializeTableColumns(TableView source) {
+        for (Object column: source.getColumns()) {
+            TableColumn x = (TableColumn) column;
+            TableColumn newCol = new TableColumn(x.getText());
+            newCol.setPrefWidth(x.getPrefWidth());
+            newCol.setVisible(x.isVisible());
+            newCol.setCellValueFactory(x.getCellValueFactory());
+            tableSearch.getColumns().add(newCol);
         }
     }
 

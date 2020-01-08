@@ -60,7 +60,7 @@
          <content>
             <AnchorPane fx:id="anchorPaneSearch" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="comboBoxTable" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
+                  <ComboBox fx:id="comboBoxTable" onHiding="#fillSearchEngine" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Klub" />
@@ -74,7 +74,7 @@
                           </FXCollections>
                       </items>
                   </ComboBox>
-                  <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />
+                  <!--<Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />-->
                   <TableView fx:id="tableSearch" layoutX="11.0" layoutY="221.0" prefHeight="334.0" prefWidth="675.0" />
                   <Button layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" style="-fx-background-color: #00c000;" text="Wyszukaj" />
                   <Label fx:id="labelA" layoutX="15.0" layoutY="60.0" text="Label" visible="false" />
