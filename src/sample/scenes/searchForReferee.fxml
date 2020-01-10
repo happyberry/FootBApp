@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SFRefereeController">
+    <TableView fx:id="tableSearch" layoutX="11.0" layoutY="237.0" prefHeight="258.0" prefWidth="670.0">
+        <columns>
+            <TableColumn prefWidth="45.33334445953369" text="ID" visible="false">
+                <cellValueFactory>
+                    <PropertyValueFactory property="idSedziego" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="182.66669178009033" text="Imię">
+                <cellValueFactory>
+                    <PropertyValueFactory property="imie" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="192.66664123535156" text="Nazwisko">
+                <cellValueFactory>
+                    <PropertyValueFactory property="nazwisko" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="102.0" text="Wiek">
+                <cellValueFactory>
+                    <PropertyValueFactory property="wiek" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="189.33334350585938" text="Pochodzenie">
+                <cellValueFactory>
+                    <PropertyValueFactory property="pochodzenie" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    <Button layoutX="313.0" layoutY="191.0" mnemonicParsing="false" onAction="#search" text="Wyszukaj" />
+    <Label fx:id="labelNazwisko" layoutX="209.0" layoutY="36.0" text="Nazwisko" />
+    <Label fx:id="labelKraj" layoutX="209.0" layoutY="76.0" text="Nazwa klubu" />
+    <TextField fx:id="textFieldNazwisko" layoutX="334.0" layoutY="32.0" />
+    <TextField fx:id="textFieldKraj" layoutX="334.0" layoutY="72.0" />
+   <Button layoutX="316.0" layoutY="505.0" mnemonicParsing="false" onAction="#saveSelected" text="Wybierz" />
+</AnchorPane>

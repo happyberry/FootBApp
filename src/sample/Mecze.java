@@ -10,9 +10,10 @@ public class Mecze {
   private Integer wynikGospodarzy;
   private Integer wynikGosci;
   private String idSedziego;
+  private String daneSedziego;
 
   public Mecze (String mId, java.sql.Date date, String gosp, String gosc,
-                Integer wgosp, Integer wgosci, String idS){
+                Integer wgosp, Integer wgosci, String idS, String dane){
     meczId = mId;
     data = date;
     gospodarze = gosp;
@@ -20,6 +21,7 @@ public class Mecze {
     wynikGospodarzy = wgosp;
     wynikGosci = wgosci;
     idSedziego = idS;
+    daneSedziego = dane;
   }
 
   public String getMeczId() {
@@ -84,4 +86,11 @@ public class Mecze {
     this.idSedziego = idSedziego;
   }
 
+  public String getDaneSedziego() {
+    return daneSedziego;
+  }
+
+  public void setDaneSedziego(String daneSedziego) {
+    this.daneSedziego = daneSedziego;
+  }
 }

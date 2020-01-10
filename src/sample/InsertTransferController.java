@@ -81,7 +81,7 @@ public class InsertTransferController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", '" + klubSprzedajacy + "', "
                     + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy + "')");
-            ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE");
+            ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();
             Transfery addedTransfer = new Transfery(kwotaTransferu, klubSprzedajacy, idPilkarza, dataTransferu, klubKupujacy, rs.getString(1));
             controller.addToTable(controller.getTableTransfery(), addedTransfer);

@@ -60,7 +60,7 @@
          <content>
             <AnchorPane fx:id="anchorPaneSearch" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="comboBoxTable" onHiding="#fillSearchEngine" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
+                  <ComboBox fx:id="comboBoxTable" layoutX="14.0" layoutY="14.0" onHiding="#fillSearchEngine" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Klub" />
@@ -284,27 +284,27 @@
                                 <PropertyValueFactory property="meczId" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="121.0" text="Data">
+                        <TableColumn prefWidth="97.3333387374878" text="Data">
                             <cellValueFactory>
                                 <PropertyValueFactory property="data" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="169.0" text="Gospodarze">
+                        <TableColumn prefWidth="130.66661834716797" text="Gospodarze">
                             <cellValueFactory>
                                 <PropertyValueFactory property="gospodarze" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="164.0" text="Goście">
+                        <TableColumn prefWidth="136.6667022705078" text="Goście">
                             <cellValueFactory>
                                 <PropertyValueFactory property="goscie" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="126.0" text="Wynik gospodarzy">
+                        <TableColumn prefWidth="114.66668701171875" text="Wynik gospodarzy">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wynikGospodarzy" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="93.0" text="Wynik gości">
+                        <TableColumn prefWidth="90.0" text="Wynik gości">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wynikGosci" />
                             </cellValueFactory>
@@ -314,9 +314,14 @@
                                 <PropertyValueFactory property="idSedziego" />
                             </cellValueFactory>
                         </TableColumn>
+                         <TableColumn minWidth="0.0" prefWidth="100.66668701171875" text="Dane sędziego">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="daneSedziego" />
+                             </cellValueFactory>
+                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj mecz" />
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertMecz" text="Dodaj mecz" />
+                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditMecz" text="Edytuj wpis" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreMecz" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>

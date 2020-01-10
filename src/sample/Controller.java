@@ -336,7 +336,7 @@ public class Controller {
 
         if (meczeJuzWczytane) return;
         meczeJuzWczytane = true;
-        String SQL = "SELECT * from MECZE ORDER BY DATA";
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) ORDER BY DATA";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -345,7 +345,7 @@ public class Controller {
                     while (rs.next()) {
                         //Iterate Row
                         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3),
-                                rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7));
+                                rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         tableMecze.getItems().add(mecz);
                     }
                 } catch (Exception e) {
@@ -355,6 +355,54 @@ public class Controller {
             }
         };
         new Thread(r).start();
+    }
+
+    public void openEditMecz(ActionEvent event) throws IOException {
+
+        if(tableMecze.getSelectionModel().getSelectedItem() == null) return;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editMecz.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditMeczController editMeczController = loader.<EditMeczController>getController();
+
+        editMeczController.connection = mainConnection;
+        editMeczController.controller = this;
+        editMeczController.initializeOptions();
+
+        Mecze mecz = (Mecze) tableMecze.getSelectionModel().getSelectedItem();
+        editMeczController.mecz = mecz;
+
+        editMeczController.comboBoxDay.setPromptText(String.valueOf(mecz.getData().getDate()));
+        editMeczController.comboBoxMonth.setPromptText(String.valueOf(mecz.getData().getMonth()+1));
+        editMeczController.comboBoxYear.setPromptText(String.valueOf(mecz.getData().getYear()+1900));
+        editMeczController.comboBoxGosc.setPromptText(mecz.getGoscie());
+        editMeczController.comboBoxGosp.setPromptText(mecz.getGospodarze());
+        editMeczController.textFieldSedzia.setText(mecz.getIdSedziego());
+        editMeczController.textFieldWynikGosc.setText(String.valueOf(mecz.getWynikGosci()));
+        editMeczController.textFieldWynikGosp.setText(String.valueOf(mecz.getWynikGospodarzy()));
+
+        stage.show();
+
+    }
+
+    public void openInsertMecz(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertMecz.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertMeczController insertMeczController = loader.<InsertMeczController>getController();
+
+        insertMeczController.connection = mainConnection;
+        insertMeczController.controller = this;
+        insertMeczController.initializeOptions();
+
+        stage.show();
+
     }
 
     public void openMoreMecz(ActionEvent event) throws IOException {
@@ -1011,13 +1059,13 @@ public class Controller {
 
             initializeTableColumns(tableMecze);
 
-            String SQL = "SELECT * from MECZE where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
+            String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
                     "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
                     Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
-                            rs.getInt(5), rs.getInt(6), rs.getString(7));
+                            rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                     tableSearch.getItems().add(mecz);
                 }
             } catch (Exception e) {
