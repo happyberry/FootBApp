@@ -1,22 +1,34 @@
 package sample;
 
 
+import java.sql.Date;
+
 public class Gole {
 
   private String golId;
   private String meczId;
   private String idPilkarza;
   private Integer minuta;
-  private String czySamobojczy;
-  private String czyDlaGospodarzy;
+  private Integer czySamobojczy;
+  private Integer czyDlaGospodarzy;
+  private String daneStrzelca;
+  private String okolicznosci;
+  private String gospodarze;
+  private String goscie;
+  private Date data;
 
-  public Gole(String id, String mecz, String idpilkarza, Integer minuta, String czysam, String czygosp){
+  public Gole(String id, String mecz, String idpilkarza, Integer minuta, Integer czysam, Integer czygosp, String dane, String oko, String gospodarze, String goscie, Date data){
+    this.data = data;
     golId = id;
     meczId = mecz;
     idPilkarza = idpilkarza;
     this.minuta = minuta;
     czySamobojczy = czysam;
     czyDlaGospodarzy = czygosp;
+    daneStrzelca = dane;
+    okolicznosci = oko;
+    this.gospodarze = gospodarze;
+    this.goscie = goscie;
   }
 
   public String getGolId() {
@@ -55,21 +67,60 @@ public class Gole {
   }
 
 
-  public String getCzySamobojczy() {
+  public Integer getCzySamobojczy() {
     return czySamobojczy;
   }
 
-  public void setCzySamobojczy(String czySamobojczy) {
+  public void setCzySamobojczy(Integer czySamobojczy) {
     this.czySamobojczy = czySamobojczy;
   }
 
 
-  public String getCzyDlaGospodarzy() {
+  public Integer getCzyDlaGospodarzy() {
     return czyDlaGospodarzy;
   }
 
-  public void setCzyDlaGospodarzy(String czyDlaGospodarzy) {
+  public void setCzyDlaGospodarzy(Integer czyDlaGospodarzy) {
     this.czyDlaGospodarzy = czyDlaGospodarzy;
   }
 
+  public String getDaneStrzelca() {
+    return daneStrzelca;
+  }
+
+  public void setDaneStrzelca(String daneStrzelca) {
+    this.daneStrzelca = daneStrzelca;
+  }
+
+  public String getOkolicznosci() {
+    return okolicznosci;
+  }
+
+  public void setOkolicznosci(String okolicznosci) {
+    this.okolicznosci = okolicznosci;
+  }
+
+  public String getGospodarze() {
+    return gospodarze;
+  }
+
+  public void setGospodarze(String gospodarze) {
+    this.gospodarze = gospodarze;
+  }
+
+  public String getGoscie() {
+    return goscie;
+  }
+
+  public void setGoscie(String goscie) {
+    this.goscie = goscie;
+  }
+
+  public Date getData() {
+    return data;
+  }
+
+  public void setData(Date data) {
+    this.data = data;
+  }
 }

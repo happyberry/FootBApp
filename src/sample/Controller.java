@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Controller {
 
@@ -417,7 +418,8 @@ public class Controller {
 
         MoreMeczController moreMeczController = loader.<MoreMeczController>getController();
 
-        String SQL = "SELECT * from GOLE where MECZ_ID = " + mecz.getMeczId();
+        String SQL = "SELECT CZY_SAMOBOJCZY, CZY_DLA_GOSPODARZY, GOL_ID, MECZ_ID, ID_PILKARZA, MINUTA, IMIE || ' ' || NAZWISKO, " +
+                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id)";
         moreMeczController.tableGole.getItems().clear();
         Runnable r = new Runnable() {
             @Override
@@ -425,8 +427,18 @@ public class Controller {
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
-                        Gole gol = new Gole(rs.getString(1), rs.getString(2), rs.getString(3),
-                                rs.getInt(4), rs.getString(5), rs.getString(6));
+                        Integer samobojczy = rs.getInt(1);
+                        Integer czyGospodarze = rs.getInt(2);
+                        String okolicznosci = null;
+                        if (samobojczy == 0) {
+                            okolicznosci = "Nie";
+                        } else {
+                            okolicznosci = "Tak";
+                        }
+
+                        Gole gol = new Gole(rs.getString(3), rs.getString(4), rs.getString(5),
+                                rs.getInt(6), samobojczy, czyGospodarze, rs.getString(7), okolicznosci,
+                                rs.getString(8), rs.getString(9), rs.getDate(10));
                         moreMeczController.tableGole.getItems().add(gol);
                     }
                 } catch (Exception e) {
@@ -602,20 +614,64 @@ public class Controller {
         stage.show();
     }
 
-    public void fillGole() throws SQLException {
+    public void openMoreSedzia(ActionEvent event) throws IOException {
 
-        if (goleJuzWczytane) return;
-        goleJuzWczytane = true;
-        String SQL = "SELECT * from GOLE";
+        if (tableSedziowie.getSelectionModel().getSelectedItem() == null) {return;}
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/moreSedzia.fxml"));
+
+        Stage stage = new Stage();
+        Sedziowie sedzia = (Sedziowie) tableSedziowie.getSelectionModel().getSelectedItem();
+        stage.setTitle(sedzia.getNazwisko() + " - dodatkowe informacje");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        stage.show();
+
+        MoreSedziaController moreSedziaController = loader.<MoreSedziaController>getController();
+
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) where ID_SEDZIEGO = " + sedzia.getIdSedziego();
+        moreSedziaController.tableMecze.getItems().clear();
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
-                        //Iterate Row
-                        Gole gol = new Gole(rs.getString(1), rs.getString(2), rs.getString(3),
-                                rs.getInt(4), rs.getString(5), rs.getString(6));
+                        Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
+                        moreSedziaController.tableMecze.getItems().add(mecz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void fillGole() throws SQLException {
+
+        if (goleJuzWczytane) return;
+        goleJuzWczytane = true;
+        String SQL = "SELECT CZY_SAMOBOJCZY, CZY_DLA_GOSPODARZY, GOL_ID, MECZ_ID, ID_PILKARZA, MINUTA, IMIE || ' ' || NAZWISKO, " +
+                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id)";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Integer samobojczy = rs.getInt(1);
+                        Integer czyGospodarze = rs.getInt(2);
+                        String okolicznosci = null;
+                        if (samobojczy == 0) {
+                            okolicznosci = "Nie";
+                        } else {
+                            okolicznosci = "Tak";
+                        }
+
+                        Gole gol = new Gole(rs.getString(3), rs.getString(4), rs.getString(5),
+                                rs.getInt(6), samobojczy, czyGospodarze, rs.getString(7), okolicznosci,
+                                rs.getString(8), rs.getString(9), rs.getDate(10));
                         tableGole.getItems().add(gol);
                     }
                 } catch (Exception e) {
@@ -625,6 +681,68 @@ public class Controller {
             }
         };
         new Thread(r).start();
+    }
+
+    public void openEditGol(ActionEvent event) throws IOException, SQLException {
+
+        if (tableGole.getSelectionModel().getSelectedItem() == null) return;
+        Gole gol = (Gole) tableGole.getSelectionModel().getSelectedItem();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editGol.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditGolController editGolController = loader.<EditGolController>getController();
+
+        editGolController.connection = mainConnection;
+        editGolController.controller = this;
+        editGolController.gol = gol;
+
+        Statement statement = mainConnection.createStatement();
+        ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE where ID_PILKARZA = " + gol.getIdPilkarza());
+        rs.next();
+        editGolController.textFieldPilkarz.setText(rs.getString(1));
+        editGolController.idPilkarza = gol.getIdPilkarza();
+        rs = statement.executeQuery("select gospodarze || '-' || goscie from MECZE where MECZ_ID = " + gol.getMeczId());
+        rs.next();
+        rs = statement.executeQuery("SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
+                " from MECZE join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
+        rs.next();
+        Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
+                rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
+        editGolController.textFieldMecz.setText(mecz.getGospodarze() + "-" + mecz.getGoscie());
+        editGolController.mecz = mecz;
+        editGolController.textFieldMinuta.setText(gol.getMinuta().toString());
+        if (gol.getCzySamobojczy() == 1) {
+            editGolController.checkBoxSamobojczy.setSelected(true);
+        } else {
+            editGolController.checkBoxSamobojczy.setSelected(false);
+        }
+        if (gol.getCzyDlaGospodarzy() == 1) {
+            editGolController.radioButtonGoscie.setSelected(false);
+            editGolController.radioButtonGospodarze.setSelected(true);
+        } else {
+            editGolController.radioButtonGospodarze.setSelected(false);
+            editGolController.radioButtonGoscie.setSelected(true);
+        }
+
+        stage.show();
+    }
+
+    public void openInsertGol(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertGol.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Dodaj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        InsertGolController insertGolController = loader.<InsertGolController>getController();
+
+        insertGolController.connection = mainConnection;
+        insertGolController.controller = this;
+
+        stage.show();
     }
 
     public void fillStadiony() {

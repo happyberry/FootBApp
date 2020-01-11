@@ -107,7 +107,8 @@ public class InsertTransferController {
 
         SFPlayerController sfPlayerController = loader.<SFPlayerController>getController();
         sfPlayerController.connection = connection;
-        sfPlayerController.controller = this;
+        sfPlayerController.insertTransferController = this;
+        sfPlayerController.opcja = "wstawianieTransfer";
     }
 
 }

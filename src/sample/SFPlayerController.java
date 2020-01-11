@@ -12,7 +12,10 @@ import java.sql.ResultSet;
 public class SFPlayerController {
 
     public Connection connection;
-    public InsertTransferController controller;
+    public InsertTransferController insertTransferController;
+    public InsertGolController insertGolController;
+
+    public String opcja;
     @FXML
     public TextField textFieldNazwisko;
     @FXML
@@ -23,6 +26,7 @@ public class SFPlayerController {
     public TextField textFieldPozycja;
     @FXML
     public TableView tableSearch;
+    public EditGolController editGolController;
 
     public void search() {
 
@@ -61,10 +65,21 @@ public class SFPlayerController {
 
     public void saveSelected(ActionEvent event) {
 
-        if(tableSearch.getSelectionModel().getSelectedItem() == null) return;
+        if (tableSearch.getSelectionModel().getSelectedItem() == null) return;
 
         Pilkarze pilkarz = (Pilkarze) tableSearch.getSelectionModel().getSelectedItem();
-        controller.textFieldID.setText(pilkarz.getIdPilkarza());
+
+        if (opcja.equals("wstawianieTransfer")) {
+            insertTransferController.textFieldID.setText(pilkarz.getIdPilkarza());
+        } else if (opcja.equals("wstawianieGol")) {
+            insertGolController.idPilkarza = pilkarz.getIdPilkarza();
+            insertGolController.textFieldPilkarz.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
+        } else if (opcja.equals("edycjaGol")) {
+            editGolController.idPilkarza = pilkarz.getIdPilkarza();
+            editGolController.textFieldPilkarz.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
+        }
+
+
 
         tableSearch.getItems().clear();
 

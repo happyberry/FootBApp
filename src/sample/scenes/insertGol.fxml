@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertGolController">
    <children>
-      <TextField fx:id="secondTF" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="thirdTF" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="textFieldMecz" disable="true" layoutX="151.0" layoutY="36.0" />
+      <TextField fx:id="textFieldPilkarz" disable="true" layoutX="151.0" layoutY="76.0" />
       <Label layoutX="89.0" layoutY="40.0" text="Mecz" />
       <Label layoutX="86.0" layoutY="80.0" text="Piłkarz" />
       <Label layoutX="82.0" layoutY="120.0" text="Minuta" />
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
-      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#editHandler" text="Zapisz zmiany" />
-      <Label layoutX="51.0" layoutY="160.0" text="Samobójczy?" />
-      <ComboBox fx:id="comboBoxSamobojczy" layoutX="151.0" layoutY="156.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz odpowiedź">
-         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <String fx:value="tak" />
-               <String fx:value="nie" />
-            </FXCollections>
-         </items>
-      </ComboBox>
-      <Label layoutX="32.0" layoutY="200.0" text="Dla gospodarzy?" />
-      <ComboBox fx:id="comboBoxCzyGospodarze" layoutX="151.0" layoutY="196.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz odpowiedź">
-         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <String fx:value="tak" />
-               <String fx:value="nie" />
-            </FXCollections>
-         </items>
-      </ComboBox>
-      <TextField fx:id="fourthTF" layoutX="151.0" layoutY="116.0" />
+      <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveHandler" text="Zapisz zmiany" />
+      <TextField fx:id="textFieldMinuta" layoutX="151.0" layoutY="116.0" />
+         <RadioButton fx:id="radioButtonGospodarze" layoutX="151.0" layoutY="160.0" mnemonicParsing="false" text="Dla gospodarzy">
+            <toggleGroup>
+               <ToggleGroup fx:id="toggleGroupDlaKogo" />
+            </toggleGroup>
+         </RadioButton>
+         <RadioButton fx:id="radioButtonGoscie" layoutX="272.0" layoutY="160.0" mnemonicParsing="false" text="Dla gości">
+            <toggleGroup>
+               <fx:reference source="toggleGroupDlaKogo" />
+            </toggleGroup>
+         </RadioButton>
+      <CheckBox fx:id="checkBoxSamobojczy" layoutX="151.0" layoutY="200.0" mnemonicParsing="false" text="Samobójczy" />
+      <Button layoutX="317.0" layoutY="36.0" mnemonicParsing="false" onAction="#findMecz" prefHeight="25.0" prefWidth="65.0" text="Wyszukaj" />
+      <Button layoutX="317.0" layoutY="76.0" mnemonicParsing="false" onAction="#findPilkarz" text="Wyszukaj" />
+      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" />
    </children>
 </AnchorPane>

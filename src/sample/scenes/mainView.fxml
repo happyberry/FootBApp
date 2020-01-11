@@ -332,14 +332,44 @@
                <children>
                   <TableView fx:id="tableGole" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn prefWidth="62.666653633117676" text="GolID" visible="false">
+                         <TableColumn prefWidth="93.99999713897705" text="Data">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="data" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="122.66666412353516" text="Gospodarze">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="gospodarze" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="121.99998474121094" text="Goscie">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="goscie" />
+                             </cellValueFactory>
+                         </TableColumn>
+                        <TableColumn prefWidth="48.66668701171875" text="Minuta">
                             <cellValueFactory>
-                                <PropertyValueFactory property="golId" />
+                                <PropertyValueFactory property="minuta" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="66.66666412353516" text="MeczID" visible="false">
+                         <TableColumn prefWidth="175.99996948242188" text="Dane strzelca">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="daneStrzelca" />
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn prefWidth="114.666748046875" text="Samobójczy">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="okolicznosci" />
+                             </cellValueFactory>
+                         </TableColumn>
+                        <TableColumn prefWidth="0" text="Samobójczy" visible="false">
                             <cellValueFactory>
-                                <PropertyValueFactory property="meczId" />
+                                <PropertyValueFactory property="czySamobojczy" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="0" text="Dla gospodarzy" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="czyDlaGospodarzy" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="63.333282470703125" text="PiłkID" visible="false">
@@ -347,24 +377,19 @@
                                 <PropertyValueFactory property="idPilkarza" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="238.00000476837158" text="Minuta">
+                        <TableColumn prefWidth="66.66666412353516" text="MeczID" visible="false">
                             <cellValueFactory>
-                                <PropertyValueFactory property="minuta" />
+                                <PropertyValueFactory property="meczId" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="221.3332977294922" text="Samobójczy">
+                        <TableColumn prefWidth="10.0" text="GolID" visible="false">
                             <cellValueFactory>
-                                <PropertyValueFactory property="czySamobojczy" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="214.00009155273438" text="Dla gospodarzy">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="czyDlaGospodarzy" />
+                                <PropertyValueFactory property="golId" />
                             </cellValueFactory>
                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj gol" />
-                  <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertGol" text="Dodaj gol" />
+                  <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditGol" text="Edytuj wpis" />
                </children></AnchorPane>
          </content>
       </Tab>
@@ -402,7 +427,7 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertSedzia" text="Dodaj sędziego" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditSedzia" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreSedzia" text="Pokaż dodatkowe informacje" />
                </children></AnchorPane>
          </content>
       </Tab>
