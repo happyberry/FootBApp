@@ -93,7 +93,7 @@ public class InsertTransferController {
             return;
         }
         String klubSprzedajacy = (String) comboBoxSell.getSelectionModel().getSelectedItem();
-        if (klubSprzedajacy.equals("")){
+        if (klubSprzedajacy == null || klubSprzedajacy.equals("")){
             klubSprzedajacy = null;
         }
         if (klubSprzedajacy != null) klubSprzedajacy = "'" + klubSprzedajacy + "'";
@@ -114,6 +114,7 @@ public class InsertTransferController {
                     + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy + "')");
             ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();
+            if (klubSprzedajacy != null) klubSprzedajacy = klubSprzedajacy.substring(1, klubSprzedajacy.length() - 1);
             Transfery addedTransfer = new Transfery(kwotaTransferu, klubSprzedajacy, idPilkarza, dataTransferu, klubKupujacy, rs.getString(1));
             controller.addToTable(controller.getTableTransfery(), addedTransfer);
         } catch (Exception e) {
@@ -140,7 +141,7 @@ public class InsertTransferController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertTransferController = this;
         sfPlayerController.opcja = "wstawianieTransfer";
-        sfPlayerController.initialize();
+        sfPlayerController.fetchInitialData();
     }
 
 }

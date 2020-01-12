@@ -29,7 +29,7 @@ public class SFPlayerController {
     public EditGolController editGolController;
     public EditTransferController editTransferController;
 
-    public void initialize(){
+    public void fetchInitialData(){
         tableSearch.getItems().clear();
         String SQL = "SELECT * from PILKARZE";
         Runnable r = new Runnable() {

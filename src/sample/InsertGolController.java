@@ -93,7 +93,7 @@ public class InsertGolController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertGolController = this;
         sfPlayerController.opcja = "wstawianieGol";
-        sfPlayerController.initialize();
+        sfPlayerController.fetchInitialData();
     }
 
     public void findMecz(ActionEvent event) throws IOException {

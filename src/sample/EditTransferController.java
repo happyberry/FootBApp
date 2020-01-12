@@ -84,7 +84,6 @@ public class EditTransferController {
 
     public void editHandler(ActionEvent event) throws SQLException {
 
-
         labelWarning.setVisible(false);
         String kwota = textFieldKwota.getText().replaceAll(" ", "");
         kwota = kwota.replaceFirst(",", ".");
@@ -139,22 +138,18 @@ public class EditTransferController {
         }
         Date dataTransferu = new Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
         String staraData = String.valueOf(transfer.getDataTransferu().getYear()+1900) + "-" + String.valueOf(transfer.getDataTransferu().getMonth()+1)
-                + "-" + String.valueOf(transfer.getDataTransferu().getDay());
+                + "-" + String.valueOf(transfer.getDataTransferu().getDate());
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM TRANSFERY WHERE ID_PILKARZA = " + transfer.getIdPilkarza() + " AND DATA_TRANSFERU = DATE '" + staraData +"'; commit;");
-            controller.removeFromTable(controller.getTableTransfery(), transfer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", " + klubSprzedajacy + ", "
-                    + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy + "')");
+            statement.executeUpdate("UPDATE TRANSFERY SET KWOTA_TRANSFERU = " + kwota + ", KLUB_SPRZEDAJACY = " + klubSprzedajacy + ", ID_PILKARZA = "
+                    + idPilkarza + ", DATA_TRANSFERU = DATE '" + data + "', KLUB_KUPUJACY = '" + klubKupujacy + "' WHERE ID_PILKARZA = " + transfer.getIdPilkarza()
+                    + " AND DATA_TRANSFERU = DATE '" + staraData + "'");
             ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();
+            if (klubSprzedajacy != null) klubSprzedajacy = klubSprzedajacy.substring(1, klubSprzedajacy.length() - 1);
             Transfery addedTransfer = new Transfery(kwotaTransferu, klubSprzedajacy, idPilkarza, dataTransferu, klubKupujacy, rs.getString(1));
             controller.addToTable(controller.getTableTransfery(), addedTransfer);
+            controller.removeFromTable(controller.getTableTransfery(), transfer);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,7 +174,7 @@ public class EditTransferController {
         sfPlayerController.connection = connection;
         sfPlayerController.editTransferController = this;
         sfPlayerController.opcja = "edycjaTransfer";
-        sfPlayerController.initialize();
+        sfPlayerController.fetchInitialData();
     }
 
 }
