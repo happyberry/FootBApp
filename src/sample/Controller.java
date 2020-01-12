@@ -980,7 +980,6 @@ public class Controller {
         InsertTransferController insertTransferController = loader.<InsertTransferController>getController();
 
         insertTransferController.connection = mainConnection;
-        while(insertTransferController.connection == null)
         insertTransferController.controller = this;
         insertTransferController.initializeOptions();
 

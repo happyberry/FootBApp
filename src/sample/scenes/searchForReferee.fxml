@@ -40,7 +40,7 @@
     </TableView>
     <Button layoutX="313.0" layoutY="191.0" mnemonicParsing="false" onAction="#search" text="Wyszukaj" />
     <Label fx:id="labelNazwisko" layoutX="209.0" layoutY="36.0" text="Nazwisko" />
-    <Label fx:id="labelKraj" layoutX="209.0" layoutY="76.0" text="Nazwa klubu" />
+    <Label fx:id="labelKraj" layoutX="209.0" layoutY="76.0" text="Kraj pochodzenia" />
     <TextField fx:id="textFieldNazwisko" layoutX="334.0" layoutY="32.0" />
     <TextField fx:id="textFieldKraj" layoutX="334.0" layoutY="72.0" />
    <Button layoutX="316.0" layoutY="505.0" mnemonicParsing="false" onAction="#saveSelected" text="Wybierz" />

@@ -37,7 +37,6 @@ public class InsertPilkarzController {
 
     public void initializeOptions() {
 
-        System.out.println(connection);
         comboBoxClub.getItems().clear();
         String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
 
@@ -63,14 +62,12 @@ public class InsertPilkarzController {
 
         String imie = textFieldImie.getText();
         if (imie.equals("")) {
-            System.out.println("[IMIE] Podaj imie zawodnika");
             labelWarning.setText("[IMIE] Podaj imie zawodnika");
             labelWarning.setVisible(true);
             return;
         }
         String nazwisko = textFieldNazwisko.getText();
         if (nazwisko.equals("")) {
-            System.out.println("[NAZWISKO] Podaj nazwisko zawodnika");
             labelWarning.setText("[NAZWISKO] Podaj nazwisko zawodnika");
             labelWarning.setVisible(true);
             return;
@@ -79,7 +76,6 @@ public class InsertPilkarzController {
         String month = (String) comboBoxBMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxBDay.getSelectionModel().getSelectedItem();
         if (year == null || month == null || day == null) {
-            System.out.println("[DATA URODZENIA] Podaj pełną datę urodzenia");
             labelWarning.setText("[DATA URODZENIA] Podaj pełną datę urodzenia");
             labelWarning.setVisible(true);
             return;
@@ -99,13 +95,11 @@ public class InsertPilkarzController {
             klub = "'" + klub + "'";
         }
         if (imie.length() > 40) {
-            System.out.println("[IMIE] Imię zbyt długie, skróć do 40 znaków");
             labelWarning.setText("[IMIE] Imię zbyt długie, skróć do 40 znaków");
             labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
-            System.out.println("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
             labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie, skróć do 40 znaków");
             labelWarning.setVisible(true);
             return;
@@ -113,7 +107,6 @@ public class InsertPilkarzController {
         if (Integer.parseInt(month) == 2) {
             if (Integer.parseInt(day) > 28) {
                 if (Integer.parseInt(day) > 29 || Integer.parseInt(year) % 4 != 0) {
-                    System.out.println("[DATA URODZENIA] Luty ma mniej niż 30 dni");
                     labelWarning.setText("[DATA URODZENIA] Luty ma mniej niż 30 dni");
                     labelWarning.setVisible(true);
                     return;
@@ -122,22 +115,19 @@ public class InsertPilkarzController {
         }
         if (Integer.parseInt(month) == 4 || Integer.parseInt(month) == 6 || Integer.parseInt(month) == 9 || Integer.parseInt(month) == 11) {
             if (day.equals("31")) {
-                System.out.println("[DATA URODZENIA] Błędny dzień miesiąca");
                 labelWarning.setText("[DATA URODZENIA] Błędny dzień miesiąca");
                 labelWarning.setVisible(true);
                 return;
             }
         }
         if (pozycje == null) {
-            System.out.println("[POZYCJA] Podaj pozycję, na której gra piłkarz");
             labelWarning.setText("[POZYCJA] Podaj pozycję, na której gra piłkarz");
             labelWarning.setVisible(true);
             return;
         }
 
-        if (wartosc == "") {
-            System.out.println("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
-            labelWarning.setText("");
+        if (wartosc.equals("")) {
+            labelWarning.setText("[WARTOŚĆ RYNKOWA] Podaj wartość rynkową piłkarza");
             labelWarning.setVisible(true);
             return;
         }
@@ -146,13 +136,11 @@ public class InsertPilkarzController {
         try {
             wartoscRynkowa = Double.parseDouble(wartosc);
         } catch (NumberFormatException e) {
-            System.out.println("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
             labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędny format wartości rynkowej");
             labelWarning.setVisible(true);
             return;
         }
         if (wartoscRynkowa > 9999999999.99 || wartoscRynkowa < 0) {
-            System.out.println("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
             labelWarning.setText("[WARTOŚĆ RYNKOWA] Błędna wartość rynkowa");
             labelWarning.setVisible(true);
             return;
@@ -162,20 +150,17 @@ public class InsertPilkarzController {
             try {
                 doublePensja = Double.parseDouble(pensja);
             } catch (NumberFormatException e) {
-                System.out.println("[PENSJA] Błędny format pensji");
                 labelWarning.setText("[PENSJA] Błędny format pensji");
                 labelWarning.setVisible(true);
                 return;
             }
-            if (doublePensja > 9999999999.99 || doublePensja < 0) {
-                System.out.println("[PENSJA] Błędna wartość pensji");
+            if (doublePensja > 9999999999.99 || doublePensja < 10) {
                 labelWarning.setText("[PENSJA] Błędna wartość pensji");
                 labelWarning.setVisible(true);
                 return;
             }
         }
         if (klub != null && klub.length() > 40) {
-            System.out.println("[NAZWA KLUBU] Nazwa klubu zbyt długa");
             labelWarning.setText("[NAZWA KLUBU] Nazwa klubu zbyt długa");
             labelWarning.setVisible(true);
             return;
@@ -187,6 +172,8 @@ public class InsertPilkarzController {
                     year + "-" + month + "-" + day + "', '" + pozycje + "', " + wartosc + ", " + pensja + ", " + klub + ")");
             ResultSet rs = statement.executeQuery("select id_pilkarza_seq.currval from dual");
             rs.next();
+            if (pensja == null) pensja = "0";
+            if (klub == null) klub = "  ";
             Pilkarze addedPilkarz = new Pilkarze(rs.getString(1), imie, nazwisko, date, pozycje, Double.parseDouble(wartosc),
                     Double.parseDouble(pensja), klub.substring(1, klub.length() - 1));
             controller.addToTable(controller.getTablePilkarze(), addedPilkarz);

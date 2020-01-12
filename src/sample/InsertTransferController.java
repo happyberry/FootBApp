@@ -67,19 +67,46 @@ public class InsertTransferController {
     public void saveHandler(ActionEvent event) throws SQLException {
 
         labelWarning.setVisible(false);
-        String kwota = textFieldKwota.getText();
-        Double kwotaTransferu = Double.parseDouble(kwota);
-        String klubKupujacy = comboBoxBuy.getSelectionModel().getSelectedItem().toString();
-        String klubSprzedajacy = comboBoxSell.getSelectionModel().getSelectedItem().toString();
+        String kwota = textFieldKwota.getText().replaceAll(" ", "");
+        kwota = kwota.replaceFirst(",", ".");
+        int toCut = kwota.length() - kwota.indexOf(".") - 3;
+        if (toCut > 0 && kwota.contains(".")) kwota = kwota.substring(0, kwota.length() - toCut);
+
+        double kwotaTransferu;
+        try {
+            kwotaTransferu = Double.parseDouble(kwota);
+        } catch (NumberFormatException e) {
+            labelWarning.setText("[KWOTA] Błędny format kwoty transferu");
+            labelWarning.setVisible(true);
+            return;
+        }
+        if (kwotaTransferu > 9999999999.99 || kwotaTransferu < 0) {
+            labelWarning.setText("[MAJĄTEK] Niepoprawna wartość kwoty transferu");
+            labelWarning.setVisible(true);
+            return;
+        }
+        String klubKupujacy = (String) comboBoxBuy.getSelectionModel().getSelectedItem();
+        if (klubKupujacy == null) {
+            labelWarning.setText("[KLUB] Wybierz klub, który nabył piłkarza");
+            labelWarning.setVisible(true);
+            return;
+        }
+        String klubSprzedajacy = (String) comboBoxSell.getSelectionModel().getSelectedItem();
+        if (klubSprzedajacy != null) klubSprzedajacy = "'" + klubSprzedajacy + "'";
         String year = (String) comboBoxYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxDay.getSelectionModel().getSelectedItem();
+        if (year == null || month == null || day == null) {
+            labelWarning.setText("[DATA] Podaj pełną datę");
+            labelWarning.setVisible(true);
+            return;
+        }
         String data = year + "-" + month + "-" + day;
         String idPilkarza = textFieldID.getText();
         Date dataTransferu = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", '" + klubSprzedajacy + "', "
+            statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", " + klubSprzedajacy + ", "
                     + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy + "')");
             ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();

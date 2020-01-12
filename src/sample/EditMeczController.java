@@ -41,7 +41,6 @@ public class EditMeczController {
 
     public void initializeOptions() {
 
-        System.out.println(connection);
         comboBoxGosc.getItems().clear();
         comboBoxGosp.getItems().clear();
         String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
@@ -98,7 +97,7 @@ public class EditMeczController {
         String wynikGosp = textFieldWynikGosp.getText();
         String wynikGosc = textFieldWynikGosc.getText();
         if (wynikGosc == null || wynikGosc.equals("")) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj wynik drużyny gości");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj wynik drużyny gości");
             labelWarning.setVisible(true);
             return;
         }
@@ -119,12 +118,12 @@ public class EditMeczController {
         try{
             wynikGosci = Integer.parseInt(wynikGosc);
         } catch (Exception e) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj liczbę całkowitą");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj liczbę całkowitą");
             labelWarning.setVisible(true);
             return;
         }
         if (wynikGosci < 0) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj poprawny wynik");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj poprawny wynik");
             labelWarning.setVisible(true);
             return;
         }
@@ -155,7 +154,7 @@ public class EditMeczController {
 
         String idSedziego = textFieldSedzia.getText();
         if(idSedziego == null || idSedziego.equals("")) {
-            labelWarning.setText("[SEDZIA] Wyszukaj sedziego");
+            labelWarning.setText("[SĘDZIA] Wyszukaj sędziego");
             labelWarning.setVisible(true);
             return;
         }

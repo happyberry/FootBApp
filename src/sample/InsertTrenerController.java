@@ -58,26 +58,22 @@ public class InsertTrenerController {
         labelWarning.setVisible(false);
         String imie = secondTF.getText();
         if (imie.equals("")) {
-            System.out.println("[IMIE] Podaj imię trenera");
             labelWarning.setText("[IMIE] Podaj imię trenera");
             labelWarning.setVisible(true);
             return;
         }
         if (imie.length() > 40) {
-            System.out.println("[IMIE] Imię zbyt długie");
             labelWarning.setText("[IMIE] Imię zbyt długie");
             labelWarning.setVisible(true);
             return;
         }
         String nazwisko = thirdTF.getText();
         if (nazwisko.equals("")) {
-            System.out.println("[NAZWISKO] Podaj nazwisko trenera");
             labelWarning.setText("[NAZWISKO] Podaj nazwisko trenera");
             labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
-            System.out.println("[NAZWISKO] Nazwisko zbyt długie");
             labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie");
             labelWarning.setVisible(true);
             return;
@@ -85,7 +81,6 @@ public class InsertTrenerController {
 
         String kraj = (String) comboBoxKraj.getSelectionModel().getSelectedItem();
         if (kraj == null) {
-            System.out.println("[KRAJ] Wybierz kraj pochodzenia");
             labelWarning.setText("[KRAJ] Wybierz kraj pochodzenia");
             labelWarning.setVisible(true);
             return;
@@ -93,7 +88,6 @@ public class InsertTrenerController {
 
         String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
         if (klub == null) {
-            System.out.println("[KLUB] Wybierz klub, który trenuje trener");
             labelWarning.setText("[KLUB] Wybierz klub, który trenuje trener");
             labelWarning.setVisible(true);
             return;

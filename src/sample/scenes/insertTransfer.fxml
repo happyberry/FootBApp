@@ -74,35 +74,6 @@
       <ComboBox fx:id="comboBoxYear" layoutX="364.0" layoutY="156.0" prefHeight="25.0" prefWidth="81.0" promptText="Rok">
          <items>
             <FXCollections fx:factory="observableArrayList">
-               <String fx:value="1981" />
-               <String fx:value="1982" />
-               <String fx:value="1983" />
-               <String fx:value="1984" />
-               <String fx:value="1985" />
-               <String fx:value="1986" />
-               <String fx:value="1987" />
-               <String fx:value="1988" />
-               <String fx:value="1989" />
-               <String fx:value="1990" />
-               <String fx:value="1991" />
-               <String fx:value="1992" />
-               <String fx:value="1993" />
-               <String fx:value="1994" />
-               <String fx:value="1995" />
-               <String fx:value="1996" />
-               <String fx:value="1997" />
-               <String fx:value="1998" />
-               <String fx:value="1999" />
-               <String fx:value="2000" />
-               <String fx:value="2001" />
-               <String fx:value="2002" />
-               <String fx:value="2003" />
-               <String fx:value="2004" />
-               <String fx:value="2005" />
-               <String fx:value="2006" />
-               <String fx:value="2007" />
-               <String fx:value="2008" />
-               <String fx:value="2009" />
                <String fx:value="2010" />
                <String fx:value="2011" />
                <String fx:value="2012" />
@@ -114,14 +85,23 @@
                <String fx:value="2018" />
                <String fx:value="2019" />
                <String fx:value="2020" />
+               <String fx:value="2021" />
+               <String fx:value="2022" />
+               <String fx:value="2023" />
+               <String fx:value="2024" />
+               <String fx:value="2025" />
+               <String fx:value="2026" />
+               <String fx:value="2027" />
+               <String fx:value="2028" />
+               <String fx:value="2029" />
             </FXCollections>
          </items>
       </ComboBox>
       <Label layoutX="63.0" layoutY="120.0" text="ID piłkarza" />
       <Label layoutX="43.0" layoutY="200.0" text="Klub kupujący" />
-      <ComboBox fx:id="comboBoxSell" layoutX="151.0" layoutY="76.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub">
+      <ComboBox fx:id="comboBoxSell" layoutX="151.0" layoutY="76.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub">
       </ComboBox>
-      <ComboBox fx:id="comboBoxBuy" layoutX="150.0" layoutY="196.0" onMouseClicked="#initializeOptions" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub" />
+      <ComboBox fx:id="comboBoxBuy" layoutX="150.0" layoutY="196.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub" />
       <Button layoutX="314.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" onAction="#openSearch" text="Wyszukaj piłkarza" />
       <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" />
       <TextField fx:id="textFieldID" disable="true" layoutX="150.0" layoutY="116.0" />

@@ -58,13 +58,11 @@ public class EditStadionController {
         labelWarning.setVisible(false);
         String nazwa = firstTF.getText();
         if (nazwa.equals("")) {
-            System.out.println("[NAZWA] Podaj nazwę stadionu");
             labelWarning.setText("[NAZWA] Podaj nazwę stadionu");
             labelWarning.setVisible(true);
             return;
         }
         if (nazwa.length() > 40) {
-            System.out.println("[NAZWA] Nazwa zbyt długa");
             labelWarning.setText("[NAZWA] Nazwa zbyt długa");
             labelWarning.setVisible(true);
             return;
@@ -76,13 +74,11 @@ public class EditStadionController {
             rokZbudowania = Integer.parseInt(strRokZbudowania);
         }
         catch (NumberFormatException e) {
-            System.out.println("[ROK ZBUDOWANIA] Podaj liczbę naturalną");
             labelWarning.setText("[ROK ZBUDOWANIA] Podaj liczbę naturalną");
             labelWarning.setVisible(true);
             return;
         }
         if (rokZbudowania < 1800 || rokZbudowania > 2050) {
-            System.out.println("[ROK ZBUDOWANIA] Podaj rok z przedziału 1800-2050");
             labelWarning.setText("[ROK ZBUDOWANIA] Podaj rok z przedziału 1800-2050");
             labelWarning.setVisible(true);
             return;
@@ -94,27 +90,23 @@ public class EditStadionController {
             pojemnosc = Integer.parseInt(strPojemnosc);
         }
         catch (NumberFormatException e) {
-            System.out.println("[POJEMNOSC] Podaj liczbę naturalną");
-            labelWarning.setText("[POJEMNOSC] Podaj liczbę naturalną");
+            labelWarning.setText("[POJEMNOŚĆ] Podaj liczbę naturalną");
             labelWarning.setVisible(true);
             return;
         }
         if (pojemnosc < 0 || pojemnosc > 500000) {
-            System.out.println("[POJEMNOSC] Podaj liczbę z przedziału 0-500000");
-            labelWarning.setText("[POJEMNOSC] Podaj liczbę z przedziału 0-500000");
+            labelWarning.setText("[POJEMNOŚĆ] Podaj liczbę z przedziału 0-500000");
             labelWarning.setVisible(true);
             return;
         }
 
         String miasto = fourthTF.getText();
         if (miasto.equals("")) {
-            System.out.println("[MIASTO] Podaj miasto, w którym znajduje się stadion");
             labelWarning.setText("[MIASTO] Podaj miasto, w którym znajduje się stadion");
             labelWarning.setVisible(true);
             return;
         }
         if (miasto.length() > 40) {
-            System.out.println("[MIASTO] Nazwa miasta zbyt długa");
             labelWarning.setText("[MIASTO] Nazwa miasta zbyt długa");
             labelWarning.setVisible(true);
             return;

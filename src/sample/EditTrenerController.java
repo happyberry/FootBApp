@@ -57,26 +57,22 @@ public class EditTrenerController {
         labelWarning.setVisible(false);
         String imie = secondTF.getText();
         if (imie.equals("")) {
-            System.out.println("[IMIE] Podaj imię trenera");
             labelWarning.setText("[IMIE] Podaj imię trenera");
             labelWarning.setVisible(true);
             return;
         }
         if (imie.length() > 40) {
-            System.out.println("[IMIE] Imię zbyt długie");
             labelWarning.setText("[IMIE] Imię zbyt długie");
             labelWarning.setVisible(true);
             return;
         }
         String nazwisko = thirdTF.getText();
         if (nazwisko.equals("")) {
-            System.out.println("[NAZWISKO] Podaj nazwisko trenera");
             labelWarning.setText("[NAZWISKO] Podaj nazwisko trenera");
             labelWarning.setVisible(true);
             return;
         }
         if (nazwisko.length() > 40) {
-            System.out.println("[NAZWISKO] Nazwisko zbyt długie");
             labelWarning.setText("[NAZWISKO] Nazwisko zbyt długie");
             labelWarning.setVisible(true);
             return;

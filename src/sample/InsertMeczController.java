@@ -40,7 +40,6 @@ public class InsertMeczController {
 
     public void initializeOptions() {
 
-        System.out.println(connection);
         comboBoxGosc.getItems().clear();
         comboBoxGosp.getItems().clear();
         String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
@@ -83,7 +82,7 @@ public class InsertMeczController {
         String goscie = (String) comboBoxGosc.getSelectionModel().getSelectedItem();
         String gospodarze = (String) comboBoxGosp.getSelectionModel().getSelectedItem();
         if (goscie == null || goscie.equals("")) {
-            labelWarning.setText("[GOSCIE] Podaj nazwę drużyny gości");
+            labelWarning.setText("[GOŚCIE] Podaj nazwę drużyny gości");
             labelWarning.setVisible(true);
             return;
         }
@@ -96,7 +95,7 @@ public class InsertMeczController {
         String wynikGosp = textFieldWynikGosp.getText();
         String wynikGosc = textFieldWynikGosc.getText();
         if (wynikGosc == null || wynikGosc.equals("")) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj wynik drużyny gości");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj wynik drużyny gości");
             labelWarning.setVisible(true);
             return;
         }
@@ -117,12 +116,12 @@ public class InsertMeczController {
         try{
             wynikGosci = Integer.parseInt(wynikGosc);
         } catch (Exception e) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj liczbę całkowitą");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj liczbę całkowitą");
             labelWarning.setVisible(true);
             return;
         }
         if (wynikGosci < 0) {
-            labelWarning.setText("[WYNIK_GOSCI] Podaj poprawny wynik");
+            labelWarning.setText("[WYNIK_GOŚCI] Podaj poprawny wynik");
             labelWarning.setVisible(true);
             return;
         }
@@ -152,8 +151,8 @@ public class InsertMeczController {
         }
 
         String idSedziego = textFieldSedzia.getText();
-        if(idSedziego == null || idSedziego.equals("")) {
-            labelWarning.setText("[SEDZIA] Wyszukaj sedziego");
+        if (idSedziego == null || idSedziego.equals("")) {
+            labelWarning.setText("[SĘDZIA] Wyszukaj sędziego");
             labelWarning.setVisible(true);
             return;
         }

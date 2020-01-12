@@ -60,7 +60,6 @@ public class EditKlubController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //controller.fillKluby();
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
@@ -77,19 +76,16 @@ public class EditKlubController {
         try {
             yearInt = Integer.parseInt(year);
         } catch (NumberFormatException e) {
-            System.out.println("[ROK ZALOZENIA] Podaj liczbę całkowitą");
             labelWarning.setText("[ROK ZALOZENIA] Podaj liczbę całkowitą");
             labelWarning.setVisible(true);
             return;
         }
         if (yearInt <= 1800) {
-            System.out.println("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
             labelWarning.setText("[ROK ZALOZENIA] Podaj rok 1801 lub późniejszy");
             labelWarning.setVisible(true);
             return;
         }
         if (name.length() > 40) {
-            System.out.println("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
             labelWarning.setText("[NAZWA KLUBU] Podaj krótszą nazwę klubu");
             labelWarning.setVisible(true);
             return;
