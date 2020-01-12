@@ -209,7 +209,7 @@ public class EditMeczController {
         sfRefereeController.connection = connection;
         sfRefereeController.editMeczController = this;
         sfRefereeController.operation = "Edycja";
-        sfRefereeController.initialize();
+        sfRefereeController.fetchInitialData();
     }
 
 

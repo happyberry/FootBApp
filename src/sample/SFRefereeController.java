@@ -24,7 +24,7 @@ public class SFRefereeController {
     @FXML
     public TableView tableSearch;
 
-    public void initialize() {
+    public void fetchInitialData() {
 
         tableSearch.getItems().clear();
         String SQL = "SELECT * from SEDZIOWIE";
@@ -77,7 +77,7 @@ public class SFRefereeController {
             }
         };
         new Thread(r).start();
-        if (found[0] == false) {
+        if (!found[0]) {
             tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
         }
     }

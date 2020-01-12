@@ -195,7 +195,7 @@ public class InsertMeczController {
         sfRefereeController.connection = connection;
         sfRefereeController.insertMeczController = this;
         sfRefereeController.operation = "Wstawianie";
-        sfRefereeController.initialize();
+        sfRefereeController.fetchInitialData();
     }
 
 }
