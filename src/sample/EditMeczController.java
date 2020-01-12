@@ -19,6 +19,7 @@ public class EditMeczController {
     public Connection connection;
     public Controller controller;
     public Mecze mecz;
+    public String sedziaId;
     @FXML
     public ComboBox comboBoxGosc;
     @FXML
@@ -208,6 +209,7 @@ public class EditMeczController {
         sfRefereeController.connection = connection;
         sfRefereeController.editMeczController = this;
         sfRefereeController.operation = "Edycja";
+        sfRefereeController.initialize();
     }
 
 

@@ -93,6 +93,7 @@ public class InsertGolController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertGolController = this;
         sfPlayerController.opcja = "wstawianieGol";
+        sfPlayerController.initialize();
     }
 
     public void findMecz(ActionEvent event) throws IOException {
@@ -106,6 +107,7 @@ public class InsertGolController {
         sfGameController.connection = connection;
         sfGameController.insertGolController = this;
         sfGameController.operation = "wstawianie";
+        sfGameController.initialize();
     }
 
 }

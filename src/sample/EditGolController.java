@@ -116,6 +116,7 @@ public class EditGolController {
         sfPlayerController.connection = connection;
         sfPlayerController.editGolController = this;
         sfPlayerController.opcja = "edycjaGol";
+        sfPlayerController.initialize();
     }
 
     public void findMecz(ActionEvent event) throws IOException {

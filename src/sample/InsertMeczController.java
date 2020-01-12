@@ -18,6 +18,7 @@ public class InsertMeczController {
 
     public Connection connection;
     public Controller controller;
+    public String sedziaId;
     @FXML
     public ComboBox comboBoxGosc;
     @FXML
@@ -194,6 +195,7 @@ public class InsertMeczController {
         sfRefereeController.connection = connection;
         sfRefereeController.insertMeczController = this;
         sfRefereeController.operation = "Wstawianie";
+        sfRefereeController.initialize();
     }
 
 }

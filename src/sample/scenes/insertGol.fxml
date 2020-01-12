@@ -10,14 +10,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InsertGolController">
    <children>
-      <TextField fx:id="textFieldMecz" disable="true" layoutX="151.0" layoutY="36.0" />
-      <TextField fx:id="textFieldPilkarz" disable="true" layoutX="151.0" layoutY="76.0" />
+      <TextField fx:id="textFieldMecz" disable="true" layoutX="151.0" layoutY="36.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="textFieldPilkarz" disable="true" layoutX="151.0" layoutY="76.0" prefHeight="25.0" prefWidth="163.0" />
       <Label layoutX="89.0" layoutY="40.0" text="Mecz" />
       <Label layoutX="86.0" layoutY="80.0" text="Piłkarz" />
       <Label layoutX="82.0" layoutY="120.0" text="Minuta" />
       <Button layoutX="14.0" layoutY="353.0" mnemonicParsing="false" onAction="#hideWindow" text="Anuluj" />
       <Button layoutX="500.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveHandler" text="Zapisz zmiany" />
-      <TextField fx:id="textFieldMinuta" layoutX="151.0" layoutY="116.0" />
+      <TextField fx:id="textFieldMinuta" layoutX="151.0" layoutY="116.0" prefHeight="25.0" prefWidth="163.0" />
          <RadioButton fx:id="radioButtonGospodarze" layoutX="151.0" layoutY="160.0" mnemonicParsing="false" text="Dla gospodarzy">
             <toggleGroup>
                <ToggleGroup fx:id="toggleGroupDlaKogo" />
@@ -29,8 +29,8 @@
             </toggleGroup>
          </RadioButton>
       <CheckBox fx:id="checkBoxSamobojczy" layoutX="151.0" layoutY="200.0" mnemonicParsing="false" text="Samobójczy" />
-      <Button layoutX="317.0" layoutY="36.0" mnemonicParsing="false" onAction="#findMecz" prefHeight="25.0" prefWidth="65.0" text="Wyszukaj" />
-      <Button layoutX="317.0" layoutY="76.0" mnemonicParsing="false" onAction="#findPilkarz" text="Wyszukaj" />
+      <Button layoutX="329.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#findMecz" prefHeight="25.0" prefWidth="65.0" text="Wyszukaj" />
+      <Button layoutX="329.0" layoutY="76.0" mnemonicParsing="false" onAction="#findPilkarz" text="Wyszukaj" />
       <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" />
    </children>
 </AnchorPane>

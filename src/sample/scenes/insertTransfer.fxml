@@ -97,13 +97,12 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Label layoutX="63.0" layoutY="120.0" text="ID piłkarza" />
+      <Label layoutX="83.0" layoutY="120.0" text="Piłkarz" />
       <Label layoutX="43.0" layoutY="200.0" text="Klub kupujący" />
       <ComboBox fx:id="comboBoxSell" layoutX="151.0" layoutY="76.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub">
       </ComboBox>
       <ComboBox fx:id="comboBoxBuy" layoutX="150.0" layoutY="196.0" prefHeight="25.0" prefWidth="149.0" promptText="Wybierz klub" />
-      <Button layoutX="314.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" onAction="#openSearch" text="Wyszukaj piłkarza" />
-      <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" />
+      <Button layoutX="314.0" layoutY="116.0" mnemonicParsing="false" onAction="#openSearch" prefHeight="25.0" prefWidth="113.0" text="Wyszukaj piłkarza" />
       <TextField fx:id="textFieldID" disable="true" layoutX="150.0" layoutY="116.0" />
       <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" text="Warning" textAlignment="CENTER" visible="false" />
    </children>

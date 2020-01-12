@@ -22,6 +22,29 @@ public class SFGameController {
     @FXML
     public TableView tableSearch;
 
+    public void initialize() {
+        tableSearch.getItems().clear();
+
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego)";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = connection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
+                                rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
+                        tableSearch.getItems().add(mecz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
     public void search() {
 
         String nazwa = textFieldNazwa.getText();

@@ -19,7 +19,7 @@ public class InsertTransferController {
 
     public Connection connection;
     public Controller controller;
-
+    public String pilkarzId;
     @FXML
     public TextField textFieldKwota;
     @FXML
@@ -102,7 +102,7 @@ public class InsertTransferController {
             return;
         }
         String data = year + "-" + month + "-" + day;
-        String idPilkarza = textFieldID.getText();
+        String idPilkarza = pilkarzId;
         Date dataTransferu = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
         try {
             Statement statement = connection.createStatement();
@@ -136,6 +136,7 @@ public class InsertTransferController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertTransferController = this;
         sfPlayerController.opcja = "wstawianieTransfer";
+        sfPlayerController.initialize();
     }
 
 }

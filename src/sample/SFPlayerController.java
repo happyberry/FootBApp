@@ -28,6 +28,29 @@ public class SFPlayerController {
     public TableView tableSearch;
     public EditGolController editGolController;
 
+    public void initialize(){
+        tableSearch.getItems().clear();
+        String SQL = "SELECT * from PILKARZE";
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = connection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        Pilkarze pilkarz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
+                                rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
+                                rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
+                        tableSearch.getItems().add(pilkarz);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Building Data");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
     public void search() {
 
         String nazwisko = textFieldNazwisko.getText();
@@ -70,7 +93,8 @@ public class SFPlayerController {
         Pilkarze pilkarz = (Pilkarze) tableSearch.getSelectionModel().getSelectedItem();
 
         if (opcja.equals("wstawianieTransfer")) {
-            insertTransferController.textFieldID.setText(pilkarz.getIdPilkarza());
+            insertTransferController.pilkarzId = pilkarz.getIdPilkarza();
+            insertTransferController.textFieldID.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
         } else if (opcja.equals("wstawianieGol")) {
             insertGolController.idPilkarza = pilkarz.getIdPilkarza();
             insertGolController.textFieldPilkarz.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
