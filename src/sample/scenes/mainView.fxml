@@ -232,7 +232,7 @@
                         </TableColumn>
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertTransfer" text="Dodaj nowy transfer" />
-                  <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
+                  <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditTransfer" text="Edytuj wpis" />
                </children></AnchorPane>
          </content>
       </Tab>

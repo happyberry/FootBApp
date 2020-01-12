@@ -970,6 +970,35 @@ public class Controller {
         new Thread(r).start();
     }
 
+    public void openEditTransfer(ActionEvent event) throws IOException {
+
+        if (tableTransfery.getSelectionModel().getSelectedItem() == null) return;
+
+        Transfery transfer = (Transfery) tableTransfery.getSelectionModel().getSelectedItem();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editTransfer.fxml"));
+
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj");
+        stage.setScene(new Scene((AnchorPane) loader.load()));
+        EditTransferController editTransferController = loader.<EditTransferController>getController();
+
+        editTransferController.connection = mainConnection;
+        editTransferController.controller = this;
+        editTransferController.transfer = transfer;
+
+        editTransferController.initializeOptions();
+        editTransferController.comboBoxBuy.setPromptText(transfer.getKlubKupujacy());
+        editTransferController.comboBoxDay.setPromptText(String.valueOf(transfer.getDataTransferu().getDate()));
+        editTransferController.comboBoxMonth.setPromptText(String.valueOf(transfer.getDataTransferu().getMonth()+1));
+        editTransferController.comboBoxYear.setPromptText(String.valueOf(transfer.getDataTransferu().getYear()+1900));
+        editTransferController.comboBoxSell.setPromptText(transfer.getKlubSprzedajacy());
+        editTransferController.textFieldID.setText(transfer.getDanePilkarza());
+        editTransferController.textFieldKwota.setText(String.valueOf(transfer.getKwotaTransferu()));
+
+        stage.show();
+    }
+
     public void openInsertTransfer(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertTransfer.fxml"));

@@ -27,6 +27,7 @@ public class SFPlayerController {
     @FXML
     public TableView tableSearch;
     public EditGolController editGolController;
+    public EditTransferController editTransferController;
 
     public void initialize(){
         tableSearch.getItems().clear();
@@ -101,6 +102,9 @@ public class SFPlayerController {
         } else if (opcja.equals("edycjaGol")) {
             editGolController.idPilkarza = pilkarz.getIdPilkarza();
             editGolController.textFieldPilkarz.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
+        } else {
+            editTransferController.pilkarzId = pilkarz.getIdPilkarza();
+            editTransferController.textFieldID.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
         }
 
 

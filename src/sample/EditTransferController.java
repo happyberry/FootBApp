@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -15,11 +14,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 
-public class InsertTransferController {
+public class EditTransferController {
 
     public Connection connection;
     public Controller controller;
     public String pilkarzId;
+    public Transfery transfer;
     @FXML
     public TextField textFieldKwota;
     @FXML
@@ -65,7 +65,25 @@ public class InsertTransferController {
         new Thread(r).start();
     }
 
-    public void saveHandler(ActionEvent event) throws SQLException {
+    public void deleteHandler(ActionEvent event) {
+        String year = comboBoxYear.getPromptText();
+        String month = comboBoxMonth.getPromptText();
+        String day = comboBoxDay.getPromptText();
+        String data = year + "-" + month + "-" + day;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM TRANSFERY WHERE ID_PILKARZA = " + transfer.getIdPilkarza() + " AND DATA_TRANSFERU = DATE '" + data +"'");
+            controller.removeFromTable(controller.getTableTransfery(), transfer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    public void editHandler(ActionEvent event) throws SQLException {
+
 
         labelWarning.setVisible(false);
         String kwota = textFieldKwota.getText().replaceAll(" ", "");
@@ -82,24 +100,33 @@ public class InsertTransferController {
             return;
         }
         if (kwotaTransferu > 9999999999.99 || kwotaTransferu < 0) {
-            labelWarning.setText("[MAJĄTEK] Niepoprawna wartość kwoty transferu");
+            labelWarning.setText("[KWOTA] Niepoprawna wartość kwoty transferu");
             labelWarning.setVisible(true);
             return;
         }
         String klubKupujacy = (String) comboBoxBuy.getSelectionModel().getSelectedItem();
         if (klubKupujacy == null) {
-            labelWarning.setText("[KLUB] Wybierz klub, który nabył piłkarza");
-            labelWarning.setVisible(true);
-            return;
+            klubKupujacy = comboBoxBuy.getPromptText();
         }
         String klubSprzedajacy = (String) comboBoxSell.getSelectionModel().getSelectedItem();
-        if (klubSprzedajacy.equals("")){
+        if (klubSprzedajacy == null) {
+            klubSprzedajacy = comboBoxSell.getPromptText();
+        } else if (klubSprzedajacy.equals("")){
             klubSprzedajacy = null;
         }
         if (klubSprzedajacy != null) klubSprzedajacy = "'" + klubSprzedajacy + "'";
         String year = (String) comboBoxYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxDay.getSelectionModel().getSelectedItem();
+        if (year == null) {
+            year = comboBoxYear.getPromptText();
+        }
+        if (month == null) {
+            month = comboBoxMonth.getPromptText();
+        }
+        if (day == null) {
+            day = comboBoxDay.getPromptText();
+        }
         if (year == null || month == null || day == null) {
             labelWarning.setText("[DATA] Podaj pełną datę");
             labelWarning.setVisible(true);
@@ -107,7 +134,19 @@ public class InsertTransferController {
         }
         String data = year + "-" + month + "-" + day;
         String idPilkarza = pilkarzId;
-        Date dataTransferu = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
+        if (idPilkarza == null) {
+            idPilkarza = transfer.getIdPilkarza();
+        }
+        Date dataTransferu = new Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
+        String staraData = String.valueOf(transfer.getDataTransferu().getYear()+1900) + "-" + String.valueOf(transfer.getDataTransferu().getMonth()+1)
+                + "-" + String.valueOf(transfer.getDataTransferu().getDay());
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM TRANSFERY WHERE ID_PILKARZA = " + transfer.getIdPilkarza() + " AND DATA_TRANSFERU = DATE '" + staraData +"'; commit;");
+            controller.removeFromTable(controller.getTableTransfery(), transfer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", " + klubSprzedajacy + ", "
@@ -138,8 +177,8 @@ public class InsertTransferController {
 
         SFPlayerController sfPlayerController = loader.<SFPlayerController>getController();
         sfPlayerController.connection = connection;
-        sfPlayerController.insertTransferController = this;
-        sfPlayerController.opcja = "wstawianieTransfer";
+        sfPlayerController.editTransferController = this;
+        sfPlayerController.opcja = "edycjaTransfer";
         sfPlayerController.initialize();
     }
 
