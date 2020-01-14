@@ -11,6 +11,7 @@ public class Mecze {
   private Integer wynikGosci;
   private String idSedziego;
   private String daneSedziego;
+  private String wynik;
 
   public Mecze (String mId, java.sql.Date date, String gosp, String gosc,
                 Integer wgosp, Integer wgosci, String idS, String dane){
@@ -22,6 +23,7 @@ public class Mecze {
     wynikGosci = wgosci;
     idSedziego = idS;
     daneSedziego = dane;
+    wynik = String.valueOf(wynikGospodarzy) + ":" + String.valueOf(wynikGosci);
   }
 
   public String getMeczId() {
@@ -92,5 +94,13 @@ public class Mecze {
 
   public void setDaneSedziego(String daneSedziego) {
     this.daneSedziego = daneSedziego;
+  }
+
+  public String getWynik() {
+    return wynik;
+  }
+
+  public void setWynik(String wynik) {
+    this.wynik = wynik;
   }
 }

@@ -38,6 +38,7 @@ public class InsertPilkarzController {
     public void initializeOptions() {
 
         comboBoxClub.getItems().clear();
+        comboBoxClub.getItems().add("");
         String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
 
         Runnable r = new Runnable() {
@@ -91,8 +92,11 @@ public class InsertPilkarzController {
         }
         String klub = null;
         if (comboBoxClub.getSelectionModel().getSelectedItem() != null) {
-            klub = comboBoxClub.getSelectionModel().getSelectedItem().toString();
-            klub = "'" + klub + "'";
+            if (comboBoxClub.getSelectionModel().getSelectedItem().equals("")) {klub = null;}
+            else {
+                klub = comboBoxClub.getSelectionModel().getSelectedItem().toString();
+                klub = "'" + klub + "'";
+            }
         }
         if (imie.length() > 40) {
             labelWarning.setText("[IMIE] Imię zbyt długie, skróć do 40 znaków");

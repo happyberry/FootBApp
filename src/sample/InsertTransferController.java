@@ -82,7 +82,7 @@ public class InsertTransferController {
             return;
         }
         if (kwotaTransferu > 9999999999.99 || kwotaTransferu < 0) {
-            labelWarning.setText("[MAJĄTEK] Niepoprawna wartość kwoty transferu");
+            labelWarning.setText("[KWOTA] Niepoprawna wartość kwoty transferu");
             labelWarning.setVisible(true);
             return;
         }
@@ -107,6 +107,11 @@ public class InsertTransferController {
         }
         String data = year + "-" + month + "-" + day;
         String idPilkarza = pilkarzId;
+        if (idPilkarza == null) {
+            labelWarning.setText("[PIŁKARZ] Wyszukaj piłkarza");
+            labelWarning.setVisible(true);
+            return;
+        }
         Date dataTransferu = new java.sql.Date(Integer.valueOf(year)-1900, Integer.valueOf(month)-1, Integer.valueOf(day));
         try {
             Statement statement = connection.createStatement();

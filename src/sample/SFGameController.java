@@ -22,7 +22,7 @@ public class SFGameController {
     @FXML
     public TableView tableSearch;
 
-    public void initialize() {
+    public void initializeOptions() {
         tableSearch.getItems().clear();
 
         String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego)";

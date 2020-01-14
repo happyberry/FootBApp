@@ -45,9 +45,15 @@ public class Controller {
     @FXML
     private TableView tableSearch;
     @FXML
+    private TableView tableRanking;
+    @FXML
+    private TableView tableStrzelcy;
+    @FXML
     private TableColumn tableColumnWartosc;
     @FXML
     private ComboBox comboBoxTable;
+    @FXML
+    private ComboBox comboBoxLeague;
     @FXML
     private AnchorPane anchorPaneSearch;
     @FXML
@@ -104,6 +110,85 @@ public class Controller {
 
     public TableView getTableLigi() {
         return tableLigi;
+    }
+
+    public void fetchInitialData() {
+        comboBoxLeague.getItems().clear();
+        comboBoxLeague.getItems().add("Wszystkie");
+        String SQL = "SELECT NAZWA_LIGI from LIGI ORDER BY NAZWA_LIGI";
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+                    while (rs.next()) {
+                        comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
+                    }
+                }
+                catch(SQLException e) {
+                    e.printStackTrace();
+                    System.out.println("Error on Picking Ligue Names");
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    public void fillRanking() {
+        fillRankingStrzelcow();
+        fillRankingKlubow();
+    }
+
+    public void fillRankingKlubow() {
+
+        if (comboBoxLeague.getSelectionModel().getSelectedItem() == null) return;
+        tableRanking.getItems().clear();
+        String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
+        if (liga.equals("wszystkie")) return;
+        String SQL = "SELECT NAZWA_KLUBU, liczpunkty(NAZWA_KLUBU) from KLUBY WHERE NAZWA_LIGI = '" + liga + "' ORDER BY liczpunkty(NAZWA_KLUBU) DESC";
+        try {
+            ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                RekordRankingu rekord = new RekordRankingu(rs.getString(1), rs.getInt(2));
+                System.out.println(rekord.nazwaKlubu);
+                tableRanking.getItems().add(rekord);
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error on Picking Ligue Names");
+        }
+
+
+    }
+
+    public void fillRankingStrzelcow() {
+
+        if (comboBoxLeague.getSelectionModel().getSelectedItem() == null) return;
+        tableStrzelcy.getItems().clear();
+        String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
+        if (!liga.equals("wszystkie")) { liga = "k2.nazwa_ligi = '" + liga + "' AND "; }
+        else { liga = ""; }
+        String SQL = "SELECT p.imie, p.nazwisko, k1.nazwa_klubu, COUNT(*) AS bramki\n" +
+                "FROM pilkarze p INNER JOIN gole g ON p.id_pilkarza = g.id_pilkarza INNER JOIN mecze m ON m.mecz_ID = g.mecz_ID INNER JOIN kluby k1 ON k1.nazwa_klubu = m.gospodarze\n" +
+                "INNER JOIN kluby k2 ON k2.nazwa_klubu = m.goscie\n" +
+                "WHERE " + liga + "k2.nazwa_ligi = k1.nazwa_ligi AND czy_samobojczy = 0\n" +
+                "GROUP BY p.imie, p.nazwisko, p.id_pilkarza, k1.nazwa_klubu " +
+                "ORDER BY bramki DESC";
+        try {
+            ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                RekordStrzelcow rekord = new RekordStrzelcow(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                System.out.println(rekord.nazwaKlubu);
+                tableStrzelcy.getItems().add(rekord);
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error on Picking Ligue Names");
+        }
+
     }
 
     public void fillKluby() throws SQLException {

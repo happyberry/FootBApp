@@ -16,29 +16,34 @@
                     <PropertyValueFactory property="meczId" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="97.3333387374878" text="Data">
+            <TableColumn prefWidth="102" text="Data">
                 <cellValueFactory>
                     <PropertyValueFactory property="data" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="130.66661834716797" text="Gospodarze">
+            <TableColumn prefWidth="175" text="Gospodarze">
                 <cellValueFactory>
                     <PropertyValueFactory property="gospodarze" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="136.6667022705078" text="Goście">
+            <TableColumn prefWidth="175" text="Goście">
                 <cellValueFactory>
                     <PropertyValueFactory property="goscie" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="114.66668701171875" text="Wynik gospodarzy">
+            <TableColumn prefWidth="114.66668701171875" text="Wynik gospodarzy" visible="false">
                 <cellValueFactory>
                     <PropertyValueFactory property="wynikGospodarzy" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="90.0" text="Wynik gości">
+            <TableColumn prefWidth="90.0" text="Wynik gości" visible="false">
                 <cellValueFactory>
                     <PropertyValueFactory property="wynikGosci" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="90.0" text="Wynik">
+                <cellValueFactory>
+                    <PropertyValueFactory property="wynik" />
                 </cellValueFactory>
             </TableColumn>
             <TableColumn minWidth="0.0" prefWidth="0.0" text="Id sędziego" visible="false">
@@ -46,7 +51,7 @@
                     <PropertyValueFactory property="idSedziego" />
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn minWidth="0.0" prefWidth="100.66668701171875" text="Dane sędziego">
+            <TableColumn minWidth="0.0" prefWidth="130" text="Dane sędziego">
                 <cellValueFactory>
                     <PropertyValueFactory property="daneSedziego" />
                 </cellValueFactory>

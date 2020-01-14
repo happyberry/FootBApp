@@ -151,7 +151,7 @@ public class InsertMeczController {
             }
         }
 
-        String idSedziego = textFieldSedzia.getText();
+        String idSedziego = sedziaId;
         if (idSedziego == null || idSedziego.equals("")) {
             labelWarning.setText("[SĘDZIA] Wyszukaj sędziego");
             labelWarning.setVisible(true);

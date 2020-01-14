@@ -27,7 +27,6 @@ public class InsertKlubController {
 
     public void initializeOptions() {
 
-        System.out.println(connection);
         comboBoxLeague.getItems().clear();
         String SQL = "SELECT NAZWA_LIGI from LIGI ORDER BY NAZWA_LIGI";
 

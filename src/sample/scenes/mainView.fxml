@@ -20,27 +20,49 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox layoutX="19.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="La Liga" />
-                              <String fx:value="Serie A" />
-                              <String fx:value="Premier League" />
-                              <String fx:value="Wszystkie" />
-                          </FXCollections>
-                      </items>
+                  <ComboBox fx:id="comboBoxLeague" onHiding="#fillRanking" onMouseEntered="#fetchInitialData" layoutX="19.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
                   </ComboBox>
-                  <TableView layoutX="14.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
+                  <TableView fx:id="tableRanking" layoutX="14.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
                     <columns>
-                      <TableColumn prefWidth="212.66669178009033" text="Nazwa klubu" />
-                      <TableColumn prefWidth="113.33332824707031" text="Liczba punktów" />
+                      <TableColumn prefWidth="212.66669178009033" text="Nazwa klubu">
+                          <cellValueFactory>
+                              <PropertyValueFactory
+                                      property="nazwaKlubu" />
+                          </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="113.33332824707031" text="Liczba punktów">
+                          <cellValueFactory>
+                              <PropertyValueFactory property="liczbaPunktow" />
+                          </cellValueFactory>
+                      </TableColumn>
                     </columns>
                   </TableView>
-                  <TableView layoutX="359.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
+                  <TableView fx:id="tableStrzelcy" layoutX="359.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Nazwisko" />
-                      <TableColumn prefWidth="75.0" text="Klub" />
-                        <TableColumn prefWidth="173.33340454101562" text="Liczba goli" />
+                        <TableColumn prefWidth="85.0" text="Imie">
+                            <cellValueFactory>
+                                <PropertyValueFactory
+                                        property="imie" />
+                            </cellValueFactory>
+                        </TableColumn>
+                      <TableColumn prefWidth="85.0" text="Nazwisko">
+                          <cellValueFactory>
+                              <PropertyValueFactory
+                                      property="nazwisko" />
+                          </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="85.0" text="Klub">
+                          <cellValueFactory>
+                              <PropertyValueFactory
+                                      property="nazwaKlubu" />
+                          </cellValueFactory>
+                      </TableColumn>
+                        <TableColumn prefWidth="50" text="Liczba goli">
+                            <cellValueFactory>
+                                <PropertyValueFactory
+                                        property="liczbaPunktow" />
+                            </cellValueFactory>
+                        </TableColumn>
                     </columns>
                   </TableView>
                   <Label layoutX="154.0" layoutY="56.0" text="Tabela">
@@ -284,37 +306,42 @@
                                 <PropertyValueFactory property="meczId" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="97.3333387374878" text="Data">
+                        <TableColumn prefWidth="102" text="Data">
                             <cellValueFactory>
                                 <PropertyValueFactory property="data" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="130.66661834716797" text="Gospodarze">
+                        <TableColumn prefWidth="175" text="Gospodarze">
                             <cellValueFactory>
                                 <PropertyValueFactory property="gospodarze" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="136.6667022705078" text="Goście">
+                        <TableColumn prefWidth="175" text="Goście">
                             <cellValueFactory>
                                 <PropertyValueFactory property="goscie" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="114.66668701171875" text="Wynik gospodarzy">
+                        <TableColumn prefWidth="114.66668701171875" text="Wynik gospodarzy" visible="false">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wynikGospodarzy" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="90.0" text="Wynik gości">
+                        <TableColumn prefWidth="90.0" text="Wynik gości" visible="false">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wynikGosci" />
                             </cellValueFactory>
                         </TableColumn>
+                         <TableColumn prefWidth="90.0" text="Wynik">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="wynik" />
+                             </cellValueFactory>
+                         </TableColumn>
                         <TableColumn minWidth="0.0" prefWidth="0.0" text="Id sędziego" visible="false">
                             <cellValueFactory>
                                 <PropertyValueFactory property="idSedziego" />
                             </cellValueFactory>
                         </TableColumn>
-                         <TableColumn minWidth="0.0" prefWidth="100.66668701171875" text="Dane sędziego">
+                         <TableColumn minWidth="0.0" prefWidth="130" text="Dane sędziego">
                              <cellValueFactory>
                                  <PropertyValueFactory property="daneSedziego" />
                              </cellValueFactory>

@@ -36,8 +36,34 @@ public class InsertGolController {
 
     public void saveHandler(ActionEvent event) throws SQLException {
 
+        labelWarning.setVisible(false);
+        if (mecz == null) {
+            labelWarning.setText("[MECZ] Wyszukaj spotkanie");
+            labelWarning.setVisible(true);
+            return;
+        }
+        if (idPilkarza == null) {
+            labelWarning.setText("[PIŁKARZ] Wyszukaj piłkarza");
+            labelWarning.setVisible(true);
+            return;
+        }
+
+        Integer minuta = 0;
         String min = textFieldMinuta.getText();
-        Integer minuta = Integer.parseInt(min);
+        if (min == null || min.equals("")) {
+            labelWarning.setText("[MINUTA] Podaj minutę, w której padł gol");
+            labelWarning.setVisible(true);
+            return;
+        }
+        else {
+            try {
+            minuta = Integer.parseInt(min);
+            } catch (Exception e) {
+                labelWarning.setText("[MINUTA] Podaj liczbę całkowitą");
+                labelWarning.setVisible(true);
+                return;
+            }
+        }
 
         Integer czySamobojczy;
         if (checkBoxSamobojczy.isSelected()) {
@@ -52,6 +78,12 @@ public class InsertGolController {
         } else {
             dlaGospodarzy = 0;
         }
+        if (!radioButtonGospodarze.isSelected() && !radioButtonGoscie.isSelected()) {
+            labelWarning.setText("Wybierz stronę, która strzeliła");
+            labelWarning.setVisible(true);
+            return;
+        }
+
         String okolicznosci = null;
         if (czySamobojczy == 0) {
             okolicznosci = "Nie";
@@ -107,7 +139,7 @@ public class InsertGolController {
         sfGameController.connection = connection;
         sfGameController.insertGolController = this;
         sfGameController.operation = "wstawianie";
-        sfGameController.initialize();
+        sfGameController.initializeOptions();
     }
 
 }

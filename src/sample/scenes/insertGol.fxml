@@ -29,7 +29,7 @@
             </toggleGroup>
          </RadioButton>
       <CheckBox fx:id="checkBoxSamobojczy" layoutX="151.0" layoutY="200.0" mnemonicParsing="false" text="Samobójczy" />
-      <Button layoutX="329.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#findMecz" prefHeight="25.0" prefWidth="65.0" text="Wyszukaj" />
+      <Button layoutX="329.0" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#findMecz" text="Wyszukaj" />
       <Button layoutX="329.0" layoutY="76.0" mnemonicParsing="false" onAction="#findPilkarz" text="Wyszukaj" />
       <Label fx:id="labelWarning" alignment="CENTER" layoutX="16.0" layoutY="333.0" prefHeight="17.0" prefWidth="569.0" />
    </children>

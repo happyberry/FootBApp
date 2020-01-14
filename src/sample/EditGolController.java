@@ -43,9 +43,34 @@ public class EditGolController {
 
     public void editHandler(ActionEvent event) throws SQLException {
 
-        String min = textFieldMinuta.getText();
+        labelWarning.setVisible(false);
+        if (mecz == null) {
+            labelWarning.setText("[MECZ] Wyszukaj spotkanie");
+            labelWarning.setVisible(true);
+            return;
+        }
+        if (idPilkarza == null) {
+            labelWarning.setText("[PIŁKARZ] Wyszukaj piłkarza");
+            labelWarning.setVisible(true);
+            return;
+        }
 
-        Integer minuta = Integer.parseInt(min);
+        Integer minuta = 0;
+        String min = textFieldMinuta.getText();
+        if (min == null || min.equals("")) {
+            labelWarning.setText("[MINUTA] Podaj minutę, w której padł gol");
+            labelWarning.setVisible(true);
+            return;
+        }
+        else {
+            try {
+                minuta = Integer.parseInt(min);
+            } catch (Exception e) {
+                labelWarning.setText("[MINUTA] Podaj liczbę całkowitą");
+                labelWarning.setVisible(true);
+                return;
+            }
+        }
 
         Integer czySamobojczy;
         if (checkBoxSamobojczy.isSelected()) {
@@ -60,12 +85,19 @@ public class EditGolController {
         } else {
             dlaGospodarzy = 0;
         }
+        if (!radioButtonGospodarze.isSelected() && !radioButtonGoscie.isSelected()) {
+            labelWarning.setText("Wybierz stronę, która strzeliła");
+            labelWarning.setVisible(true);
+            return;
+        }
+
         String okolicznosci = null;
         if (czySamobojczy == 0) {
             okolicznosci = "Nie";
         } else {
             okolicznosci = "Tak";
         }
+
 
 
         try {

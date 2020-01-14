@@ -40,6 +40,7 @@ public class EditPilkarzController {
     public void initializeOptions() {
 
         comboBoxClub.getItems().clear();
+        comboBoxClub.getItems().add("");
         String SQL = "SELECT NAZWA_klubu from KLUBY ORDER BY NAZWA_KLUBU";
 
         Runnable r = new Runnable() {
@@ -128,10 +129,13 @@ public class EditPilkarzController {
         }
 
         String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
-        if(klub == null){
+        if (klub == null) {
             klub = comboBoxClub.getPromptText();
+        } else if (klub.equals("")) {
+            klub = null;
         }
-        klub = "'" + klub + "'";
+        if (klub != null) klub = "'" + klub + "'";
+
 
         if (imie.length() > 40) {
             labelWarning.setText("[IMIE] Imię zbyt długie, skróć do 40 znaków");
