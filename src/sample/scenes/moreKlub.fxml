@@ -10,28 +10,28 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MoreKlubController">
    <children>
-      <Label layoutX="289.0" layoutY="24.0" text="Lista zawodników">
+      <Label layoutX="442.0" layoutY="24.0" text="Lista zawodników">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <TableView fx:id="tablePilkarze" layoutX="11.0" layoutY="52.0" prefHeight="372.0" prefWidth="675.0">
+      <TableView fx:id="tablePilkarze" layoutX="321.0" layoutY="51.0" prefHeight="379.0" prefWidth="359.0">
           <columns>
               <TableColumn prefWidth="28.666687965393066" text="ID" visible="false">
                   <cellValueFactory>
                       <PropertyValueFactory property="idPilkarza" />
                   </cellValueFactory>
               </TableColumn>
-              <TableColumn prefWidth="106.00002765655518" text="Imię">
+              <TableColumn prefWidth="100.0" text="Imię">
                   <cellValueFactory>
                       <PropertyValueFactory property="imie" />
                   </cellValueFactory>
               </TableColumn>
-              <TableColumn prefWidth="119.3333511352539" text="Nazwisko">
+              <TableColumn prefWidth="100.0" text="Nazwisko">
                   <cellValueFactory>
                       <PropertyValueFactory property="nazwisko" />
                   </cellValueFactory>
               </TableColumn>
-              <TableColumn prefWidth="93.33335876464844" text="Data urodzenia">
+              <TableColumn prefWidth="93.33335876464844" text="Data urodzenia" visible="false">
                   <cellValueFactory>
                       <PropertyValueFactory property="dataUrodzenia" />
                   </cellValueFactory>
@@ -41,7 +41,7 @@
                       <PropertyValueFactory property="pozycja" />
                   </cellValueFactory>
               </TableColumn>
-              <TableColumn fx:id="tableColumnWartosc" prefWidth="103.33334350585938" text="Wartość rynkowa">
+              <TableColumn fx:id="tableColumnWartosc" prefWidth="103.33334350585938" text="Wartość rynkowa" visible="false">
                   <cellValueFactory>
                       <PropertyValueFactory property="wartoscRynkowa" />
                   </cellValueFactory>
@@ -51,12 +51,53 @@
                       <PropertyValueFactory property="pensja" />
                   </cellValueFactory>
               </TableColumn>
-              <TableColumn prefWidth="92.6666259765625" text="Nazwa klubu">
+              <TableColumn prefWidth="92.6666259765625" text="Nazwa klubu" visible="false">
                   <cellValueFactory>
                       <PropertyValueFactory property="nazwaKlubu" />
                   </cellValueFactory>
               </TableColumn>
           </columns></TableView>
       <Button layoutX="321.0" layoutY="441.0" mnemonicParsing="false" onAction="#hideWindow" text="Powrót" />
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="195.0" prefHeight="17.0" prefWidth="78.0" text="Trener">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="235.0" prefHeight="17.0" prefWidth="78.0" text="Właściciel">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="155.0" prefHeight="17.0" prefWidth="78.0" text="Liga">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="115.0" text="Rok założenia">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="275.0" prefHeight="17.0" prefWidth="78.0" text="Stadion">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="315.0" prefHeight="17.0" prefWidth="78.0" text="Miasto">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelRok" layoutX="129.0" layoutY="115.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelLiga" layoutX="129.0" layoutY="155.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelTrener" layoutX="129.0" layoutY="195.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelWlasciciel" layoutX="129.0" layoutY="235.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelStadion" layoutX="129.0" layoutY="275.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelMiasto" layoutX="129.0" layoutY="315.0" prefHeight="17.0" prefWidth="173.0" text="Brak informacji" />
+      <Label fx:id="labelNazwa" alignment="CENTER_RIGHT" layoutX="39.0" layoutY="35.0" text="Nazwa_klubu">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

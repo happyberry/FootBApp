@@ -6,11 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -309,6 +311,30 @@ public class Controller {
         };
         new Thread(r).start();
 
+        moreKlubController.labelNazwa.setText(klub.getNazwaKlubu());
+        moreKlubController.labelLiga.setText(klub.getNazwaLigi());
+        moreKlubController.labelRok.setText(klub.getRokZalozenia().toString());
+        try {
+            Statement statement = mainConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select NAZWA, MIASTO from STADIONY where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            while(resultSet.next()) {
+                moreKlubController.labelStadion.setText(resultSet.getString(1));
+                moreKlubController.labelMiasto.setText(resultSet.getString(2));
+            }
+            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from WLASCICIELE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            while(resultSet.next()) {
+                moreKlubController.labelWlasciciel.setText(resultSet.getString(1));
+            }
+            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from TRENERZY where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            while(resultSet.next()) {
+                moreKlubController.labelTrener.setText(resultSet.getString(1));
+            }
+
+        }
+        catch (Exception e) {
+            System.out.println("Error on building data");
+        }
+
     }
 
     public void fillPilkarze() throws SQLException {
@@ -502,37 +528,83 @@ public class Controller {
         stage.show();
 
         MoreMeczController moreMeczController = loader.<MoreMeczController>getController();
+        moreMeczController.box.getChildren().clear();
+        moreMeczController.labelGospodarze.setText(mecz.getGospodarze());
+        moreMeczController.labelGoscie.setText(mecz.getGoscie());
+        moreMeczController.labelWynik.setText(mecz.getWynik());
+
+        if (mecz.getWynikGosci() > mecz.getWynikGospodarzy()) {
+            moreMeczController.labelGoscie.setTextFill(Color.web("green"));
+            moreMeczController.labelGospodarze.setTextFill(Color.web("red"));
+        } else if (mecz.getWynikGospodarzy() > mecz.getWynikGosci()) {
+            moreMeczController.labelGoscie.setTextFill(Color.web("red"));
+            moreMeczController.labelGospodarze.setTextFill(Color.web("green"));
+        }
+
+        try {
+            Statement statement = mainConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGospodarze() + "'");
+            resultSet.next();
+            String ligaGospodarzy = resultSet.getString(1);
+            resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGoscie() + "'");
+            resultSet.next();
+            String ligaGosci = resultSet.getString(1);
+            if (ligaGosci.equals(ligaGospodarzy)) {
+                moreMeczController.labelData.setText(ligaGosci + ", " + mecz.getData().toString());
+            } else {
+                moreMeczController.labelData.setText("Mecz towarzyski, " + mecz.getData().toString());
+            }
+
+        }
+        catch (Exception e) {
+            System.out.println("Error on building data");
+        }
 
         String SQL = "SELECT CZY_SAMOBOJCZY, CZY_DLA_GOSPODARZY, GOL_ID, MECZ_ID, ID_PILKARZA, MINUTA, IMIE || ' ' || NAZWISKO, " +
-                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id)";
-        moreMeczController.tableGole.getItems().clear();
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
-                    while (rs.next()) {
-                        Integer samobojczy = rs.getInt(1);
-                        Integer czyGospodarze = rs.getInt(2);
-                        String okolicznosci = null;
-                        if (samobojczy == 0) {
-                            okolicznosci = "Nie";
-                        } else {
-                            okolicznosci = "Tak";
-                        }
+                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id) WHERE MECZ_ID = " + mecz.getMeczId() + " ORDER BY MINUTA";
 
-                        Gole gol = new Gole(rs.getString(3), rs.getString(4), rs.getString(5),
-                                rs.getInt(6), samobojczy, czyGospodarze, rs.getString(7), okolicznosci,
-                                rs.getString(8), rs.getString(9), rs.getDate(10));
-                        moreMeczController.tableGole.getItems().add(gol);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Error on Building Data");
+        Integer translateGospodarze = 0;
+        Integer translateGoscie = 0;
+        try {
+            ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                Integer samobojczy = rs.getInt(1);
+                Integer czyGospodarze = rs.getInt(2);
+                String okolicznosci = null;
+                if (samobojczy == 0) {
+                    okolicznosci = "Nie";
+                } else {
+                    okolicznosci = "Tak";
                 }
+                Gole gol = new Gole(rs.getString(3), rs.getString(4), rs.getString(5),
+                        rs.getInt(6), samobojczy, czyGospodarze, rs.getString(7), okolicznosci,
+                        rs.getString(8), rs.getString(9), rs.getDate(10));
+
+                Label labelNowyGol = new Label();
+                labelNowyGol.setPrefWidth(200);
+                String text = gol.getDaneStrzelca() + " " + gol.getMinuta().toString() + "'";
+                System.out.println(text);
+                if (samobojczy == 0) {
+                    text += "(S)";
+                }
+                labelNowyGol.setText(text);
+                if (czyGospodarze == 1) {
+                    System.out.println("Gospodarze");
+                    labelNowyGol.setTranslateX(0);
+                    labelNowyGol.setTranslateY(translateGospodarze += 10);
+                } else {
+                    labelNowyGol.setTranslateX(356);
+                    labelNowyGol.setAlignment(Pos.CENTER_RIGHT);
+                    labelNowyGol.setTranslateY(translateGoscie += 10);
+                }
+                System.out.println(translateGospodarze + " " + translateGoscie);
+                moreMeczController.box.getChildren().add(labelNowyGol);
             }
-        };
-        new Thread(r).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+
 
     }
 
