@@ -34,6 +34,7 @@ public class Main extends Application {
                     "jdbc:oracle:thin:@//admlab2.cs.put.poznan.pl:1521/dblab02_students.cs.put.poznan.pl",
                     "inf136820", "inf136820");
             controller.mainConnection = connection;
+            controller.fillRanking();
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE,
                     "nie udało się połączyć z bazą danych", ex);

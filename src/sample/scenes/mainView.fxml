@@ -20,14 +20,13 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="comboBoxLeague" onHiding="#fillRanking" onMouseEntered="#fetchInitialData" layoutX="19.0" layoutY="14.0" prefHeight="25.0" prefWidth="269.0" promptText="Wybierz ligę do podsumowania">
+                  <ComboBox fx:id="comboBoxLeague" layoutX="176.0" layoutY="14.0" onHiding="#fillRanking" onMouseClicked="#fetchInitialData" prefHeight="25.0" prefWidth="223.0" promptText="Wybierz ligę do podsumowania">
                   </ComboBox>
                   <TableView fx:id="tableRanking" layoutX="14.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
                     <columns>
                       <TableColumn prefWidth="212.66669178009033" text="Nazwa klubu">
                           <cellValueFactory>
-                              <PropertyValueFactory
-                                      property="nazwaKlubu" />
+                              <PropertyValueFactory property="nazwaKlubu" />
                           </cellValueFactory>
                       </TableColumn>
                       <TableColumn prefWidth="113.33332824707031" text="Liczba punktów">
@@ -41,26 +40,22 @@
                     <columns>
                         <TableColumn prefWidth="85.0" text="Imie">
                             <cellValueFactory>
-                                <PropertyValueFactory
-                                        property="imie" />
+                                <PropertyValueFactory property="imie" />
                             </cellValueFactory>
                         </TableColumn>
                       <TableColumn prefWidth="85.0" text="Nazwisko">
                           <cellValueFactory>
-                              <PropertyValueFactory
-                                      property="nazwisko" />
+                              <PropertyValueFactory property="nazwisko" />
                           </cellValueFactory>
                       </TableColumn>
                       <TableColumn prefWidth="85.0" text="Klub">
                           <cellValueFactory>
-                              <PropertyValueFactory
-                                      property="nazwaKlubu" />
+                              <PropertyValueFactory property="nazwaKlubu" />
                           </cellValueFactory>
                       </TableColumn>
-                        <TableColumn prefWidth="50" text="Liczba goli">
+                        <TableColumn prefWidth="69" text="Liczba goli">
                             <cellValueFactory>
-                                <PropertyValueFactory
-                                        property="liczbaPunktow" />
+                                <PropertyValueFactory property="liczbaPunktow" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
@@ -75,6 +70,32 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
+                  <ComboBox fx:id="comboBoxYear" layoutX="412.0" layoutY="14.0" onHiding="#fillRanking" prefHeight="25.0" prefWidth="129.0" promptText="Wybierz sezon">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="2010/2011" />
+                              <String fx:value="2011/2012" />
+                              <String fx:value="2012/2013" />
+                              <String fx:value="2013/2014" />
+                              <String fx:value="2014/2015" />
+                              <String fx:value="2015/2016" />
+                              <String fx:value="2016/2017" />
+                              <String fx:value="2017/2018" />
+                              <String fx:value="2018/2019" />
+                              <String fx:value="2019/2020" />
+                              <String fx:value="2020/2021" />
+                              <String fx:value="2021/2022" />
+                              <String fx:value="2022/2023" />
+                              <String fx:value="2023/2024" />
+                              <String fx:value="2024/2025" />
+                              <String fx:value="2025/2026" />
+                              <String fx:value="2026/2027" />
+                              <String fx:value="2027/2028" />
+                              <String fx:value="2028/2029" />
+                              <String fx:value="2029/2030" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
                </children></AnchorPane>
       </content>
     </Tab>

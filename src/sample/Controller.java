@@ -55,7 +55,7 @@ public class Controller {
     @FXML
     private ComboBox comboBoxTable;
     @FXML
-    private ComboBox comboBoxLeague;
+    private ComboBox comboBoxLeague, comboBoxYear;
     @FXML
     private AnchorPane anchorPaneSearch;
     @FXML
@@ -114,27 +114,28 @@ public class Controller {
         return tableLigi;
     }
 
+    public void initialize() {
+        comboBoxLeague.getItems().add("Wszystkie");
+        comboBoxLeague.getSelectionModel().select(0);
+        comboBoxYear.getSelectionModel().select(9);
+    }
+
     public void fetchInitialData() {
         comboBoxLeague.getItems().clear();
         comboBoxLeague.getItems().add("Wszystkie");
         String SQL = "SELECT NAZWA_LIGI from LIGI ORDER BY NAZWA_LIGI";
 
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
-                    while (rs.next()) {
-                        comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
-                    }
-                }
-                catch(SQLException e) {
-                    e.printStackTrace();
-                    System.out.println("Error on Picking Ligue Names");
-                }
+        try {
+            ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
             }
-        };
-        new Thread(r).start();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error on Picking Ligue Names");
+        }
+        comboBoxLeague.hide();
+        comboBoxLeague.show();
     }
 
     public void fillRanking() {
@@ -145,10 +146,27 @@ public class Controller {
     public void fillRankingKlubow() {
 
         if (comboBoxLeague.getSelectionModel().getSelectedItem() == null) return;
+        String poczatek = null;
+        String koniec = null;
+        if (comboBoxYear.getSelectionModel().getSelectedItem() == null) {
+            poczatek = "DATE '2019-07-01'";
+            koniec = "DATE '2020-06-30' ";
+        }
+        else {
+            Integer rokPoczatku = Integer.parseInt(comboBoxYear.getSelectionModel().getSelectedItem().toString().substring(0,4));
+            System.out.println(rokPoczatku);
+            poczatek = "DATE '" + String.valueOf(rokPoczatku) +"-07-01'";
+            koniec = "DATE '" + String.valueOf(rokPoczatku+1) + "-06-30' ";
+        }
         tableRanking.getItems().clear();
         String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
-        if (liga.equals("wszystkie")) return;
-        String SQL = "SELECT NAZWA_KLUBU, liczpunkty(NAZWA_KLUBU) from KLUBY WHERE NAZWA_LIGI = '" + liga + "' ORDER BY liczpunkty(NAZWA_KLUBU) DESC";
+        if (liga.equals("Wszystkie")) {
+            tableRanking.setPlaceholder(new Label("Wybierz ligę by zobaczyć jej tabelę"));
+            return;
+        } else {
+            tableRanking.setPlaceholder(new Label("No content in table"));
+        }
+        String SQL = "SELECT NAZWA_KLUBU, liczpunktywsezonie(NAZWA_KLUBU, " + poczatek + ", " + koniec + ") as punkty from KLUBY WHERE NAZWA_LIGI = '" + liga + "' ORDER BY punkty DESC";
         try {
             ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
             while (rs.next()) {
@@ -170,7 +188,7 @@ public class Controller {
         if (comboBoxLeague.getSelectionModel().getSelectedItem() == null) return;
         tableStrzelcy.getItems().clear();
         String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
-        if (!liga.equals("wszystkie")) { liga = "k2.nazwa_ligi = '" + liga + "' AND "; }
+        if (!liga.equals("Wszystkie")) { liga = "k2.nazwa_ligi = '" + liga + "' AND "; }
         else { liga = ""; }
         String SQL = "SELECT p.imie, p.nazwisko, k1.nazwa_klubu, COUNT(*) AS bramki\n" +
                 "FROM pilkarze p INNER JOIN gole g ON p.id_pilkarza = g.id_pilkarza INNER JOIN mecze m ON m.mecz_ID = g.mecz_ID INNER JOIN kluby k1 ON k1.nazwa_klubu = m.gospodarze\n" +
