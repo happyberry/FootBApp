@@ -126,8 +126,18 @@ public class InsertStadionController {
                     + miasto + "', '" + klub + "')");
             Stadiony addedStadion = new Stadiony(nazwa, rokZbudowania, pojemnosc, miasto, klub);
             controller.addToTable(controller.getTableStadiony(), addedStadion);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("Ten klub ma już stadion. Usuń go i spróbuj ponownie");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
 
         ((Node)(event.getSource())).getScene().getWindow().hide();

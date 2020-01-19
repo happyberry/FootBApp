@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -51,8 +52,9 @@ public class InsertWlascicielController {
         new Thread(r).start();
     }
 
-    public void saveHandler(ActionEvent event) throws SQLException {
+    public void saveHandler(ActionEvent event) {
 
+        Boolean out = true;
         labelWarning.setVisible(false);
         String imie = secondTF.getText();
         if (imie.equals("")) {
@@ -111,8 +113,18 @@ public class InsertWlascicielController {
             rs.next();
             Wlasciciele addedWlasciciel = new Wlasciciele(rs.getString(1), imie, nazwisko, doubleMajatek, klub);
             controller.addToTable(controller.getTableWlasciciele(), addedWlasciciel);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("Ten klub ma już właściciela. Usuń go i spróbuj ponownie");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
 
         ((Node)(event.getSource())).getScene().getWindow().hide();

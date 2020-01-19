@@ -96,8 +96,18 @@ public class EditTrenerController {
             Trenerzy nowyTrener = new Trenerzy(trener.getIdTrenera(), imie, nazwisko, kraj, klub);
             controller.removeFromTable(controller.getTableTrenerzy(), trener);
             controller.addToTable(controller.getTableTrenerzy(), nowyTrener);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("Ten klub ma już trenera. Usuń go i spróbuj ponownie");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
 
         ((Node)(event.getSource())).getScene().getWindow().hide();

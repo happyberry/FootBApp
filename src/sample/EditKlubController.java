@@ -98,7 +98,17 @@ public class EditKlubController {
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.addToTable(controller.getTableKluby(), nowyKlub);
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("Taki klub już istnieje. Zmień dane i spróbuj ponownie");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
         //controller.fillKluby();
         ((Node)(event.getSource())).getScene().getWindow().hide();
