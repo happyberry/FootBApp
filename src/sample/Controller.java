@@ -57,6 +57,8 @@ public class Controller {
     @FXML
     private TableColumn tableColumnWartosc;
     @FXML
+    private TableColumn tableColumnMajatek;
+    @FXML
     private ComboBox comboBoxTable;
     @FXML
     private ComboBox comboBoxLeague, comboBoxYear;
@@ -118,11 +120,10 @@ public class Controller {
         return tableLigi;
     }
 
-    public void reformatDoubleCell(TableColumn column) {
-
+    public <E> void reformatDoubleCell(TableColumn column) {
         column.setCellFactory(new Callback<TableColumn, TableCell>() {
             public TableCell call(TableColumn p) {
-                TableCell cell = new TableCell<Pilkarze, Double>() {
+                TableCell cell = new TableCell<E, Double>() {
                     @Override
                     public void updateItem(Double item, boolean empty) {
                         super.updateItem(item, empty);
@@ -154,6 +155,8 @@ public class Controller {
         comboBoxLeague.getItems().add("Wszystkie");
         comboBoxLeague.getSelectionModel().select(0);
         comboBoxYear.getSelectionModel().select(9);
+        this.<Pilkarze>reformatDoubleCell(tableColumnWartosc);
+        this.<Wlasciciele>reformatDoubleCell(tableColumnMajatek);
     }
 
     public void fetchInitialData() {

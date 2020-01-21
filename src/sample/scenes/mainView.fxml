@@ -500,7 +500,7 @@
                                  <PropertyValueFactory property="nazwisko" />
                              </cellValueFactory>
                          </TableColumn>
-                         <TableColumn prefWidth="102.0" text="Majątek">
+                         <TableColumn fx:id="tableColumnMajatek" prefWidth="102.0" text="Majątek">
                              <cellValueFactory>
                                  <PropertyValueFactory property="majatek" />
                              </cellValueFactory>
