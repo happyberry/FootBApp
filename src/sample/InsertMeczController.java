@@ -173,7 +173,17 @@ public class InsertMeczController {
 
             controller.addToTable(controller.getTableMecze(), addedMecz);
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("ORA-02290")) {
+                labelWarning.setText("Wybierz dwa różne kluby");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
 

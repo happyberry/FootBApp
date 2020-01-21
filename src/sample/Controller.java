@@ -14,12 +14,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class Controller {
 
@@ -112,6 +116,38 @@ public class Controller {
 
     public TableView getTableLigi() {
         return tableLigi;
+    }
+
+    public void reformatDoubleCell(TableColumn column) {
+
+        column.setCellFactory(new Callback<TableColumn, TableCell>() {
+            public TableCell call(TableColumn p) {
+                TableCell cell = new TableCell<Pilkarze, Double>() {
+                    @Override
+                    public void updateItem(Double item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty ? null : getString());
+                        setGraphic(null);
+                    }
+
+                    private String getString() {
+                        String ret = "";
+                        if (getItem() != null) {
+                            String gi = getItem().toString();
+                            NumberFormat df = DecimalFormat.getInstance();
+                            df.setMinimumFractionDigits(2);
+                            df.setRoundingMode(RoundingMode.DOWN);
+
+                            ret = df.format(Double.parseDouble(gi));
+                        } else {
+                            ret = "0.00";
+                        }
+                        return ret;
+                    }
+                };
+                return cell;
+            }
+        });
     }
 
     public void initialize() {

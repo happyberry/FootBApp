@@ -158,7 +158,7 @@ public class InsertPilkarzController {
                 labelWarning.setVisible(true);
                 return;
             }
-            if (doublePensja > 9999999999.99 || doublePensja < 10) {
+            if (doublePensja > 9999999999.99 || doublePensja < 0) {
                 labelWarning.setText("[PENSJA] Błędna wartość pensji");
                 labelWarning.setVisible(true);
                 return;

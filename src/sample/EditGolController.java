@@ -97,8 +97,31 @@ public class EditGolController {
         } else {
             okolicznosci = "Tak";
         }
-
-
+        if (dlaGospodarzy == 1) {
+            Integer policzoneGole = 0;
+            Statement policzGole = connection.createStatement();
+            ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 1 AND MECZ_ID = " + mecz.getMeczId());
+            while (liczbaGoli.next()) {
+                policzoneGole = liczbaGoli.getInt(1);
+            }
+            if (policzoneGole == mecz.getWynikGospodarzy()) {
+                labelWarning.setText("Wszystkie gole gospodarzy są już wpisane");
+                labelWarning.setVisible(true);
+                return;
+            }
+        } else {
+            Integer policzoneGole = 0;
+            Statement policzGole = connection.createStatement();
+            ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 0 AND MECZ_ID = " + mecz.getMeczId());
+            while (liczbaGoli.next()) {
+                policzoneGole = liczbaGoli.getInt(1);
+            }
+            if (policzoneGole == mecz.getWynikGosci()) {
+                labelWarning.setText("Wszystkie gole gosci są już wpisane");
+                labelWarning.setVisible(true);
+                return;
+            }
+        }
 
         try {
             Statement statement = connection.createStatement();
@@ -113,7 +136,17 @@ public class EditGolController {
                     okolicznosci, mecz.getGospodarze(), mecz.getGoscie(), mecz.getData());
             controller.addToTable(controller.getTableGole(), nowyGol);
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("ORA-02290") && (minuta < 1 || minuta > 130)) {
+                labelWarning.setText("[MINUTA] Podaj poprawną wartość");
+                labelWarning.setVisible(true);
+                return;
+            }
+            else {
+                labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            }
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
 
