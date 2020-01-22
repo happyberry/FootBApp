@@ -1,11 +1,14 @@
 package sample;
 
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonType;
 
 import java.sql.*;
 
@@ -62,11 +65,21 @@ public class EditPilkarzController {
     }
 
     public void deleteHandler(ActionEvent event) throws SQLException {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Czy jesteś pewien?");
+        alert.setHeaderText("Czy na pewno chcesz usunąć tego piłkarza?\n" +
+                "Usuwając go, usuniesz też dane o golach, które strzelił\ni transferach," +
+                " w których piłkarz brał udział");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            return;
+        }
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM PILKARZE WHERE ID_PILKARZA = " + pilkarz.getIdPilkarza());
             controller.removeFromTable(controller.getTablePilkarze(), pilkarz);
+            controller.transferyJuzWczytane = false;
+            controller.goleJuzWczytane = false;
         } catch (SQLException e) {
             e.printStackTrace();
         }

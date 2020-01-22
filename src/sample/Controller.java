@@ -57,6 +57,10 @@ public class Controller {
     @FXML
     private TableColumn tableColumnWartosc;
     @FXML
+    private TableColumn tableColumnPensja;
+    @FXML
+    private TableColumn tableColumnKwotaTransferu;
+    @FXML
     private TableColumn tableColumnMajatek;
     @FXML
     private ComboBox comboBoxTable;
@@ -69,16 +73,16 @@ public class Controller {
     @FXML
     private TextField textFieldA, textFieldB, textFieldC, textFieldD;
 
-    private boolean pilkarzeJuzWczytani = false;
-    private boolean klubyJuzWczytane = false;
-    private boolean ligiJuzWczytane = false;
-    private boolean goleJuzWczytane = false;
-    private boolean meczeJuzWczytane = false;
-    private boolean sedziowieJuzWczytani = false;
-    private boolean trenerzyJuzWczytani = false;
-    private boolean stadionyJuzWczytane = false;
-    private boolean transferyJuzWczytane = false;
-    private boolean wlascicieleJuzWczytani = false;
+    public boolean pilkarzeJuzWczytani = false;
+    public boolean klubyJuzWczytane = false;
+    public boolean ligiJuzWczytane = false;
+    public boolean goleJuzWczytane = false;
+    public boolean meczeJuzWczytane = false;
+    public boolean sedziowieJuzWczytani = false;
+    public boolean trenerzyJuzWczytani = false;
+    public boolean stadionyJuzWczytane = false;
+    public boolean transferyJuzWczytane = false;
+    public boolean wlascicieleJuzWczytani = false;
 
     public TableView getTableKluby() {
         return tableKluby;
@@ -156,6 +160,8 @@ public class Controller {
         comboBoxLeague.getSelectionModel().select(0);
         comboBoxYear.getSelectionModel().select(9);
         this.<Pilkarze>reformatDoubleCell(tableColumnWartosc);
+        this.<Pilkarze>reformatDoubleCell(tableColumnPensja);
+        this.<Transfery>reformatDoubleCell(tableColumnKwotaTransferu);
         this.<Wlasciciele>reformatDoubleCell(tableColumnMajatek);
     }
 
@@ -253,6 +259,7 @@ public class Controller {
     public void fillKluby() throws SQLException {
 
         if (klubyJuzWczytane) return;
+        tableKluby.getItems().clear();
         klubyJuzWczytane = true;
         String SQL = "SELECT * from KLUBY ORDER BY NAZWA_LIGI, NAZWA_KLUBU";
         Runnable r = new Runnable() {
@@ -397,6 +404,7 @@ public class Controller {
     public void fillPilkarze() throws SQLException {
 
         if (pilkarzeJuzWczytani) return;
+        tablePilkarze.getItems().clear();
         pilkarzeJuzWczytani = true;
 
         String SQL = "SELECT * from PILKARZE ORDER BY NAZWA_KLUBU, POZYCJA, NAZWISKO";
@@ -504,6 +512,7 @@ public class Controller {
     public void fillMecze() throws SQLException {
 
         if (meczeJuzWczytane) return;
+        tableMecze.getItems().clear();
         meczeJuzWczytane = true;
         String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) ORDER BY DATA";
         Runnable r = new Runnable() {
@@ -668,6 +677,7 @@ public class Controller {
     public void fillLigi() throws SQLException {
 
         if (ligiJuzWczytane) return;
+        tableLigi.getItems().clear();
         ligiJuzWczytane = true;
         String SQL = "SELECT * from LIGI ORDER BY NAZWA_LIGI";
         Runnable r = new Runnable() {
@@ -766,6 +776,7 @@ public class Controller {
     public void fillSedziowie() throws SQLException {
 
         if (sedziowieJuzWczytani) return;
+        tableSedziowie.getItems().clear();
         sedziowieJuzWczytani = true;
         String SQL = "SELECT * from SEDZIOWIE ORDER BY POCHODZENIE";
         Runnable r = new Runnable() {
@@ -865,6 +876,7 @@ public class Controller {
     public void fillGole() throws SQLException {
 
         if (goleJuzWczytane) return;
+        tableGole.getItems().clear();
         goleJuzWczytane = true;
         String SQL = "SELECT CZY_SAMOBOJCZY, CZY_DLA_GOSPODARZY, GOL_ID, MECZ_ID, ID_PILKARZA, MINUTA, IMIE || ' ' || NAZWISKO, " +
                 "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id)";
@@ -962,6 +974,7 @@ public class Controller {
     public void fillStadiony() {
 
         if (stadionyJuzWczytane) return;
+        tableStadiony.getItems().clear();
         stadionyJuzWczytane = true;
         String SQL = "SELECT * from STADIONY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
@@ -1029,6 +1042,7 @@ public class Controller {
     public void fillTrenerzy() throws SQLException {
 
         if (trenerzyJuzWczytani) return;
+        tableTrenerzy.getItems().clear();
         trenerzyJuzWczytani = true;
         String SQL = "SELECT * from TRENERZY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
@@ -1095,6 +1109,7 @@ public class Controller {
     public void fillWlasciciele() throws SQLException {
 
         if (wlascicieleJuzWczytani) return;
+        tableWlasciciele.getItems().clear();
         wlascicieleJuzWczytani = true;
         String SQL = "SELECT * from WLASCICIELE ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
@@ -1161,6 +1176,7 @@ public class Controller {
     public void fillTransfery() throws SQLException {
 
         if (transferyJuzWczytane) return;
+        tableTransfery.getItems().clear();
         transferyJuzWczytane = true;
 
         String SQL = "SELECT KWOTA_TRANSFERU, KLUB_SPRZEDAJACY, TRANSFERY.ID_PILKARZA, DATA_TRANSFERU, KLUB_KUPUJACY, " +
@@ -1564,6 +1580,9 @@ public class Controller {
             newCol.setPrefWidth(x.getPrefWidth());
             newCol.setVisible(x.isVisible());
             newCol.setCellValueFactory(x.getCellValueFactory());
+            if (newCol.getText().contains("€")) {
+                this.reformatDoubleCell(newCol);
+            };
             tableSearch.getColumns().add(newCol);
         }
     }

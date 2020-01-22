@@ -195,7 +195,7 @@
                                 <PropertyValueFactory property="idPilkarza" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="106.00002765655518" text="Imię">
+                        <TableColumn prefWidth="86.00002765655518" text="Imię">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imie" />
                             </cellValueFactory>
@@ -215,12 +215,12 @@
                                 <PropertyValueFactory property="pozycja" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="tableColumnWartosc" prefWidth="103.33334350585938" text="Wartość rynkowa">
+                        <TableColumn fx:id="tableColumnWartosc" prefWidth="123.33334350585938" text="Wartość rynkowa (€)">
                             <cellValueFactory>
                                 <PropertyValueFactory property="wartoscRynkowa" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="75.33331298828125" text="Pensja">
+                        <TableColumn fx:id="tableColumnPensja" prefWidth="75.33331298828125" text="Pensja (€)">
                             <cellValueFactory>
                                 <PropertyValueFactory property="pensja" />
                             </cellValueFactory>
@@ -243,7 +243,7 @@
                <children>
                   <TableView fx:id="tableTransfery" layoutX="9.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="675.0">
                      <columns>
-                        <TableColumn minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu">
+                        <TableColumn fx:id="tableColumnKwotaTransferu" minWidth="3.0517578125E-5" prefWidth="131.33334827423096" text="Kwota Transferu (€)">
                             <cellValueFactory>
                                 <PropertyValueFactory property="kwotaTransferu" />
                             </cellValueFactory>
@@ -500,7 +500,7 @@
                                  <PropertyValueFactory property="nazwisko" />
                              </cellValueFactory>
                          </TableColumn>
-                         <TableColumn fx:id="tableColumnMajatek" prefWidth="102.0" text="Majątek">
+                         <TableColumn fx:id="tableColumnMajatek" prefWidth="102.0" text="Majątek (€)">
                              <cellValueFactory>
                                  <PropertyValueFactory property="majatek" />
                              </cellValueFactory>
