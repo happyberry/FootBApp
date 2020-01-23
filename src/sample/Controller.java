@@ -854,7 +854,7 @@ public class Controller {
 
         MoreSedziaController moreSedziaController = loader.<MoreSedziaController>getController();
 
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) where ID_SEDZIEGO = " + sedzia.getIdSedziego();
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where ID_SEDZIEGO = " + sedzia.getIdSedziego();
         moreSedziaController.tableMecze.getItems().clear();
         Runnable r = new Runnable() {
             @Override
@@ -934,7 +934,7 @@ public class Controller {
         rs = statement.executeQuery("select gospodarze || '-' || goscie from MECZE where MECZ_ID = " + gol.getMeczId());
         rs.next();
         rs = statement.executeQuery("SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
-                " from MECZE join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
+                " from MECZE left outer join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
         rs.next();
         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
                 rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
@@ -1436,7 +1436,7 @@ public class Controller {
 
             initializeTableColumns(tableMecze);
 
-            String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
+            String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
                     "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);

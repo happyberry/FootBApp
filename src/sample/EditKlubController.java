@@ -57,6 +57,13 @@ public class EditKlubController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM KLUBY WHERE nazwa_klubu = '" + oldName + "'");
             controller.removeFromTable(controller.getTableKluby(), klub);
+            controller.goleJuzWczytane = false;
+            controller.meczeJuzWczytane = false;
+            controller.transferyJuzWczytane = false;
+            controller.stadionyJuzWczytane = false;
+            controller.wlascicieleJuzWczytani = false;
+            controller.trenerzyJuzWczytani = false;
+            controller.pilkarzeJuzWczytani = false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
