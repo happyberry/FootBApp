@@ -151,25 +151,30 @@ public class InsertMeczController {
             }
         }
 
-        String idSedziego = sedziaId;
-        if (idSedziego == null || idSedziego.equals("")) {
-            labelWarning.setText("[SĘDZIA] Wyszukaj sędziego");
-            labelWarning.setVisible(true);
-            return;
+        if (sedziaId == null || sedziaId.equals("")) {
+            sedziaId = null;
         }
 
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO MECZE VALUES(null, DATE '" + completeDate + "', '" + gospodarze + "', '" +
-                    goscie + "', " + wynikGospodarzy + ", " + wynikGosci + ", " + idSedziego + ")");
+                    goscie + "', " + wynikGospodarzy + ", " + wynikGosci + ", " + sedziaId + ")");
             ResultSet rs = statement.executeQuery("select MECZE_MECZ_ID_SEQ.currval from dual");
             rs.next();
             String idMeczu = rs.getString(1);
-            rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + idSedziego);
-            rs.next();
-            String daneSedziego = rs.getString(1);
+            String daneSedziego;
+            System.out.println("IDSEDZIEGO: " + sedziaId);
+            if (sedziaId == null) {
+                daneSedziego = "";
+                sedziaId = "-1";
+            }
+            else {
+                rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + sedziaId);
+                rs.next();
+                daneSedziego = rs.getString(1);
+            }
             Mecze addedMecz = new Mecze(idMeczu, date, gospodarze, goscie,
-                    wynikGospodarzy, wynikGosci, idSedziego, daneSedziego);
+                    wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);
 
             controller.addToTable(controller.getTableMecze(), addedMecz);
         } catch (SQLException e) {

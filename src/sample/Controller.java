@@ -216,7 +216,7 @@ public class Controller {
             ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
             while (rs.next()) {
                 RekordRankingu rekord = new RekordRankingu(rs.getString(1), rs.getInt(2));
-                System.out.println(rekord.nazwaKlubu);
+                //System.out.println(rekord.nazwaKlubu);
                 tableRanking.getItems().add(rekord);
             }
         }
@@ -235,17 +235,17 @@ public class Controller {
         String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
         if (!liga.equals("Wszystkie")) { liga = "k2.nazwa_ligi = '" + liga + "' AND "; }
         else { liga = ""; }
-        String SQL = "SELECT p.imie, p.nazwisko, k1.nazwa_klubu, COUNT(*) AS bramki\n" +
+        String SQL = "SELECT p.imie, p.nazwisko, p.nazwa_klubu, COUNT(*) AS bramki\n" +
                 "FROM pilkarze p INNER JOIN gole g ON p.id_pilkarza = g.id_pilkarza INNER JOIN mecze m ON m.mecz_ID = g.mecz_ID INNER JOIN kluby k1 ON k1.nazwa_klubu = m.gospodarze\n" +
                 "INNER JOIN kluby k2 ON k2.nazwa_klubu = m.goscie\n" +
                 "WHERE " + liga + "k2.nazwa_ligi = k1.nazwa_ligi AND czy_samobojczy = 0\n" +
-                "GROUP BY p.imie, p.nazwisko, p.id_pilkarza, k1.nazwa_klubu " +
+                "GROUP BY p.imie, p.nazwisko, p.id_pilkarza, p.nazwa_klubu " +
                 "ORDER BY bramki DESC";
         try {
             ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
             while (rs.next()) {
                 RekordStrzelcow rekord = new RekordStrzelcow(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-                System.out.println(rekord.nazwaKlubu);
+                //System.out.println(rekord.nazwaKlubu);
                 tableStrzelcy.getItems().add(rekord);
             }
         }
@@ -514,7 +514,7 @@ public class Controller {
         if (meczeJuzWczytane) return;
         tableMecze.getItems().clear();
         meczeJuzWczytane = true;
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE join sedziowie using(id_sedziego) ORDER BY DATA";
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, NVL(ID_SEDZIEGO, -1), IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) ORDER BY DATA";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -522,6 +522,7 @@ public class Controller {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
                         //Iterate Row
+                        System.out.println(rs.getString(8));
                         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3),
                                 rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         tableMecze.getItems().add(mecz);
@@ -650,7 +651,7 @@ public class Controller {
                 labelNowyGol.setPrefWidth(200);
                 String text = gol.getDaneStrzelca() + " " + gol.getMinuta().toString() + "'";
                 System.out.println(text);
-                if (samobojczy == 0) {
+                if (samobojczy == 1) {
                     text += "(S)";
                 }
                 labelNowyGol.setText(text);

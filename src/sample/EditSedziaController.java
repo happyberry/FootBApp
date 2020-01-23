@@ -94,6 +94,7 @@ public class EditSedziaController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM SEDZIOWIE WHERE ID_SEDZIEGO = " + sedzia.getIdSedziego());
             controller.removeFromTable(controller.getTableSedziowie(), sedzia);
+            controller.meczeJuzWczytane = false;
         } catch (SQLException e) {
             e.printStackTrace();
         }

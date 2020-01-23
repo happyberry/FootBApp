@@ -5,14 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Optional;
 
 public class EditMeczController {
 
@@ -153,11 +152,8 @@ public class EditMeczController {
             }
         }
 
-        String idSedziego = textFieldSedzia.getText();
-        if(idSedziego == null || idSedziego.equals("")) {
-            labelWarning.setText("[SĘDZIA] Wyszukaj sędziego");
-            labelWarning.setVisible(true);
-            return;
+        if(sedziaId == null || sedziaId.equals("")) {
+            sedziaId = null;
         }
 
 
@@ -165,12 +161,20 @@ public class EditMeczController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE MECZE SET DATA = DATE '" + completeDate + "',GOSPODARZE = '" + gospodarze + "', GOSCIE = '" +
-                    goscie + "', WYNIK_GOSPODARZY = " + wynikGospodarzy + ", WYNIK_GOSCI = " + wynikGosci + ",ID_SEDZIEGO = " + idSedziego +
+                    goscie + "', WYNIK_GOSPODARZY = " + wynikGospodarzy + ", WYNIK_GOSCI = " + wynikGosci + ",ID_SEDZIEGO = " + sedziaId +
                     " WHERE MECZ_ID = " + mecz.getMeczId());
-            ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + idSedziego);
-            rs.next();
+            String daneSedziego;
+            if (sedziaId == null) {
+                daneSedziego = "";
+                sedziaId = "-1";
+            }
+            else {
+                ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + sedziaId);
+                rs.next();
+                daneSedziego = rs.getString(1);
+            }
             Mecze nowyMecz = new Mecze(mecz.getMeczId(), date, gospodarze, goscie,
-                    wynikGospodarzy, wynikGosci, idSedziego, rs.getString(1));
+                    wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);
             controller.removeFromTable(controller.getTableMecze(), mecz);
             controller.addToTable(controller.getTableMecze(), nowyMecz);
         } catch (SQLException e) {
@@ -191,11 +195,19 @@ public class EditMeczController {
     }
 
     public void deleteHandler(ActionEvent event) throws SQLException {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Czy jesteś pewien?");
+        alert.setHeaderText("Czy na pewno chcesz usunąć ten mecz?\n" +
+                "Wraz z nim usunięte zostaną informacje o golach w nim strzelonych.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            return;
+        }
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM MECZE WHERE MECZ_ID = " + mecz.getMeczId());
             controller.removeFromTable(controller.getTableMecze(), mecz);
+            controller.goleJuzWczytane = false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
