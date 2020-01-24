@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -72,6 +73,7 @@ public class Controller {
     private Label labelA, labelB, labelC, labelD;
     @FXML
     private TextField textFieldA, textFieldB, textFieldC, textFieldD;
+    public Stage primaryStage;
 
     public boolean pilkarzeJuzWczytani = false;
     public boolean klubyJuzWczytane = false;
@@ -209,7 +211,7 @@ public class Controller {
             tableRanking.setPlaceholder(new Label("Wybierz ligę by zobaczyć jej tabelę"));
             return;
         } else {
-            tableRanking.setPlaceholder(new Label("No content in table"));
+            tableRanking.setPlaceholder(new Label("Brak danych dotyczących tej ligii"));
         }
         String SQL = "SELECT NAZWA_KLUBU, liczpunktywsezonie(NAZWA_KLUBU, " + poczatek + ", " + koniec + ") as punkty from KLUBY WHERE NAZWA_LIGI = '" + liga + "' ORDER BY punkty DESC";
         try {
@@ -231,6 +233,20 @@ public class Controller {
     public void fillRankingStrzelcow() {
 
         if (comboBoxLeague.getSelectionModel().getSelectedItem() == null) return;
+        tableStrzelcy.setPlaceholder(new Label("Brak danych dotyczących tego sezonu"));
+        String poczatek = null;
+        String koniec = null;
+        if (comboBoxYear.getSelectionModel().getSelectedItem() == null) {
+            poczatek = "DATE '2019-07-01'";
+            koniec = "DATE '2020-06-30' ";
+        }
+        else {
+            Integer rokPoczatku = Integer.parseInt(comboBoxYear.getSelectionModel().getSelectedItem().toString().substring(0,4));
+            System.out.println(rokPoczatku);
+            poczatek = "DATE '" + String.valueOf(rokPoczatku) +"-07-01'";
+            koniec = "DATE '" + String.valueOf(rokPoczatku+1) + "-06-30' ";
+        }
+        String text = "AND m.data BETWEEN " + poczatek + " AND " + koniec;
         tableStrzelcy.getItems().clear();
         String liga = comboBoxLeague.getSelectionModel().getSelectedItem().toString();
         if (!liga.equals("Wszystkie")) { liga = "k2.nazwa_ligi = '" + liga + "' AND "; }
@@ -238,14 +254,13 @@ public class Controller {
         String SQL = "SELECT p.imie, p.nazwisko, p.nazwa_klubu, COUNT(*) AS bramki\n" +
                 "FROM pilkarze p INNER JOIN gole g ON p.id_pilkarza = g.id_pilkarza INNER JOIN mecze m ON m.mecz_ID = g.mecz_ID INNER JOIN kluby k1 ON k1.nazwa_klubu = m.gospodarze\n" +
                 "INNER JOIN kluby k2 ON k2.nazwa_klubu = m.goscie\n" +
-                "WHERE " + liga + "k2.nazwa_ligi = k1.nazwa_ligi AND czy_samobojczy = 0\n" +
+                "WHERE " + liga + "k2.nazwa_ligi = k1.nazwa_ligi AND czy_samobojczy = 0" + text +
                 "GROUP BY p.imie, p.nazwisko, p.id_pilkarza, p.nazwa_klubu " +
                 "ORDER BY bramki DESC";
         try {
             ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
             while (rs.next()) {
                 RekordStrzelcow rekord = new RekordStrzelcow(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-                //System.out.println(rekord.nazwaKlubu);
                 tableStrzelcy.getItems().add(rekord);
             }
         }
@@ -287,10 +302,11 @@ public class Controller {
 
         if(tableKluby.getSelectionModel().getSelectedItem() == null) {return;}
 
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editKlub.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edytuj");
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditKlubController editKlubController = loader.<EditKlubController>getController();
@@ -307,7 +323,8 @@ public class Controller {
         editKlubController.textFieldYear.setText(String.valueOf(klub.getRokZalozenia()));
         editKlubController.comboBoxLeague.setPromptText(klub.getNazwaLigi());
 
-        stage.show();
+        stage.showAndWait();
+        //stage.show();
 
     }
 
@@ -316,6 +333,8 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/insertKlub.fxml"));
 
         Stage stage = new Stage();
+        //stage.setAlwaysOnTop(true);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Dodaj");
         stage.setScene(new Scene((AnchorPane) loader.load()));
         InsertKlubController insertKlubController = loader.<InsertKlubController>getController();
@@ -323,21 +342,10 @@ public class Controller {
         insertKlubController.connection = mainConnection;
         insertKlubController.controller = this;
         insertKlubController.initializeOptions();
-        //System.out.println(mainConnection);
-        //System.out.println(insertKlubController.connection);
 
+        //stage.showAndWait();
         stage.show();
 
-        /*Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("insertKlub.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Dodaj");
-            stage.setScene(new Scene(root, 600, 400));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void openMoreKlub(ActionEvent event) throws IOException {
@@ -346,9 +354,12 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/moreKlub.fxml"));
 
         Stage stage = new Stage();
+        //stage.setAlwaysOnTop(true);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         Kluby klub = (Kluby) tableKluby.getSelectionModel().getSelectedItem();
         stage.setScene(new Scene((AnchorPane) loader.load()));
         stage.setTitle(klub.getNazwaKlubu() + " - dodatkowe informacje");
+
         stage.show();
 
         MoreKlubController moreKlubController = loader.<MoreKlubController>getController();
@@ -543,6 +554,8 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editMecz.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edytuj");
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditMeczController editMeczController = loader.<EditMeczController>getController();
@@ -564,8 +577,8 @@ public class Controller {
         editMeczController.textFieldWynikGosc.setText(String.valueOf(mecz.getWynikGosci()));
         editMeczController.textFieldWynikGosp.setText(String.valueOf(mecz.getWynikGospodarzy()));
 
-        stage.show();
-
+        //stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertMecz(ActionEvent event) throws IOException {

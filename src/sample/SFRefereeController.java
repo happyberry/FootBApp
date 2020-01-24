@@ -48,7 +48,6 @@ public class SFRefereeController {
 
     public void search() {
 
-
         boolean[] found = new boolean[1];
         String nazwisko = textFieldNazwisko.getText();
         String kraj = textFieldKraj.getText();

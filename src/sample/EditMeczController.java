@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -156,8 +157,6 @@ public class EditMeczController {
             sedziaId = null;
         }
 
-
-
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE MECZE SET DATA = DATE '" + completeDate + "',GOSPODARZE = '" + gospodarze + "', GOSCIE = '" +
@@ -224,14 +223,17 @@ public class EditMeczController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForReferee.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        //stage.show();
 
         SFRefereeController sfRefereeController = loader.<SFRefereeController>getController();
         sfRefereeController.connection = connection;
         sfRefereeController.editMeczController = this;
         sfRefereeController.operation = "Edycja";
         sfRefereeController.fetchInitialData();
+        stage.showAndWait();
     }
 
 

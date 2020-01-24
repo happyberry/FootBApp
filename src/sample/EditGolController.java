@@ -194,6 +194,7 @@ public class EditGolController {
         SFGameController sfGameController = loader.<SFGameController>getController();
         sfGameController.connection = connection;
         sfGameController.editGolController = this;
+        sfGameController.initializeOptions();
         sfGameController.operation = "Edycja";
     }
 
