@@ -34,6 +34,7 @@ public class InsertTrenerController {
 
         //System.out.println(connection);
         comboBoxClub.getItems().clear();
+        comboBoxClub.getItems().add("");
         String SQL = "SELECT NAZWA_KLUBU from KLUBY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
@@ -87,18 +88,19 @@ public class InsertTrenerController {
         }
 
         String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
-        if (klub == null) {
-            labelWarning.setText("[KLUB] Wybierz klub, który trenuje trener");
-            labelWarning.setVisible(true);
-            return;
+        if (klub == null || klub.equals("")) {
+            klub = null;
+        } else {
+            klub = "'" + klub + "'";
         }
 
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO Trenerzy VALUES(null, '" + imie + "', '" + nazwisko + "', '"
-                    + kraj + "', '" + klub + "')");
+                    + kraj + "', " + klub + ")");
             ResultSet rs = statement.executeQuery("select ID_TRENERA_SEQ.currval from dual");
             rs.next();
+            if (klub != null) klub = klub.substring(1, klub.length()-1);
             Trenerzy addedTrener = new Trenerzy(rs.getString(1), imie, nazwisko, kraj, klub);
             controller.addToTable(controller.getTableTrenerzy(), addedTrener);
         } catch (SQLException e) {

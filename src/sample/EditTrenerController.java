@@ -33,6 +33,7 @@ public class EditTrenerController {
 
         //System.out.println(connection);
         comboBoxClub.getItems().clear();
+        comboBoxClub.getItems().add("");
         String SQL = "SELECT NAZWA_KLUBU from KLUBY ORDER BY NAZWA_KLUBU";
         Runnable r = new Runnable() {
             @Override
@@ -88,11 +89,17 @@ public class EditTrenerController {
         if (klub == null) {
             klub = comboBoxClub.getPromptText();
         }
+        klub = "'" + klub + "'";
+        if (klub.equals("''")) {
+            klub = null;
+        }
+
 
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE TRENERZY SET imie = '" + imie + "', nazwisko = '" + nazwisko + "'" +
-                    ", pochodzenie = '" + kraj + "', nazwa_klubu = '" + klub + "' " + "where ID_TRENERA = " + trener.getIdTrenera());
+                    ", pochodzenie = '" + kraj + "', nazwa_klubu = " + klub + " where ID_TRENERA = " + trener.getIdTrenera());
+            if (klub != null) klub = klub.substring(1, klub.length()-1);
             Trenerzy nowyTrener = new Trenerzy(trener.getIdTrenera(), imie, nazwisko, kraj, klub);
             controller.removeFromTable(controller.getTableTrenerzy(), trener);
             controller.addToTable(controller.getTableTrenerzy(), nowyTrener);

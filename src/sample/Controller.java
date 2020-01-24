@@ -553,13 +553,14 @@ public class Controller {
 
         Mecze mecz = (Mecze) tableMecze.getSelectionModel().getSelectedItem();
         editMeczController.mecz = mecz;
+        editMeczController.sedziaId = mecz.getIdSedziego();
 
         editMeczController.comboBoxDay.setPromptText(String.valueOf(mecz.getData().getDate()));
         editMeczController.comboBoxMonth.setPromptText(String.valueOf(mecz.getData().getMonth()+1));
         editMeczController.comboBoxYear.setPromptText(String.valueOf(mecz.getData().getYear()+1900));
         editMeczController.comboBoxGosc.setPromptText(mecz.getGoscie());
         editMeczController.comboBoxGosp.setPromptText(mecz.getGospodarze());
-        editMeczController.textFieldSedzia.setText(mecz.getIdSedziego());
+        editMeczController.textFieldSedzia.setText(mecz.getDaneSedziego());
         editMeczController.textFieldWynikGosc.setText(String.valueOf(mecz.getWynikGosci()));
         editMeczController.textFieldWynikGosp.setText(String.valueOf(mecz.getWynikGospodarzy()));
 
