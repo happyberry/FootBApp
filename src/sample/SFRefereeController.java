@@ -48,7 +48,7 @@ public class SFRefereeController {
 
     public void search() {
 
-        boolean[] found = new boolean[1];
+        //boolean[] found = new boolean[1];
         String nazwisko = textFieldNazwisko.getText();
         String kraj = textFieldKraj.getText();
         if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
@@ -58,27 +58,21 @@ public class SFRefereeController {
 
         String SQL = "SELECT * from SEDZIOWIE where POCHODZENIE like '%" + kraj +
                 "%' OR nazwisko like '%" + nazwisko + "%'";
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                found[0] = false;
-                try {
-                    ResultSet rs = connection.createStatement().executeQuery(SQL);
-                    while (rs.next()) {
-                        Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
-                        tableSearch.getItems().add(sedzia);
-                        found[0] = true;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Error on Building Data");
-                }
+        //found[0] = false;
+        try {
+            ResultSet rs = connection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+                tableSearch.getItems().add(sedzia);
+                //found[0] = true;
             }
-        };
-        new Thread(r).start();
-        if (!found[0]) {
-            tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
         }
+        //if (!found[0]) {
+        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
+        //}
     }
 
     public void saveSelected(ActionEvent event) {

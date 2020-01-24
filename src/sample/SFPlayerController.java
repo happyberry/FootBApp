@@ -3,6 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -50,6 +51,7 @@ public class SFPlayerController {
             }
         };
         new Thread(r).start();
+        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
     }
 
     public void search() {
@@ -67,24 +69,18 @@ public class SFPlayerController {
 
         String SQL = "SELECT * from PILKARZE where DATA_URODZENIA = DATE '" + dataUrodzenia + "' OR NAZWA_KLUBU like '%" + nazwaKlubu +
                 "%' OR nazwisko like '%" + nazwisko + "%' OR POZYCJA like '%" + pozycja + "%'";
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ResultSet rs = connection.createStatement().executeQuery(SQL);
-                    while (rs.next()) {
-                        Pilkarze pilkarz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
-                                rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
-                                rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
-                        tableSearch.getItems().add(pilkarz);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Error on Building Data");
-                }
+        try {
+            ResultSet rs = connection.createStatement().executeQuery(SQL);
+            while (rs.next()) {
+                Pilkarze pilkarz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
+                        rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
+                        rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
+                tableSearch.getItems().add(pilkarz);
             }
-        };
-        new Thread(r).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
     }
 
     public void saveSelected(ActionEvent event) {
@@ -106,8 +102,6 @@ public class SFPlayerController {
             editTransferController.pilkarzId = pilkarz.getIdPilkarza();
             editTransferController.textFieldID.setText(pilkarz.getImie() + " " + pilkarz.getNazwisko());
         }
-
-
 
         tableSearch.getItems().clear();
 

@@ -28,6 +28,7 @@ public class InsertKlubController {
     public void initializeOptions() {
 
         comboBoxLeague.getItems().clear();
+        comboBoxLeague.getItems().add("");
         String SQL = "SELECT NAZWA_LIGI from LIGI ORDER BY NAZWA_LIGI";
 
         Runnable r = new Runnable() {
@@ -73,15 +74,18 @@ public class InsertKlubController {
             labelWarning.setVisible(true);
             return;
         }
-        if (league == null) {
-            labelWarning.setText("[NAZWA LIGI] Wybierz ligę, do której należy klub");
-            labelWarning.setVisible(true);
-            return;
+        if (league != null) {
+            if (league.equals("")) {league = null;}
+            else { league = "'" + league + "'";}
+            //labelWarning.setText("[NAZWA LIGI] Wybierz ligę, do której należy klub");
+            //labelWarning.setVisible(true);
+            //return;
         }
         try {
-            Kluby addedClub = new Kluby(name, yearInt, league);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO KLUBY VALUES('" + name + "', " + year + ", '" + league + "')");
+            statement.executeUpdate("INSERT INTO KLUBY VALUES('" + name + "', " + year + ", " + league + ")");
+            if (league != null) league = league.substring(1, league.length()-1);
+            Kluby addedClub = new Kluby(name, yearInt, league);
             controller.addToTable(controller.getTableKluby(), addedClub);
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {

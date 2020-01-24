@@ -30,8 +30,8 @@ public class EditKlubController {
 
     public void initializeOptions() {
 
-        //System.out.println(connection);
         comboBoxLeague.getItems().clear();
+        comboBoxLeague.getItems().add("");
         String SQL = "SELECT NAZWA_LIGI from LIGI ORDER BY NAZWA_LIGI";
         Runnable r = new Runnable() {
             @Override
@@ -79,6 +79,11 @@ public class EditKlubController {
         String year = textFieldYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
         if (league == null) league = comboBoxLeague.getPromptText();
+        if (league.equals("")) {
+            league = null;
+        } else {
+            league = "'" + league + "'";
+        }
         int yearInt;
         try {
             yearInt = Integer.parseInt(year);
@@ -99,8 +104,9 @@ public class EditKlubController {
         }
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = '" + league + "'"
-                    + " WHERE nazwa_klubu = '" + oldName + "'");
+            statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = " + league +
+                    " WHERE nazwa_klubu = '" + oldName + "'");
+            if (league != null) league = league.substring(1, league.length()-1);
             Kluby nowyKlub = new Kluby(name, yearInt, league);
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.addToTable(controller.getTableKluby(), nowyKlub);

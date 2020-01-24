@@ -30,6 +30,8 @@ public class EditLigaController {
 
     public void deleteHandler(ActionEvent event) throws SQLException {
 
+        controller.klubyJuzWczytane = false;
+
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM LIGI WHERE NAZWA_LIGI = '" + liga.getNazwaLigi() + "'");

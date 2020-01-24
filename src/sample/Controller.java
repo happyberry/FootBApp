@@ -321,7 +321,9 @@ public class Controller {
         editKlubController.textFieldClubName.setText(klub.getNazwaKlubu());
         editKlubController.oldName = klub.getNazwaKlubu();
         editKlubController.textFieldYear.setText(String.valueOf(klub.getRokZalozenia()));
-        editKlubController.comboBoxLeague.setPromptText(klub.getNazwaLigi());
+        String nazwaLigi = klub.getNazwaLigi();
+        if (nazwaLigi == null) nazwaLigi = "";
+        editKlubController.comboBoxLeague.setPromptText(nazwaLigi);
 
         stage.showAndWait();
         //stage.show();
@@ -1100,7 +1102,9 @@ public class Controller {
         editTrenerController.secondTF.setText(trener.getImie());
         editTrenerController.thirdTF.setText(trener.getNazwisko());
         editTrenerController.comboBoxKraj.setPromptText(trener.getPochodzenie());
-        editTrenerController.comboBoxClub.setPromptText(trener.getNazwaKlubu());
+        String nazwaKlubu = trener.getNazwaKlubu();
+        if (nazwaKlubu == null) nazwaKlubu = "";
+        editTrenerController.comboBoxClub.setPromptText(nazwaKlubu);
 
         stage.show();
     }
@@ -1401,12 +1405,18 @@ public class Controller {
         if(table.equals("Klub")){
             String nazwa = textFieldA.getText();
             String liga = textFieldB.getText();
+            String wyszukajLige;
             if (nazwa == null || nazwa.equals("")) {nazwa = "#123456789";}
-            if (liga == null || liga.equals("")) {liga = "#123456789";}
+            if (liga == null || liga.equals("")) {
+                wyszukajLige = "nazwa_ligi IS NULL";
+            } else {
+                wyszukajLige = "nazwa_ligi LIKE '%" + liga + "%'";
+            }
+            //if (liga == null || liga.equals("")) {liga = "#123456789";}
 
             initializeTableColumns(tableKluby);
 
-            String SQL = "SELECT * from KLUBY where NAZWA_KLUBU LIKE '%" + nazwa + "%' OR NAZWA_LIGI like '%" + liga + "%'";
+            String SQL = "SELECT * from KLUBY where NAZWA_KLUBU LIKE '%" + nazwa + "%' OR " + wyszukajLige;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1544,13 +1554,19 @@ public class Controller {
         if (table.equals("Trener")) {
             String nazwisko = textFieldA.getText();
             String nazwaKlubu = textFieldB.getText();
+            String wyszukajKlub;
 
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
-            if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
+           //if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
+            if (nazwaKlubu == null || nazwaKlubu.equals("")) {
+                wyszukajKlub = "nazwa_klubu IS NULL";
+            } else {
+                wyszukajKlub = "nazwa_klubu LIKE '%" + nazwaKlubu + "%'";
+            }
 
             initializeTableColumns(tableTrenerzy);
 
-            String SQL = "SELECT * from TRENERZY where NAZWISKO LIKE '%" + nazwisko + "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
+            String SQL = "SELECT * from TRENERZY where NAZWISKO LIKE '%" + nazwisko + "%' OR " + wyszukajKlub;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
