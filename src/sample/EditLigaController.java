@@ -77,8 +77,18 @@ public class EditLigaController {
 
         try {
             Statement statement = connection.createStatement();
+            if (!name.equals(liga.getNazwaLigi())) {
+                connection.setAutoCommit(false);
+            }
             statement.executeUpdate("UPDATE LIGI SET nazwa_ligi = '" + name + "', kraj = '" + country + "'"
                     + " WHERE nazwa_ligi = '" + liga.getNazwaLigi() + "'");
+            if (!name.equals(liga.getNazwaLigi())) {
+                statement.executeUpdate("UPDATE KLUBY SET nazwa_ligi = '" + name + "'" +
+                        " WHERE nazwa_ligi = '" + liga.getNazwaLigi() + "'");
+                connection.commit();
+                connection.setAutoCommit(true);
+                controller.klubyJuzWczytane = false;
+            }
             Ligi nowaLiga = new Ligi(name, country);
             controller.removeFromTable(controller.getTableLigi(), liga);
             controller.addToTable(controller.getTableLigi(), nowaLiga);

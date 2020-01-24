@@ -103,9 +103,38 @@ public class EditKlubController {
             return;
         }
         try {
+            if (!name.equals(oldName)) {
+                connection.setAutoCommit(false);
+            }
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = " + league +
                     " WHERE nazwa_klubu = '" + oldName + "'");
+            if (!name.equals(oldName)) {
+                statement.executeUpdate("UPDATE MECZE SET GOSPODARZE = '" + name + "'" +
+                        " WHERE GOSPODARZE = '" + oldName + "'");
+                statement.executeUpdate("UPDATE MECZE SET GOSCIE = '" + name + "'" +
+                        " WHERE GOSCIE = '" + oldName + "'");
+                statement.executeUpdate("UPDATE TRENERZY SET NAZWA_KLUBU = '" + name + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
+                statement.executeUpdate("UPDATE WLASCICIELE SET NAZWA_KLUBU = '" + name + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
+                statement.executeUpdate("UPDATE STADIONY SET NAZWA_KLUBU = '" + name + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
+                statement.executeUpdate("UPDATE PILKARZE SET NAZWA_KLUBU = '" + name + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
+                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_KUPUJACY = '" + name + "'" +
+                        " WHERE KLUB_KUPUJACY = '" + oldName + "'");
+                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_SPRZEDAJACY = '" + name + "'" +
+                        " WHERE KLUB_SPRZEDAJACY = '" + oldName + "'");
+                connection.commit();
+                connection.setAutoCommit(true);
+                controller.meczeJuzWczytane = false;
+                controller.trenerzyJuzWczytani = false;
+                controller.wlascicieleJuzWczytani = false;
+                controller.stadionyJuzWczytane = false;
+                controller.pilkarzeJuzWczytani = false;
+                controller.transferyJuzWczytane = false;
+            }
             if (league != null) league = league.substring(1, league.length()-1);
             Kluby nowyKlub = new Kluby(name, yearInt, league);
             controller.removeFromTable(controller.getTableKluby(), klub);
