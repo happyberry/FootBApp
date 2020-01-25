@@ -103,7 +103,7 @@
          <content>
             <AnchorPane fx:id="anchorPaneSearch" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="comboBoxTable" layoutX="14.0" layoutY="14.0" onHiding="#fillSearchEngine" prefHeight="25.0" prefWidth="239.0" promptText="Wybierz kogo lub co chcesz wyszukać">
+                  <ComboBox fx:id="comboBoxTable" layoutX="14.0" layoutY="14.0" onHiding="#fillSearchEngine" prefHeight="25.0" prefWidth="256.0" promptText="Wybierz kogo lub co chcesz wyszukać">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Klub" />
@@ -119,15 +119,53 @@
                   </ComboBox>
                   <!--<Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />-->
                   <TableView fx:id="tableSearch" layoutX="11.0" layoutY="221.0" prefHeight="334.0" prefWidth="675.0" />
-                  <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" style="-fx-background-color: #00c000;" text="Wyszukaj" />
+                  <Button layoutX="283.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" style="-fx-background-color: #00c000;" text="Wyszukaj" />
                   <Label fx:id="labelA" layoutX="15.0" layoutY="60.0" text="Label" visible="false" />
-                  <Label fx:id="labelB" layoutX="15.0" layoutY="100.0" text="Label" visible="false" />
+                  <Label fx:id="labelB" layoutX="15.0" layoutY="100.0" text="Data" visible="false" />
                   <Label fx:id="labelC" layoutX="15.0" layoutY="140.0" text="Label" visible="false" />
                   <Label fx:id="labelD" layoutX="15.0" layoutY="180.0" text="Label" visible="false" />
                   <TextField fx:id="textFieldA" layoutX="140.0" layoutY="56.0" visible="false" />
                   <TextField fx:id="textFieldB" layoutX="140.0" layoutY="96.0" visible="false" />
                   <TextField fx:id="textFieldC" layoutX="140.0" layoutY="136.0" visible="false" />
                   <TextField fx:id="textFieldD" layoutX="140.0" layoutY="176.0" visible="false" />
+                  <ComboBox fx:id="comboBoxBYear" layoutX="139.0" layoutY="56.0" prefHeight="25.0" prefWidth="121.0" promptText="Początek - rok" visible="false" />
+                  <ComboBox fx:id="comboBoxBMonth" layoutX="270.0" layoutY="56.0" prefHeight="25.0" prefWidth="89.0" promptText="Miesiąc" visible="false">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="01" />
+                              <String fx:value="02" />
+                              <String fx:value="03" />
+                              <String fx:value="04" />
+                              <String fx:value="05" />
+                              <String fx:value="06" />
+                              <String fx:value="07" />
+                              <String fx:value="08" />
+                              <String fx:value="09" />
+                              <String fx:value="10" />
+                              <String fx:value="11" />
+                              <String fx:value="12" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
+                  <ComboBox fx:id="comboBoxCYear" layoutX="390.0" layoutY="56.0" prefHeight="25.0" prefWidth="121.0" promptText="Koniec - rok" visible="false" />
+                  <ComboBox fx:id="comboBoxCMonth" layoutX="520.0" layoutY="56.0" prefHeight="25.0" prefWidth="86.0" promptText="Miesiąc" visible="false">
+                      <items>
+                          <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="01" />
+                              <String fx:value="02" />
+                              <String fx:value="03" />
+                              <String fx:value="04" />
+                              <String fx:value="05" />
+                              <String fx:value="06" />
+                              <String fx:value="07" />
+                              <String fx:value="08" />
+                              <String fx:value="09" />
+                              <String fx:value="10" />
+                              <String fx:value="11" />
+                              <String fx:value="12" />
+                          </FXCollections>
+                      </items>
+                  </ComboBox>
                </children>
             </AnchorPane>
          </content>

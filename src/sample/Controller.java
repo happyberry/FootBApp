@@ -66,7 +66,7 @@ public class Controller {
     @FXML
     private ComboBox comboBoxTable;
     @FXML
-    private ComboBox comboBoxLeague, comboBoxYear;
+    private ComboBox comboBoxLeague, comboBoxYear, comboBoxBYear, comboBoxCYear, comboBoxBMonth, comboBoxCMonth;
     @FXML
     private AnchorPane anchorPaneSearch;
     @FXML
@@ -366,7 +366,7 @@ public class Controller {
 
         MoreKlubController moreKlubController = loader.<MoreKlubController>getController();
 
-        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'";
+        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "' ORDER BY POZYCJA, NAZWISKO";
         moreKlubController.tablePilkarze.getItems().clear();
         Runnable r = new Runnable() {
             @Override
@@ -1290,6 +1290,12 @@ public class Controller {
         textFieldB.clear();
         textFieldC.clear();
         textFieldD.clear();
+        comboBoxBMonth.setVisible(false);
+        comboBoxBYear.setVisible(false);
+        comboBoxCMonth.setVisible(false);
+        comboBoxCYear.setVisible(false);
+        comboBoxBYear.getItems().clear();
+        comboBoxCYear.getItems().clear();
 
         if(table.equals("Klub")){
 
@@ -1322,9 +1328,25 @@ public class Controller {
 
             labelA.setVisible(true);
             labelB.setVisible(true);
-            textFieldA.setVisible(true);
-            textFieldA.setPromptText("YYYY-MM-DD");
+            //textFieldA.setVisible(true);
+            //textFieldA.setPromptText("YYYY-MM-DD");
             textFieldB.setVisible(true);
+
+            comboBoxBYear.getItems().addAll(2000, 2001, 2002,2003,2004,2005,2006,2007, 2008, 2009,
+                    2010, 2011, 2012,2013,2014,2015,2016,2017, 2018, 2019,
+                    2020, 2021, 2022,2023,2024,2025,2026,2027, 2028, 2029, 2030);
+            comboBoxCYear.getItems().addAll(2000, 2001, 2002,2003,2004,2005,2006,2007, 2008, 2009,
+                    2010, 2011, 2012,2013,2014,2015,2016,2017, 2018, 2019,
+                    2020, 2021, 2022,2023,2024,2025,2026,2027, 2028, 2029, 2030);
+            comboBoxBMonth.setLayoutY(56);
+            comboBoxBYear.setLayoutY(56);
+            comboBoxCMonth.setLayoutY(56);
+            comboBoxCYear.setLayoutY(56);
+
+            comboBoxBMonth.setVisible(true);
+            comboBoxBYear.setVisible(true);
+            comboBoxCMonth.setVisible(true);
+            comboBoxCYear.setVisible(true);
         }
 
         if (table.equals("Piłkarz")) {
@@ -1340,10 +1362,27 @@ public class Controller {
             labelD.setVisible(true);
             textFieldA.setVisible(true);
             textFieldB.setVisible(true);
-            textFieldC.setVisible(true);
-            textFieldC.setPromptText("YYYY-MM-DD");
+            //textFieldC.setVisible(true);
+            //textFieldC.setPromptText("YYYY-MM-DD");
             textFieldD.setVisible(true);
 
+            comboBoxBYear.getItems().addAll(1970, 1971, 1972,1973,1974,1975,1976,1977, 1978, 1979,
+                    1980, 1981, 1982,1983,1984,1985,1986,1987, 1988, 1989,
+                    1990, 1991, 1992,1993,1994,1995,1996,1997, 1998, 1999,
+                    2000, 2001, 2002,2003,2004,2005,2006,2007, 2008, 2009,2010);
+            comboBoxCYear.getItems().addAll(1970, 1971, 1972,1973,1974,1975,1976,1977, 1978, 1979,
+                    1980, 1981, 1982,1983,1984,1985,1986,1987, 1988, 1989,
+                    1990, 1991, 1992,1993,1994,1995,1996,1997, 1998, 1999,
+                    2000, 2001, 2002,2003,2004,2005,2006,2007, 2008, 2009,2010);
+            comboBoxBMonth.setLayoutY(136);
+            comboBoxBYear.setLayoutY(136);
+            comboBoxCMonth.setLayoutY(136);
+            comboBoxCYear.setLayoutY(136);
+
+            comboBoxBMonth.setVisible(true);
+            comboBoxBYear.setVisible(true);
+            comboBoxCMonth.setVisible(true);
+            comboBoxCYear.setVisible(true);
         }
 
         if (table.equals("Sędzia")) {
@@ -1453,15 +1492,34 @@ public class Controller {
         }
 
         if (table.equals("Mecz")) {
-            String data = textFieldA.getText();
+            //String data = textFieldA.getText();
             String nazwaKlubu = textFieldB.getText();
-            if (data == null || data.equals("")) {data = "1800-01-01";}
+            //if (data == null || data.equals("")) {data = "1800-01-01";}
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
+
+            String wyszukajDate;
+            Integer yearB = (Integer) comboBoxBYear.getSelectionModel().getSelectedItem();
+            String monthB = (String) comboBoxBMonth.getSelectionModel().getSelectedItem();
+            Integer yearC = (Integer) comboBoxCYear.getSelectionModel().getSelectedItem();
+            String monthC = (String) comboBoxCMonth.getSelectionModel().getSelectedItem();
+            if (yearB == null || yearC == null || monthB == null || monthC == null) {
+                wyszukajDate = "";
+            } else {
+                Integer dayC = 28;
+                if (monthC.equals("02")) {
+                    if (yearC % 4 == 0) dayC = 29;
+                    else dayC = 28;
+                } else if (monthC.equals("04") || monthC.equals("06") || monthC.equals("09") || monthC.equals("11")) {
+                    dayC = 30;
+                } else { dayC = 31;}
+                wyszukajDate = "OR DATA BETWEEN DATE '" + yearB + "-" + monthB + "-01'" + "AND DATE '" +
+                        yearC + "-" + monthC + "-" + dayC + "'";
+            }
 
             initializeTableColumns(tableMecze);
 
-            String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where data = DATE '" + data + "' OR GOSCIE like '%" + nazwaKlubu +
-                    "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'";
+            String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where GOSCIE like '%" + nazwaKlubu +
+                    "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'" + wyszukajDate;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1478,17 +1536,42 @@ public class Controller {
         if (table.equals("Piłkarz")) {
             String nazwisko = textFieldA.getText();
             String nazwaKlubu = textFieldB.getText();
-            String dataUrodzenia = textFieldC.getText();
+            //String dataUrodzenia = textFieldC.getText();
             String pozycja = textFieldD.getText();
+            String wyszukajKlub;
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
-            if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
-            if (dataUrodzenia == null || dataUrodzenia.equals("")) {dataUrodzenia = "1800-01-01";}
+            //if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
+            //if (dataUrodzenia == null || dataUrodzenia.equals("")) {dataUrodzenia = "1800-01-01";}
             if (pozycja == null || pozycja.equals("")) {pozycja = "#123456789";}
+            if (nazwaKlubu == null || nazwaKlubu.equals("")) {
+                wyszukajKlub = "nazwa_klubu IS NULL";
+            } else {
+                wyszukajKlub = "nazwa_klubu LIKE '%" + nazwaKlubu + "%'";
+            }
+
+            String wyszukajDate;
+            Integer yearB = (Integer) comboBoxBYear.getSelectionModel().getSelectedItem();
+            String monthB = (String) comboBoxBMonth.getSelectionModel().getSelectedItem();
+            Integer yearC = (Integer) comboBoxCYear.getSelectionModel().getSelectedItem();
+            String monthC = (String) comboBoxCMonth.getSelectionModel().getSelectedItem();
+            if (yearB == null || yearC == null || monthB == null || monthC == null) {
+                wyszukajDate = "";
+            } else {
+                Integer dayC = 28;
+                if (monthC.equals("02")) {
+                    if (yearC % 4 == 0) dayC = 29;
+                    else dayC = 28;
+                } else if (monthC.equals("04") || monthC.equals("06") || monthC.equals("09") || monthC.equals("11")) {
+                    dayC = 30;
+                } else { dayC = 31;}
+                wyszukajDate = " OR DATA_urodzenia BETWEEN DATE '" + yearB + "-" + monthB + "-01'" + "AND DATE '" +
+                        yearC + "-" + monthC + "-" + dayC + "'";
+            }
 
             initializeTableColumns(tablePilkarze);
 
-            String SQL = "SELECT * from PILKARZE where DATA_URODZENIA = DATE '" + dataUrodzenia + "' OR NAZWA_KLUBU like '%" + nazwaKlubu +
-                    "%' OR nazwisko like '%" + nazwisko + "%' OR POZYCJA like '%" + pozycja + "%'";
+            String SQL = "SELECT * from PILKARZE where " + wyszukajKlub + " OR nazwisko like '%" + nazwisko + "%' OR POZYCJA like '%"
+                    + pozycja + "%'" + wyszukajDate;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
