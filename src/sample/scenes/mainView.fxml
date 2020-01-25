@@ -128,6 +128,16 @@
                   <TextField fx:id="textFieldB" layoutX="140.0" layoutY="96.0" visible="false" />
                   <TextField fx:id="textFieldC" layoutX="140.0" layoutY="136.0" visible="false" />
                   <TextField fx:id="textFieldD" layoutX="140.0" layoutY="176.0" visible="false" />
+                   <ComboBox fx:id="comboBoxPozycja" layoutX="140.0" layoutY="176.0" prefWidth="150.0" promptText="Wybierz pozycję" visible="false">
+                       <items>
+                           <FXCollections fx:factory="observableArrayList">
+                               <String fx:value="bramkarz" />
+                               <String fx:value="napastnik" />
+                               <String fx:value="obrońca" />
+                               <String fx:value="pomocnik" />
+                           </FXCollections>
+                       </items>
+                   </ComboBox>
                   <ComboBox fx:id="comboBoxBYear" layoutX="139.0" layoutY="56.0" prefHeight="25.0" prefWidth="121.0" promptText="Początek - rok" visible="false" />
                   <ComboBox fx:id="comboBoxBMonth" layoutX="270.0" layoutY="56.0" prefHeight="25.0" prefWidth="89.0" promptText="Miesiąc" visible="false">
                       <items>

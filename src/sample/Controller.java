@@ -67,7 +67,7 @@ public class Controller {
     @FXML
     private ComboBox comboBoxTable;
     @FXML
-    private ComboBox comboBoxLeague, comboBoxYear, comboBoxBYear, comboBoxCYear, comboBoxBMonth, comboBoxCMonth;
+    private ComboBox comboBoxLeague, comboBoxYear, comboBoxBYear, comboBoxCYear, comboBoxBMonth, comboBoxCMonth, comboBoxPozycja;
     @FXML
     private AnchorPane anchorPaneSearch;
     @FXML
@@ -1328,6 +1328,7 @@ public class Controller {
         comboBoxCYear.setVisible(false);
         comboBoxBYear.getItems().clear();
         comboBoxCYear.getItems().clear();
+        comboBoxPozycja.setVisible(false);
 
         if(table.equals("Klub")){
 
@@ -1396,7 +1397,8 @@ public class Controller {
             textFieldB.setVisible(true);
             //textFieldC.setVisible(true);
             //textFieldC.setPromptText("YYYY-MM-DD");
-            textFieldD.setVisible(true);
+            //textFieldD.setVisible(true);
+            comboBoxPozycja.setVisible(true);
 
             comboBoxBYear.getItems().addAll(1970, 1971, 1972,1973,1974,1975,1976,1977, 1978, 1979,
                     1980, 1981, 1982,1983,1984,1985,1986,1987, 1988, 1989,
@@ -1572,7 +1574,7 @@ public class Controller {
             String nazwisko = textFieldA.getText();
             String nazwaKlubu = textFieldB.getText();
             //String dataUrodzenia = textFieldC.getText();
-            String pozycja = textFieldD.getText();
+            String pozycja = (String) comboBoxPozycja.getSelectionModel().getSelectedItem();
             String wyszukajKlub;
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
             //if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}

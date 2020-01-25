@@ -3,10 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,7 +22,7 @@ public class SFPlayerController {
     @FXML
     public TextField textFieldData;
     @FXML
-    public TextField textFieldPozycja;
+    public ComboBox comboBoxPozycja;
     @FXML
     public TableView tableSearch;
     @FXML
@@ -64,7 +61,7 @@ public class SFPlayerController {
         String nazwisko = textFieldNazwisko.getText();
         String nazwaKlubu = textFieldKlub.getText();
         String dataUrodzenia = textFieldData.getText();
-        String pozycja = textFieldPozycja.getText();
+        String pozycja = (String) comboBoxPozycja.getSelectionModel().getSelectedItem();
         if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
         if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
         if (dataUrodzenia == null || dataUrodzenia.equals("")) {dataUrodzenia = "1800-01-01";}
