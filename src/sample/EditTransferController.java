@@ -113,7 +113,10 @@ public class EditTransferController {
         } else if (klubSprzedajacy.equals("")){
             klubSprzedajacy = null;
         }
-        if (klubSprzedajacy != null) klubSprzedajacy = "'" + klubSprzedajacy + "'";
+        if (klubSprzedajacy != null) {
+            klubSprzedajacy = klubSprzedajacy.replaceAll("'", "''");
+            klubSprzedajacy = "'" + klubSprzedajacy + "'";
+        }
         String year = (String) comboBoxYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxDay.getSelectionModel().getSelectedItem();
@@ -142,7 +145,7 @@ public class EditTransferController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE TRANSFERY SET KWOTA_TRANSFERU = " + kwota + ", KLUB_SPRZEDAJACY = " + klubSprzedajacy + ", ID_PILKARZA = "
-                    + idPilkarza + ", DATA_TRANSFERU = DATE '" + data + "', KLUB_KUPUJACY = '" + klubKupujacy + "' WHERE ID_PILKARZA = " + transfer.getIdPilkarza()
+                    + idPilkarza + ", DATA_TRANSFERU = DATE '" + data + "', KLUB_KUPUJACY = '" + klubKupujacy.replaceAll("'", "''") + "' WHERE ID_PILKARZA = " + transfer.getIdPilkarza()
                     + " AND DATA_TRANSFERU = DATE '" + staraData + "'");
             ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();

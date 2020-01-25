@@ -89,6 +89,7 @@ public class EditTrenerController {
         if (klub == null) {
             klub = comboBoxClub.getPromptText();
         }
+        klub = klub.replaceAll("'", "''");
         klub = "'" + klub + "'";
         if (klub.equals("''")) {
             klub = null;
@@ -97,7 +98,7 @@ public class EditTrenerController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE TRENERZY SET imie = '" + imie + "', nazwisko = '" + nazwisko + "'" +
+            statement.executeUpdate("UPDATE TRENERZY SET imie = '" + imie.replaceAll("'", "''") + "', nazwisko = '" + nazwisko.replaceAll("'", "''") + "'" +
                     ", pochodzenie = '" + kraj + "', nazwa_klubu = " + klub + " where ID_TRENERA = " + trener.getIdTrenera());
             if (klub != null) klub = klub.substring(1, klub.length()-1);
             Trenerzy nowyTrener = new Trenerzy(trener.getIdTrenera(), imie, nazwisko, kraj, klub);

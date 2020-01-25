@@ -96,7 +96,10 @@ public class InsertTransferController {
         if (klubSprzedajacy == null || klubSprzedajacy.equals("")){
             klubSprzedajacy = null;
         }
-        if (klubSprzedajacy != null) klubSprzedajacy = "'" + klubSprzedajacy + "'";
+        if (klubSprzedajacy != null) {
+            klubSprzedajacy = klubSprzedajacy.replaceAll("'", "''");
+            klubSprzedajacy = "'" + klubSprzedajacy + "'";
+        }
         String year = (String) comboBoxYear.getSelectionModel().getSelectedItem();
         String month = (String) comboBoxMonth.getSelectionModel().getSelectedItem();
         String day = (String) comboBoxDay.getSelectionModel().getSelectedItem();
@@ -116,7 +119,7 @@ public class InsertTransferController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO TRANSFERY VALUES(" + kwota + ", " + klubSprzedajacy + ", "
-                    + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy + "')");
+                    + idPilkarza + ", DATE '" + data + "', '" + klubKupujacy.replaceAll("'", "''") + "')");
             ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE WHERE ID_PILKARZA = " + idPilkarza);
             rs.next();
             if (klubSprzedajacy != null) klubSprzedajacy = klubSprzedajacy.substring(1, klubSprzedajacy.length() - 1);

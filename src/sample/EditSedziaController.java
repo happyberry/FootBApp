@@ -75,7 +75,7 @@ public class EditSedziaController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE SEDZIOWIE SET imie = '" + imie + "', nazwisko = '" + nazwisko + "', wiek = "
+            statement.executeUpdate("UPDATE SEDZIOWIE SET imie = '" + imie.replaceAll("'", "''") + "', nazwisko = '" + nazwisko.replaceAll("'", "''") + "', wiek = "
                     + wiek + ", pochodzenie = '" + kraj + "' where ID_SEDZIEGO = " + sedzia.getIdSedziego());
             Sedziowie nowySedzia = new Sedziowie(sedzia.getIdSedziego(), imie, nazwisko, Integer.parseInt(wiek), kraj);
             controller.removeFromTable(controller.getTableSedziowie(), sedzia);

@@ -56,8 +56,8 @@ public class SFRefereeController {
 
         tableSearch.getItems().clear();
 
-        String SQL = "SELECT * from SEDZIOWIE where POCHODZENIE like '%" + kraj +
-                "%' OR nazwisko like '%" + nazwisko + "%'";
+        String SQL = "SELECT * from SEDZIOWIE where POCHODZENIE like '%" + kraj.replaceAll("'", "''") +
+                "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%'";
         //found[0] = false;
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);

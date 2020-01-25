@@ -34,7 +34,7 @@ public class EditLigaController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM LIGI WHERE NAZWA_LIGI = '" + liga.getNazwaLigi() + "'");
+            statement.executeUpdate("DELETE FROM LIGI WHERE NAZWA_LIGI = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableLigi(), liga);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,11 +80,11 @@ public class EditLigaController {
             if (!name.equals(liga.getNazwaLigi())) {
                 connection.setAutoCommit(false);
             }
-            statement.executeUpdate("UPDATE LIGI SET nazwa_ligi = '" + name + "', kraj = '" + country + "'"
-                    + " WHERE nazwa_ligi = '" + liga.getNazwaLigi() + "'");
+            statement.executeUpdate("UPDATE LIGI SET nazwa_ligi = '" + name.replaceAll("'", "''") + "', kraj = '" + country + "'"
+                    + " WHERE nazwa_ligi = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'");
             if (!name.equals(liga.getNazwaLigi())) {
-                statement.executeUpdate("UPDATE KLUBY SET nazwa_ligi = '" + name + "'" +
-                        " WHERE nazwa_ligi = '" + liga.getNazwaLigi() + "'");
+                statement.executeUpdate("UPDATE KLUBY SET nazwa_ligi = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE nazwa_ligi = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'");
                 connection.commit();
                 connection.setAutoCommit(true);
                 controller.klubyJuzWczytane = false;

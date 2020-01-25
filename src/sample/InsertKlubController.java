@@ -76,14 +76,17 @@ public class InsertKlubController {
         }
         if (league != null) {
             if (league.equals("")) {league = null;}
-            else { league = "'" + league + "'";}
+            else {
+                league = league.replaceAll("'", "''");
+                league = "'" + league + "'";
+            }
             //labelWarning.setText("[NAZWA LIGI] Wybierz ligę, do której należy klub");
             //labelWarning.setVisible(true);
             //return;
         }
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO KLUBY VALUES('" + name + "', " + year + ", " + league + ")");
+            statement.executeUpdate("INSERT INTO KLUBY VALUES('" + name.replaceAll("'", "''") + "', " + year + ", " + league + ")");
             if (league != null) league = league.substring(1, league.length()-1);
             Kluby addedClub = new Kluby(name, yearInt, league);
             controller.addToTable(controller.getTableKluby(), addedClub);

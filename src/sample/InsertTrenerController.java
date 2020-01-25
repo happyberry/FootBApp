@@ -91,12 +91,13 @@ public class InsertTrenerController {
         if (klub == null || klub.equals("")) {
             klub = null;
         } else {
+            klub = klub.replaceAll("'", "''");
             klub = "'" + klub + "'";
         }
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Trenerzy VALUES(null, '" + imie + "', '" + nazwisko + "', '"
+            statement.executeUpdate("INSERT INTO Trenerzy VALUES(null, '" + imie.replaceAll("'", "''") + "', '" + nazwisko.replaceAll("'", "''") + "', '"
                     + kraj + "', " + klub + ")");
             ResultSet rs = statement.executeQuery("select ID_TRENERA_SEQ.currval from dual");
             rs.next();

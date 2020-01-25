@@ -55,7 +55,7 @@ public class EditKlubController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM KLUBY WHERE nazwa_klubu = '" + oldName + "'");
+            statement.executeUpdate("DELETE FROM KLUBY WHERE nazwa_klubu = '" + oldName.replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.goleJuzWczytane = false;
             controller.meczeJuzWczytane = false;
@@ -82,6 +82,7 @@ public class EditKlubController {
         if (league.equals("")) {
             league = null;
         } else {
+            league = league.replaceAll("'", "''");
             league = "'" + league + "'";
         }
         int yearInt;
@@ -107,25 +108,25 @@ public class EditKlubController {
                 connection.setAutoCommit(false);
             }
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name + "', rok_zalozenia = " + year + ", nazwa_ligi = " + league +
-                    " WHERE nazwa_klubu = '" + oldName + "'");
+            statement.executeUpdate("UPDATE KLUBY SET nazwa_klubu = '" + name.replaceAll("'", "''") + "', rok_zalozenia = " + year + ", nazwa_ligi = " + league +
+                    " WHERE nazwa_klubu = '" + oldName.replaceAll("'", "''") + "'");
             if (!name.equals(oldName)) {
-                statement.executeUpdate("UPDATE MECZE SET GOSPODARZE = '" + name + "'" +
-                        " WHERE GOSPODARZE = '" + oldName + "'");
-                statement.executeUpdate("UPDATE MECZE SET GOSCIE = '" + name + "'" +
-                        " WHERE GOSCIE = '" + oldName + "'");
-                statement.executeUpdate("UPDATE TRENERZY SET NAZWA_KLUBU = '" + name + "'" +
-                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
-                statement.executeUpdate("UPDATE WLASCICIELE SET NAZWA_KLUBU = '" + name + "'" +
-                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
-                statement.executeUpdate("UPDATE STADIONY SET NAZWA_KLUBU = '" + name + "'" +
-                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
-                statement.executeUpdate("UPDATE PILKARZE SET NAZWA_KLUBU = '" + name + "'" +
-                        " WHERE NAZWA_KLUBU = '" + oldName + "'");
-                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_KUPUJACY = '" + name + "'" +
-                        " WHERE KLUB_KUPUJACY = '" + oldName + "'");
-                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_SPRZEDAJACY = '" + name + "'" +
-                        " WHERE KLUB_SPRZEDAJACY = '" + oldName + "'");
+                statement.executeUpdate("UPDATE MECZE SET GOSPODARZE = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE GOSPODARZE = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE MECZE SET GOSCIE = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE GOSCIE = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE TRENERZY SET NAZWA_KLUBU = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE WLASCICIELE SET NAZWA_KLUBU = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE STADIONY SET NAZWA_KLUBU = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE PILKARZE SET NAZWA_KLUBU = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE NAZWA_KLUBU = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_KUPUJACY = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE KLUB_KUPUJACY = '" + oldName.replaceAll("'", "''") + "'");
+                statement.executeUpdate("UPDATE TRANSFERY SET KLUB_SPRZEDAJACY = '" + name.replaceAll("'", "''") + "'" +
+                        " WHERE KLUB_SPRZEDAJACY = '" + oldName.replaceAll("'", "''") + "'");
                 connection.commit();
                 connection.setAutoCommit(true);
                 controller.meczeJuzWczytane = false;

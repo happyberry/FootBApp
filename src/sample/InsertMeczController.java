@@ -157,8 +157,8 @@ public class InsertMeczController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO MECZE VALUES(null, DATE '" + completeDate + "', '" + gospodarze + "', '" +
-                    goscie + "', " + wynikGospodarzy + ", " + wynikGosci + ", " + sedziaId + ")");
+            statement.executeUpdate("INSERT INTO MECZE VALUES(null, DATE '" + completeDate + "', '" + gospodarze.replaceAll("'", "''") + "', '" +
+                    goscie.replaceAll("'", "''") + "', " + wynikGospodarzy + ", " + wynikGosci + ", " + sedziaId + ")");
             ResultSet rs = statement.executeQuery("select MECZE_MECZ_ID_SEQ.currval from dual");
             rs.next();
             String idMeczu = rs.getString(1);

@@ -107,8 +107,8 @@ public class InsertWlascicielController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Wlasciciele VALUES(null, '" + imie + "', '" + nazwisko + "', "
-                    + majatek + ", '" + klub + "')");
+            statement.executeUpdate("INSERT INTO Wlasciciele VALUES(null, '" + imie.replaceAll("'", "''") + "', '" + nazwisko.replaceAll("'", "''") + "', "
+                    + majatek + ", '" + klub.replaceAll("'", "''") + "')");
             ResultSet rs = statement.executeQuery("select ID_wlasciciela_SEQ.currval from dual");
             rs.next();
             Wlasciciele addedWlasciciel = new Wlasciciele(rs.getString(1), imie, nazwisko, doubleMajatek, klub);

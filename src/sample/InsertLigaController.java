@@ -59,7 +59,7 @@ public class InsertLigaController {
         try {
             Ligi addedLiga = new Ligi(name, country);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO LIGI VALUES('" + name + "', '" + country + "')");
+            statement.executeUpdate("INSERT INTO LIGI VALUES('" + name.replaceAll("'", "''") + "', '" + country + "')");
             controller.addToTable(controller.getTableLigi(), addedLiga);
         } catch (Exception e) {
             e.printStackTrace();

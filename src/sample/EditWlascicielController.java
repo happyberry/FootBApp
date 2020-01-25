@@ -103,8 +103,8 @@ public class EditWlascicielController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE Wlasciciele SET imie = '" + imie + "', nazwisko = '" + nazwisko + "'" +
-                    ", majatek = " + doubleMajatek + ", nazwa_klubu = '" + klub + "' " + "where ID_Wlasciciela = " + wlasciciel.getIdWlasciciela());
+            statement.executeUpdate("UPDATE Wlasciciele SET imie = '" + imie.replaceAll("'", "''") + "', nazwisko = '" + nazwisko.replaceAll("'", "''") + "'" +
+                    ", majatek = " + doubleMajatek + ", nazwa_klubu = '" + klub.replaceAll("'", "''") + "' " + "where ID_Wlasciciela = " + wlasciciel.getIdWlasciciela());
             Wlasciciele nowyWlasciciel = new Wlasciciele(wlasciciel.getIdWlasciciela(), imie, nazwisko, doubleMajatek, klub);
             controller.removeFromTable(controller.getTableWlasciciele(), wlasciciel);
             controller.addToTable(controller.getTableWlasciciele(), nowyWlasciciel);

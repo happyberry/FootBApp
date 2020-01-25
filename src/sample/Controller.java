@@ -370,7 +370,7 @@ public class Controller {
 
         MoreKlubController moreKlubController = loader.<MoreKlubController>getController();
 
-        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "' ORDER BY POZYCJA, NAZWISKO";
+        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "' ORDER BY POZYCJA, NAZWISKO";
         moreKlubController.tablePilkarze.getItems().clear();
         Runnable r = new Runnable() {
             @Override
@@ -397,16 +397,16 @@ public class Controller {
         moreKlubController.labelRok.setText(klub.getRokZalozenia().toString());
         try {
             Statement statement = mainConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select NAZWA, MIASTO from STADIONY where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            ResultSet resultSet = statement.executeQuery("select NAZWA, MIASTO from STADIONY where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "'");
             while(resultSet.next()) {
                 moreKlubController.labelStadion.setText(resultSet.getString(1));
                 moreKlubController.labelMiasto.setText(resultSet.getString(2));
             }
-            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from WLASCICIELE where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from WLASCICIELE where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "'");
             while(resultSet.next()) {
                 moreKlubController.labelWlasciciel.setText(resultSet.getString(1));
             }
-            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from TRENERZY where NAZWA_KLUBU = '" + klub.getNazwaKlubu() + "'");
+            resultSet = statement.executeQuery("select imie || ' ' || nazwisko from TRENERZY where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "'");
             while(resultSet.next()) {
                 moreKlubController.labelTrener.setText(resultSet.getString(1));
             }
@@ -631,10 +631,10 @@ public class Controller {
 
         try {
             Statement statement = mainConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGospodarze() + "'");
+            ResultSet resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGospodarze().replaceAll("'", "''") + "'");
             resultSet.next();
             String ligaGospodarzy = resultSet.getString(1);
-            resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGoscie() + "'");
+            resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGoscie().replaceAll("'", "''") + "'");
             resultSet.next();
             String ligaGosci = resultSet.getString(1);
             if (ligaGosci.equals(ligaGospodarzy)) {
@@ -650,7 +650,7 @@ public class Controller {
 
         try {
             Statement statement = mainConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select MIASTO,NAZWA from STADIONY where NAZWA_KLUBU = '" + mecz.getGospodarze() + "'");
+            ResultSet resultSet = statement.executeQuery("select MIASTO,NAZWA from STADIONY where NAZWA_KLUBU = '" + mecz.getGospodarze().replaceAll("'", "''") + "'");
             while (resultSet.next()) {
                 String miejsce = resultSet.getString(1) + ", " + resultSet.getString(2);
                 moreMeczController.labelMiasto.setText(miejsce);
@@ -788,7 +788,7 @@ public class Controller {
 
         MoreLigaController moreLigaController = loader.<MoreLigaController>getController();
 
-        String SQL = "SELECT * from KLUBY where NAZWA_LIGI = '" + liga.getNazwaLigi() + "'";
+        String SQL = "SELECT * from KLUBY where NAZWA_LIGI = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'";
         moreLigaController.tableKluby.getItems().clear();
         Runnable r = new Runnable() {
             @Override
@@ -1467,13 +1467,14 @@ public class Controller {
             if (liga == null || liga.equals("")) {
                 wyszukajLige = "nazwa_ligi IS NULL";
             } else {
+                liga = liga.replaceAll("'", "''");
                 wyszukajLige = "nazwa_ligi LIKE '%" + liga + "%'";
             }
             //if (liga == null || liga.equals("")) {liga = "#123456789";}
 
             initializeTableColumns(tableKluby);
 
-            String SQL = "SELECT * from KLUBY where NAZWA_KLUBU LIKE '%" + nazwa + "%' OR " + wyszukajLige;
+            String SQL = "SELECT * from KLUBY where NAZWA_KLUBU LIKE '%" + nazwa.replaceAll("'", "''") + "%' OR " + wyszukajLige;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1496,7 +1497,7 @@ public class Controller {
 
             initializeTableColumns(tableLigi);
 
-            String SQL = "SELECT * from LIGI where NAZWA_LIGI LIKE '%" + nazwa + "%' OR KRAJ like '%" + kraj + "%'";
+            String SQL = "SELECT * from LIGI where NAZWA_LIGI LIKE '%" + nazwa.replaceAll("'", "''") + "%' OR KRAJ like '%" + kraj.replaceAll("'", "''") + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1539,7 +1540,7 @@ public class Controller {
             initializeTableColumns(tableMecze);
 
             String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where GOSCIE like '%" + nazwaKlubu +
-                    "%' OR GOSPODARZE like '%" + nazwaKlubu + "%'" + wyszukajDate;
+                    "%' OR GOSPODARZE like '%" + nazwaKlubu.replaceAll("'", "''") + "%'" + wyszukajDate;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1566,6 +1567,7 @@ public class Controller {
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {
                 wyszukajKlub = "nazwa_klubu IS NULL";
             } else {
+                nazwaKlubu = nazwaKlubu.replaceAll("'", "''");
                 wyszukajKlub = "nazwa_klubu LIKE '%" + nazwaKlubu + "%'";
             }
 
@@ -1592,7 +1594,7 @@ public class Controller {
 
             initializeTableColumns(tablePilkarze);
 
-            String SQL = "SELECT * from PILKARZE where " + wyszukajKlub + " OR nazwisko like '%" + nazwisko + "%' OR POZYCJA like '%"
+            String SQL = "SELECT * from PILKARZE where " + wyszukajKlub + " OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%' OR POZYCJA like '%"
                     + pozycja + "%'" + wyszukajDate;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
@@ -1617,7 +1619,7 @@ public class Controller {
 
             initializeTableColumns(tableSedziowie);
 
-            String SQL = "SELECT * from SEDZIOWIE where NAZWISKO LIKE '%" + nazwisko + "%' OR POCHODZENIE like '%" + kraj + "%'";
+            String SQL = "SELECT * from SEDZIOWIE where NAZWISKO LIKE '%" + nazwisko.replaceAll("'", "''") + "%' OR POCHODZENIE like '%" + kraj.replaceAll("'", "''") + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1642,8 +1644,8 @@ public class Controller {
 
             initializeTableColumns(tableStadiony);
 
-            String SQL = "SELECT * from STADIONY where NAZWA like '%" + nazwa + "%' OR MIASTO like '%" + miasto +
-                    "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
+            String SQL = "SELECT * from STADIONY where NAZWA like '%" + nazwa.replaceAll("'", "''") + "%' OR MIASTO like '%" + miasto.replaceAll("'", "''") +
+                    "%' OR NAZWA_KLUBU like '%" + nazwaKlubu.replaceAll("'", "''") + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1666,12 +1668,13 @@ public class Controller {
             if (nazwaKlubu == null || nazwaKlubu.equals("")) {
                 wyszukajKlub = "nazwa_klubu IS NULL";
             } else {
+                nazwaKlubu = nazwaKlubu.replaceAll("'", "''");
                 wyszukajKlub = "nazwa_klubu LIKE '%" + nazwaKlubu + "%'";
             }
 
             initializeTableColumns(tableTrenerzy);
 
-            String SQL = "SELECT * from TRENERZY where NAZWISKO LIKE '%" + nazwisko + "%' OR " + wyszukajKlub;
+            String SQL = "SELECT * from TRENERZY where NAZWISKO LIKE '%" + nazwisko.replaceAll("'", "''") + "%' OR " + wyszukajKlub;
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {
@@ -1694,7 +1697,7 @@ public class Controller {
 
             initializeTableColumns(tableWlasciciele);
 
-            String SQL = "SELECT * from WLASCICIELE where NAZWISKO LIKE '%" + nazwisko + "%' OR NAZWA_KLUBU like '%" + nazwaKlubu + "%'";
+            String SQL = "SELECT * from WLASCICIELE where NAZWISKO LIKE '%" + nazwisko.replaceAll("'", "''") + "%' OR NAZWA_KLUBU like '%" + nazwaKlubu.replaceAll("'", "''") + "%'";
             try {
                 ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                 while (rs.next()) {

@@ -122,8 +122,8 @@ public class InsertStadionController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO STADIONY VALUES('" + nazwa + "', " + rokZbudowania + ", " + pojemnosc + ", '"
-                    + miasto + "', '" + klub + "')");
+            statement.executeUpdate("INSERT INTO STADIONY VALUES('" + nazwa.replaceAll("'", "''") + "', " + rokZbudowania + ", " + pojemnosc + ", '"
+                    + miasto.replaceAll("'", "''") + "', '" + klub + "')");
             Stadiony addedStadion = new Stadiony(nazwa, rokZbudowania, pojemnosc, miasto, klub);
             controller.addToTable(controller.getTableStadiony(), addedStadion);
         } catch (SQLException e) {

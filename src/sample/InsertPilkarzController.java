@@ -95,6 +95,7 @@ public class InsertPilkarzController {
             if (comboBoxClub.getSelectionModel().getSelectedItem().equals("")) {klub = null;}
             else {
                 klub = comboBoxClub.getSelectionModel().getSelectedItem().toString();
+                klub = klub.replaceAll("'", "''");
                 klub = "'" + klub + "'";
             }
         }
@@ -164,15 +165,10 @@ public class InsertPilkarzController {
                 return;
             }
         }
-        if (klub != null && klub.length() > 40) {
-            labelWarning.setText("[NAZWA KLUBU] Nazwa klubu zbyt długa");
-            labelWarning.setVisible(true);
-            return;
-        }
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO PILKARZE VALUES (null, '" + imie + "', '" + nazwisko + "', Date '" +
+            statement.executeUpdate("INSERT INTO PILKARZE VALUES (null, '" + imie.replaceAll("'", "''") + "', '" + nazwisko.replaceAll("'", "''") + "', Date '" +
                     year + "-" + month + "-" + day + "', '" + pozycje + "', " + wartosc + ", " + pensja + ", " + klub + ")");
             ResultSet rs = statement.executeQuery("select id_pilkarza_seq.currval from dual");
             rs.next();

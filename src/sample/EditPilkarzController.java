@@ -147,7 +147,10 @@ public class EditPilkarzController {
         } else if (klub.equals("")) {
             klub = null;
         }
-        if (klub != null) klub = "'" + klub + "'";
+        if (klub != null) {
+            klub = klub.replaceAll("'", "''");
+            klub = "'" + klub + "'";
+        }
 
 
         if (imie.length() > 40) {
@@ -210,7 +213,7 @@ public class EditPilkarzController {
         System.out.println(imie + " " + nazwisko + " " + year + "-" + month + "-" + day + " " + pozycja + " " + wartosc + " " + pensja + " " + klub);
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE PILKARZE SET imie = '" + imie + "', nazwisko = '" + nazwisko + "', DATA_URODZENIA = DATE '"
+            statement.executeUpdate("UPDATE PILKARZE SET imie = '" + imie.replaceAll("'", "''") + "', nazwisko = '" + nazwisko.replaceAll("'", "''") + "', DATA_URODZENIA = DATE '"
                     + year + "-" + month + "-" + day + "', POZYCJA = '" + pozycja + "', WARTOSC_RYNKOWA = " + wartosc + ", PENSJA = " + pensja
                     + ", NAZWA_KLUBU = " + klub + "  WHERE ID_PILKARZA = " + pilkarz.getIdPilkarza());
             if (pensja == null) pensja = "0";

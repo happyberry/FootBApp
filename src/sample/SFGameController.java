@@ -56,8 +56,10 @@ public class SFGameController {
 
         tableSearch.getItems().clear();
 
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where data = DATE '" + data + "' OR GOSCIE like '%" + nazwa +
-                "%' OR GOSPODARZE like '%" + nazwa + "%'";
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
+                "from MECZE left outer join sedziowie using(id_sedziego)" +
+                "where data = DATE '" + data + "' OR GOSCIE like '%" + nazwa.replaceAll("'", "''") +
+                "%' OR GOSPODARZE like '%" + nazwa.replaceAll("'", "''") + "%'";
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);
             while (rs.next()) {

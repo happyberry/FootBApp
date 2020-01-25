@@ -120,8 +120,9 @@ public class EditStadionController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE STADIONY SET NAZWA = '" + nazwa + "', ROK_ZBUDOWANIA = " + rokZbudowania +
-                    ", POJEMNOSC = " + pojemnosc + ", miasto = '" + miasto + "', nazwa_klubu = '" + klub + "' " + "where NAZWA = '" + stadion.getNazwa() + "'");
+            statement.executeUpdate("UPDATE STADIONY SET NAZWA = '" + nazwa.replaceAll("'", "''") + "', ROK_ZBUDOWANIA = " + rokZbudowania +
+                    ", POJEMNOSC = " + pojemnosc + ", miasto = '" + miasto.replaceAll("'", "''") + "', nazwa_klubu = '" + klub.replaceAll("'", "''") + "' " +
+                    "where NAZWA = '" + stadion.getNazwa().replaceAll("'", "''") + "'");
             Stadiony nowyStadion = new Stadiony(nazwa, rokZbudowania, pojemnosc, miasto, klub);
             controller.removeFromTable(controller.getTableStadiony(), stadion);
             controller.addToTable(controller.getTableStadiony(), nowyStadion);
@@ -147,7 +148,7 @@ public class EditStadionController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM STADIONY WHERE NAZWA = '" + stadion.getNazwa() + "'");
+            statement.executeUpdate("DELETE FROM STADIONY WHERE NAZWA = '" + stadion.getNazwa().replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableStadiony(), stadion);
         } catch (SQLException e) {
             e.printStackTrace();

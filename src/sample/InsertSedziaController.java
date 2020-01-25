@@ -76,7 +76,7 @@ public class InsertSedziaController {
 
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO SEDZIOWIE VALUES(null, '" + imie + "', '" + nazwisko + "', "
+            statement.executeUpdate("INSERT INTO SEDZIOWIE VALUES(null, '" + imie.replaceAll("'", "''") + "', '" + nazwisko.replaceAll("'", "''") + "', "
                     + wiek + ", '" + kraj + "')");
             ResultSet rs = statement.executeQuery("select ID_SEDZIEGO_SEQ.currval from dual");
             rs.next();
