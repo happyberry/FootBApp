@@ -166,6 +166,7 @@
                           </FXCollections>
                       </items>
                   </ComboBox>
+                  <Label fx:id="labelWarning" layoutX="302.0" layoutY="176.0" prefHeight="17.0" prefWidth="373.0" text="Aby wyszukać według daty podaj pełną datę początku i końca zakresu" visible="false" />
                </children>
             </AnchorPane>
          </content>
@@ -269,8 +270,7 @@
                             </cellValueFactory>
                         </TableColumn>
                      </columns></TableView>
-                  <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditPilkarz" text="Edytuj wpis" />
-                  <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" text="Pokaż dodatkowe informacje" />
+                  <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditPilkarz" text="Edytuj wpis" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertPilkarz" text="Dodaj piłkarza" />
                </children></AnchorPane>
          </content>

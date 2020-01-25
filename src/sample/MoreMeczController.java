@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 public class MoreMeczController {
 
     @FXML
-    public Label labelGospodarze, labelGoscie, labelWynik, labelData;
+    public Label labelGospodarze, labelGoscie, labelWynik, labelData, labelMiasto;
     @FXML
     public VBox box;
 

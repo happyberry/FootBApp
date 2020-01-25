@@ -70,7 +70,7 @@ public class Controller {
     @FXML
     private AnchorPane anchorPaneSearch;
     @FXML
-    private Label labelA, labelB, labelC, labelD;
+    private Label labelA, labelB, labelC, labelD, labelWarning;
     @FXML
     private TextField textFieldA, textFieldB, textFieldC, textFieldD;
     public Stage primaryStage;
@@ -615,6 +615,7 @@ public class Controller {
         moreMeczController.labelGospodarze.setText(mecz.getGospodarze());
         moreMeczController.labelGoscie.setText(mecz.getGoscie());
         moreMeczController.labelWynik.setText(mecz.getWynik());
+        moreMeczController.labelMiasto.setVisible(false);
 
         if (mecz.getWynikGosci() > mecz.getWynikGospodarzy()) {
             moreMeczController.labelGoscie.setTextFill(Color.web("green"));
@@ -638,6 +639,19 @@ public class Controller {
                 moreMeczController.labelData.setText("Mecz towarzyski, " + mecz.getData().toString());
             }
 
+        }
+        catch (Exception e) {
+            System.out.println("Error on building data");
+        }
+
+        try {
+            Statement statement = mainConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select MIASTO,NAZWA from STADIONY where NAZWA_KLUBU = '" + mecz.getGospodarze() + "'");
+            while (resultSet.next()) {
+                String miejsce = resultSet.getString(1) + ", " + resultSet.getString(2);
+                moreMeczController.labelMiasto.setText(miejsce);
+                moreMeczController.labelMiasto.setVisible(true);
+            }
         }
         catch (Exception e) {
             System.out.println("Error on building data");
@@ -1504,7 +1518,9 @@ public class Controller {
             String monthC = (String) comboBoxCMonth.getSelectionModel().getSelectedItem();
             if (yearB == null || yearC == null || monthB == null || monthC == null) {
                 wyszukajDate = "";
+                labelWarning.setVisible(true);
             } else {
+                labelWarning.setVisible(false);
                 Integer dayC = 28;
                 if (monthC.equals("02")) {
                     if (yearC % 4 == 0) dayC = 29;
@@ -1556,7 +1572,9 @@ public class Controller {
             String monthC = (String) comboBoxCMonth.getSelectionModel().getSelectedItem();
             if (yearB == null || yearC == null || monthB == null || monthC == null) {
                 wyszukajDate = "";
+                labelWarning.setVisible(true);
             } else {
+                labelWarning.setVisible(false);
                 Integer dayC = 28;
                 if (monthC.equals("02")) {
                     if (yearC % 4 == 0) dayC = 29;
