@@ -41,7 +41,7 @@
                 <PropertyValueFactory property="wartoscRynkowa" />
             </cellValueFactory>
         </TableColumn>
-        <TableColumn prefWidth="77.33334350585938" text="Pensja">
+        <TableColumn fx:id="tableColumnPensja" prefWidth="77.33334350585938" text="Pensja">
             <cellValueFactory>
                 <PropertyValueFactory property="pensja" />
             </cellValueFactory>

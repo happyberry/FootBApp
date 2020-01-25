@@ -156,6 +156,8 @@ public class InsertTransferController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertTransferController = this;
         sfPlayerController.opcja = "wstawianieTransfer";
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
     }
 

@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
 public class Controller {
@@ -74,6 +75,9 @@ public class Controller {
     @FXML
     private TextField textFieldA, textFieldB, textFieldC, textFieldD;
     public Stage primaryStage;
+
+    private DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance();
+    private DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 
     public boolean pilkarzeJuzWczytani = false;
     public boolean klubyJuzWczytane = false;
@@ -141,10 +145,6 @@ public class Controller {
                         String ret = "";
                         if (getItem() != null) {
                             String gi = getItem().toString();
-                            NumberFormat df = DecimalFormat.getInstance();
-                            df.setMinimumFractionDigits(2);
-                            df.setRoundingMode(RoundingMode.DOWN);
-
                             ret = df.format(Double.parseDouble(gi));
                         } else {
                             ret = "0.00";
@@ -165,6 +165,10 @@ public class Controller {
         this.<Pilkarze>reformatDoubleCell(tableColumnPensja);
         this.<Transfery>reformatDoubleCell(tableColumnKwotaTransferu);
         this.<Wlasciciele>reformatDoubleCell(tableColumnMajatek);
+        df.setMinimumFractionDigits(2);
+        symbols.setGroupingSeparator(' ');
+        df.setDecimalFormatSymbols(symbols);
+        df.setRoundingMode(RoundingMode.DOWN);
     }
 
     public void fetchInitialData() {
@@ -498,8 +502,8 @@ public class Controller {
             editPilkarzController.comboBoxBMonth.setPromptText(String.valueOf(pilkarz.getDataUrodzenia().getMonth()+1));
             editPilkarzController.comboBoxBDay.setPromptText(String.valueOf(pilkarz.getDataUrodzenia().getDate()));
             editPilkarzController.comboBoxPos.setPromptText(pilkarz.getPozycja());
-            editPilkarzController.textFieldWartosc.setText(String.valueOf(pilkarz.getWartoscRynkowa()));
-            editPilkarzController.textFieldPensja.setText(String.valueOf(pilkarz.getPensja().toString()));
+            editPilkarzController.textFieldWartosc.setText(df.format(pilkarz.getWartoscRynkowa()));
+            editPilkarzController.textFieldPensja.setText(df.format(pilkarz.getPensja()));
             editPilkarzController.comboBoxClub.setPromptText(pilkarz.getNazwaKlubu());
 
             stage.show();
@@ -1184,7 +1188,7 @@ public class Controller {
         editWlascicielController.initializeOptions();
         editWlascicielController.secondTF.setText(wlasciciel.getImie());
         editWlascicielController.thirdTF.setText(wlasciciel.getNazwisko());
-        editWlascicielController.fourthTF.setText(String.valueOf(wlasciciel.getMajatek()));
+        editWlascicielController.fourthTF.setText(df.format(wlasciciel.getMajatek()));
         editWlascicielController.comboBoxClub.setPromptText(wlasciciel.getNazwaKlubu());
 
         stage.show();
@@ -1257,7 +1261,7 @@ public class Controller {
         editTransferController.comboBoxYear.setPromptText(String.valueOf(transfer.getDataTransferu().getYear()+1900));
         editTransferController.comboBoxSell.setPromptText(transfer.getKlubSprzedajacy());
         editTransferController.textFieldID.setText(transfer.getDanePilkarza());
-        editTransferController.textFieldKwota.setText(String.valueOf(transfer.getKwotaTransferu()));
+        editTransferController.textFieldKwota.setText(df.format(transfer.getKwotaTransferu()));
 
         stage.show();
     }

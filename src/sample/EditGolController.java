@@ -181,6 +181,8 @@ public class EditGolController {
         sfPlayerController.connection = connection;
         sfPlayerController.editGolController = this;
         sfPlayerController.opcja = "edycjaGol";
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
     }
 

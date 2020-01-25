@@ -160,6 +160,8 @@ public class InsertGolController {
         sfPlayerController.connection = connection;
         sfPlayerController.insertGolController = this;
         sfPlayerController.opcja = "wstawianieGol";
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
     }
 

@@ -81,6 +81,7 @@ public class EditWlascicielController {
         int toCut = majatek.length() - majatek.indexOf(".") - 3;
         if (toCut > 0 && majatek.contains(".")) majatek = majatek.substring(0, majatek.length() - toCut);
 
+        System.out.println(majatek);
         double doubleMajatek;
         try {
             doubleMajatek = Double.parseDouble(majatek);

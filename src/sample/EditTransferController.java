@@ -184,6 +184,8 @@ public class EditTransferController {
         sfPlayerController.connection = connection;
         sfPlayerController.editTransferController = this;
         sfPlayerController.opcja = "edycjaTransfer";
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
+        controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
     }
 
