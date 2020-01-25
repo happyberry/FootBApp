@@ -169,6 +169,7 @@ public class Controller {
         symbols.setGroupingSeparator(' ');
         df.setDecimalFormatSymbols(symbols);
         df.setRoundingMode(RoundingMode.DOWN);
+        tableSearch.setPlaceholder(new Label(""));
     }
 
     public void fetchInitialData() {
@@ -309,7 +310,6 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editKlub.fxml"));
 
         Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edytuj");
         stage.setScene(new Scene((AnchorPane) loader.load()));
@@ -372,6 +372,7 @@ public class Controller {
 
         String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "' ORDER BY POZYCJA, NAZWISKO";
         moreKlubController.tablePilkarze.getItems().clear();
+        moreKlubController.tablePilkarze.setPlaceholder(new Label("Brak informacji o zawodnikach tego klubu"));
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -486,6 +487,7 @@ public class Controller {
 
             Stage stage = new Stage();
             stage.setTitle("Edytuj");
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene((AnchorPane) loader.load()));
             EditPilkarzController editPilkarzController = loader.<EditPilkarzController>getController();
 
@@ -506,7 +508,8 @@ public class Controller {
             editPilkarzController.textFieldPensja.setText(df.format(pilkarz.getPensja()));
             editPilkarzController.comboBoxClub.setPromptText(pilkarz.getNazwaKlubu());
 
-            stage.show();
+            //stage.show();
+            stage.showAndWait();
         }
     }
 
@@ -736,12 +739,13 @@ public class Controller {
 
     public void openEditLiga(ActionEvent event) throws IOException {
 
-        if(tableLigi.getSelectionModel().getSelectedItem() != null) {
+        if (tableLigi.getSelectionModel().getSelectedItem() == null) return;
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editLiga.fxml"));
 
             Stage stage = new Stage();
             stage.setTitle("Edytuj");
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene((AnchorPane) loader.load()));
             EditLigaController editLigaController = loader.<EditLigaController>getController();
 
@@ -754,8 +758,8 @@ public class Controller {
             editLigaController.textFieldName.setText(liga.getNazwaLigi());
             editLigaController.comboBoxKraj.setPromptText(liga.getKraj());
 
-            stage.show();
-        }
+            stage.showAndWait();
+
     }
 
     public void openInsertLiga(ActionEvent event) throws IOException {
@@ -790,6 +794,7 @@ public class Controller {
 
         String SQL = "SELECT * from KLUBY where NAZWA_LIGI = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'";
         moreLigaController.tableKluby.getItems().clear();
+        moreLigaController.tableKluby.setPlaceholder(new Label("Żaden klub nie należy do tej ligi"));
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -842,6 +847,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditSedziaController editSedziaController = loader.<EditSedziaController>getController();
 
@@ -856,7 +862,7 @@ public class Controller {
         editSedziaController.textFieldWiek.setText(String.valueOf(sedzia.getWiek()));
         editSedziaController.comboBoxKraj.setPromptText(sedzia.getPochodzenie());
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertSedzia(ActionEvent event) throws IOException {
@@ -890,6 +896,7 @@ public class Controller {
 
         String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) where ID_SEDZIEGO = " + sedzia.getIdSedziego();
         moreSedziaController.tableMecze.getItems().clear();
+        moreSedziaController.tableMecze.setPlaceholder(new Label("Ten sędzia nie ma jeszcze przypisanych spotkań"));
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -953,6 +960,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditGolController editGolController = loader.<EditGolController>getController();
 
@@ -988,7 +996,7 @@ public class Controller {
             editGolController.radioButtonGoscie.setSelected(true);
         }
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertGol(ActionEvent event) throws IOException {
@@ -1039,6 +1047,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditStadionController editStadionController = loader.<EditStadionController>getController();
 
@@ -1055,7 +1064,7 @@ public class Controller {
         editStadionController.fourthTF.setText(stadion.getMiasto());
         editStadionController.comboBoxClub.setPromptText(stadion.getNazwaKlubu());
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertStadion(ActionEvent event) throws IOException {
@@ -1107,6 +1116,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditTrenerController editTrenerController = loader.<EditTrenerController>getController();
 
@@ -1124,7 +1134,7 @@ public class Controller {
         if (nazwaKlubu == null) nazwaKlubu = "";
         editTrenerController.comboBoxClub.setPromptText(nazwaKlubu);
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertTrener(ActionEvent event) throws IOException {
@@ -1176,6 +1186,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditWlascicielController editWlascicielController = loader.<EditWlascicielController>getController();
 
@@ -1191,7 +1202,7 @@ public class Controller {
         editWlascicielController.fourthTF.setText(df.format(wlasciciel.getMajatek()));
         editWlascicielController.comboBoxClub.setPromptText(wlasciciel.getNazwaKlubu());
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertWlasciciel(ActionEvent event) throws IOException {
@@ -1247,6 +1258,7 @@ public class Controller {
 
         Stage stage = new Stage();
         stage.setTitle("Edytuj");
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         EditTransferController editTransferController = loader.<EditTransferController>getController();
 
@@ -1263,7 +1275,7 @@ public class Controller {
         editTransferController.textFieldID.setText(transfer.getDanePilkarza());
         editTransferController.textFieldKwota.setText(df.format(transfer.getKwotaTransferu()));
 
-        stage.show();
+        stage.showAndWait();
     }
 
     public void openInsertTransfer(ActionEvent event) throws IOException {
@@ -1294,6 +1306,8 @@ public class Controller {
 
         String table = (String) comboBoxTable.getSelectionModel().getSelectedItem();
         if (table == null) {return;}
+
+        tableSearch.setPlaceholder(new Label(""));
 
         for (Node node : anchorPaneSearch.getChildren().filtered(n -> n instanceof Label)) {
             node.setVisible(false);
@@ -1710,6 +1724,7 @@ public class Controller {
                 System.out.println("Error on Building Data");
             }
         }
+        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
     }
 
     public void initializeTableColumns(TableView source) {
@@ -1724,64 +1739,5 @@ public class Controller {
             };
             tableSearch.getColumns().add(newCol);
         }
-    }
-
-
-    public void hideAll() {
-        tablePilkarze.setVisible(false);
-        tableKluby.setVisible(false);
-    }
-    public void initializeKluby() throws SQLException {
-
-        TableColumn nameColumn = new TableColumn("Nazwa klubu");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
-        nameColumn.setPrefWidth(220.0);
-
-        TableColumn yearColumn = new TableColumn("Rok zalozenia");
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("rokZalozenia"));
-        yearColumn.setPrefWidth(110.0);
-
-        TableColumn ligueColumn = new TableColumn("Nazwa Ligi");
-        ligueColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaLigi"));
-        ligueColumn.setPrefWidth(290.0);
-
-        tableKluby.getColumns().addAll(nameColumn, yearColumn, ligueColumn);
-
-    }
-    public void initializePilkarze() throws SQLException {
-        TableColumn idColumn = new TableColumn("id");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idPilkarza"));
-        idColumn.setPrefWidth(5.0);
-        idColumn.setVisible(false);
-
-        TableColumn nameColumn = new TableColumn("Imie");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
-        nameColumn.setPrefWidth(100.0);
-
-        TableColumn surnameColumn = new TableColumn("Nazwisko");
-        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
-        surnameColumn.setPrefWidth(100.0);
-
-        TableColumn birthDateColumn = new TableColumn("Data urodzenia");
-        birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("dataUrodzenia"));
-        birthDateColumn.setPrefWidth(100.0);
-
-        TableColumn posColumn = new TableColumn("Pozycja");
-        posColumn.setCellValueFactory(new PropertyValueFactory<>("pozycja"));
-        posColumn.setPrefWidth(80.0);
-
-        TableColumn priceColumn = new TableColumn("Wartość rynkowa");
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("wartoscRynkowa"));
-        priceColumn.setPrefWidth(100.0);
-
-        TableColumn salaryColumn = new TableColumn("Pensja");
-        salaryColumn.setCellValueFactory(new PropertyValueFactory<>("pensja"));
-        salaryColumn.setPrefWidth(80.0);
-
-        TableColumn clubColumn = new TableColumn("Nazwa klubu");
-        clubColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaKlubu"));
-        clubColumn.setPrefWidth(100.0);
-
-        tablePilkarze.getColumns().addAll(idColumn, nameColumn, surnameColumn, birthDateColumn, posColumn, priceColumn, salaryColumn, clubColumn);
     }
 }

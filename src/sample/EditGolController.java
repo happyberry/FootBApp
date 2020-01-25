@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -175,7 +176,8 @@ public class EditGolController {
 
         Stage stage = new Stage();
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.show();
 
         SFPlayerController sfPlayerController = loader.<SFPlayerController>getController();
         sfPlayerController.connection = connection;
@@ -184,6 +186,7 @@ public class EditGolController {
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
+        stage.showAndWait();
     }
 
     public void findMecz(ActionEvent event) throws IOException {
@@ -191,13 +194,15 @@ public class EditGolController {
 
         Stage stage = new Stage();
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.show();
 
         SFGameController sfGameController = loader.<SFGameController>getController();
         sfGameController.connection = connection;
         sfGameController.editGolController = this;
         sfGameController.initializeOptions();
         sfGameController.operation = "Edycja";
+        stage.showAndWait();
     }
 
 }

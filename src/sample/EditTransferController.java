@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -180,8 +181,9 @@ public class EditTransferController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForPlayer.fxml"));
 
         Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        //stage.show();
 
         SFPlayerController sfPlayerController = loader.<SFPlayerController>getController();
         sfPlayerController.connection = connection;
@@ -190,6 +192,7 @@ public class EditTransferController {
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
+        stage.showAndWait();
     }
 
 }

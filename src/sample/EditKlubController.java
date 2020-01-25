@@ -3,14 +3,13 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class EditKlubController {
 
@@ -52,6 +51,16 @@ public class EditKlubController {
     }
 
     public void deleteHandler(ActionEvent event) throws SQLException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Czy jesteś pewien?");
+        alert.setHeaderText("Czy na pewno chcesz usunąć ten klub?\n" +
+                "Usuwając go, usuniesz także dane o rozegranych meczach,\n" +
+                "stadionie, właścicielu i transferach");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            return;
+        }
 
         try {
             Statement statement = connection.createStatement();
