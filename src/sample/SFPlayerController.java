@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLRecoverableException;
 
 public class SFPlayerController {
 
@@ -46,6 +47,8 @@ public class SFPlayerController {
                                 rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                         tableSearch.getItems().add(pilkarz);
                     }
+                } catch (SQLRecoverableException e) {
+                    insertGolController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -53,7 +56,7 @@ public class SFPlayerController {
             }
         };
         new Thread(r).start();
-        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
+        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących piłkarzy"));
     }
 
     public void search() {
@@ -79,6 +82,8 @@ public class SFPlayerController {
                         rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                 tableSearch.getItems().add(pilkarz);
             }
+        } catch (SQLRecoverableException e) {
+            insertGolController.controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");

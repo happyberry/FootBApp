@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,6 +58,8 @@ public class InsertLigaController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO LIGI VALUES('" + name.replaceAll("'", "''") + "', '" + country + "')");
             controller.addToTable(controller.getTableLigi(), addedLiga);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
         }

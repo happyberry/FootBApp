@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class InsertSedziaController {
 
@@ -82,6 +79,8 @@ public class InsertSedziaController {
             rs.next();
             Sedziowie addedSedzia = new Sedziowie(rs.getString(1), imie, nazwisko, Integer.parseInt(wiek), kraj);
             controller.addToTable(controller.getTableSedziowie(), addedSedzia);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
         }

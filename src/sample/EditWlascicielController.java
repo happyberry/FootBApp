@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class EditWlascicielController {
 
@@ -42,6 +39,8 @@ public class EditWlascicielController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Clubs Names");
@@ -108,6 +107,8 @@ public class EditWlascicielController {
             Wlasciciele nowyWlasciciel = new Wlasciciele(wlasciciel.getIdWlasciciela(), imie, nazwisko, doubleMajatek, klub);
             controller.removeFromTable(controller.getTableWlasciciele(), wlasciciel);
             controller.addToTable(controller.getTableWlasciciele(), nowyWlasciciel);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Ten klub ma już właściciela. Usuń go i spróbuj ponownie");
@@ -132,6 +133,8 @@ public class EditWlascicielController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM Wlasciciele WHERE ID_Wlasciciela = " + wlasciciel.getIdWlasciciela());
             controller.removeFromTable(controller.getTableWlasciciele(), wlasciciel);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

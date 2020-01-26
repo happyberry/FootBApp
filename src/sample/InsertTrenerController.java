@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class InsertTrenerController {
 
@@ -45,6 +42,8 @@ public class InsertTrenerController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Clubs Names");
@@ -104,6 +103,8 @@ public class InsertTrenerController {
             if (klub != null) klub = klub.substring(1, klub.length()-1);
             Trenerzy addedTrener = new Trenerzy(rs.getString(1), imie, nazwisko, kraj, klub);
             controller.addToTable(controller.getTableTrenerzy(), addedTrener);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Ten klub ma już trenera. Usuń go i spróbuj ponownie");

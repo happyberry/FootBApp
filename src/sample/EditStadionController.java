@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class EditStadionController {
 
@@ -44,6 +41,8 @@ public class EditStadionController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Clubs Names");
@@ -126,6 +125,8 @@ public class EditStadionController {
             Stadiony nowyStadion = new Stadiony(nazwa, rokZbudowania, pojemnosc, miasto, klub);
             controller.removeFromTable(controller.getTableStadiony(), stadion);
             controller.addToTable(controller.getTableStadiony(), nowyStadion);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Ten klub ma już stadion. Usuń go i spróbuj ponownie");
@@ -150,6 +151,8 @@ public class EditStadionController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM STADIONY WHERE NAZWA = '" + stadion.getNazwa().replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableStadiony(), stadion);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

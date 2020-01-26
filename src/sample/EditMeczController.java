@@ -56,8 +56,9 @@ public class EditMeczController {
                         comboBoxGosc.getItems().add(nazwaKlubu);
                         comboBoxGosp.getItems().add(nazwaKlubu);
                     }
-                }
-                catch(SQLException e) {
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
+                } catch(SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Club Names");
                 }
@@ -176,6 +177,8 @@ public class EditMeczController {
                     wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);
             controller.removeFromTable(controller.getTableMecze(), mecz);
             controller.addToTable(controller.getTableMecze(), nowyMecz);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-02290")) {
                 labelWarning.setText("Wybierz dwa różne kluby");
@@ -198,6 +201,7 @@ public class EditMeczController {
         alert.setTitle("Czy jesteś pewien?");
         alert.setHeaderText("Czy na pewno chcesz usunąć ten mecz?\n" +
                 "Wraz z nim usunięte zostaną informacje o golach w nim strzelonych.");
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() != ButtonType.OK) {
             return;
@@ -207,6 +211,8 @@ public class EditMeczController {
             statement.executeUpdate("DELETE FROM MECZE WHERE MECZ_ID = " + mecz.getMeczId());
             controller.removeFromTable(controller.getTableMecze(), mecz);
             controller.goleJuzWczytane = false;
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

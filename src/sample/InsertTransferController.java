@@ -56,6 +56,8 @@ public class InsertTransferController {
                         comboBoxSell.getItems().add(nazwa);
                         comboBoxBuy.getItems().add(nazwa);
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Clubs Names");
@@ -125,6 +127,8 @@ public class InsertTransferController {
             if (klubSprzedajacy != null) klubSprzedajacy = klubSprzedajacy.substring(1, klubSprzedajacy.length() - 1);
             Transfery addedTransfer = new Transfery(kwotaTransferu, klubSprzedajacy, idPilkarza, dataTransferu, klubKupujacy, rs.getString(1));
             controller.addToTable(controller.getTableTransfery(), addedTransfer);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-02290") && e.getMessage().contains("CHECK_KLUBY")) {
                 labelWarning.setText("Wybierz dwa różne kluby");

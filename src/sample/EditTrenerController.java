@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class EditTrenerController {
 
@@ -44,6 +41,8 @@ public class EditTrenerController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Clubs Names");
@@ -104,6 +103,8 @@ public class EditTrenerController {
             Trenerzy nowyTrener = new Trenerzy(trener.getIdTrenera(), imie, nazwisko, kraj, klub);
             controller.removeFromTable(controller.getTableTrenerzy(), trener);
             controller.addToTable(controller.getTableTrenerzy(), nowyTrener);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Ten klub ma już trenera. Usuń go i spróbuj ponownie");
@@ -128,6 +129,8 @@ public class EditTrenerController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM TRENERZY WHERE ID_TRENERA = " + trener.getIdTrenera());
             controller.removeFromTable(controller.getTableTrenerzy(), trener);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

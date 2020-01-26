@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLRecoverableException;
 
 public class SFRefereeController {
 
@@ -37,6 +38,8 @@ public class SFRefereeController {
                         Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                         tableSearch.getItems().add(sedzia);
                     }
+                } catch (SQLRecoverableException e) {
+                    insertMeczController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -66,12 +69,14 @@ public class SFRefereeController {
                 tableSearch.getItems().add(sedzia);
                 //found[0] = true;
             }
+        } catch (SQLRecoverableException e) {
+            insertMeczController.controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }
         //if (!found[0]) {
-        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
+        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących sędziów"));
         //}
     }
 

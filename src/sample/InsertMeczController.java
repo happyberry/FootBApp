@@ -55,8 +55,9 @@ public class InsertMeczController {
                         comboBoxGosc.getItems().add(nazwaKlubu);
                         comboBoxGosp.getItems().add(nazwaKlubu);
                     }
-                }
-                catch(SQLException e) {
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
+                } catch(SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Club Names");
                 }
@@ -177,6 +178,8 @@ public class InsertMeczController {
                     wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);
 
             controller.addToTable(controller.getTableMecze(), addedMecz);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-02290")) {
                 labelWarning.setText("Wybierz dwa różne kluby");

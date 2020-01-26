@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Optional;
 
 public class EditKlubController {
@@ -41,6 +38,8 @@ public class EditKlubController {
                     while (rs.next()) {
                         comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
                     }
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Ligue Names");
@@ -73,6 +72,8 @@ public class EditKlubController {
             controller.wlascicieleJuzWczytani = false;
             controller.trenerzyJuzWczytani = false;
             controller.pilkarzeJuzWczytani = false;
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,6 +150,8 @@ public class EditKlubController {
             Kluby nowyKlub = new Kluby(name, yearInt, league);
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.addToTable(controller.getTableKluby(), nowyKlub);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Taki klub już istnieje. Zmień dane i spróbuj ponownie");

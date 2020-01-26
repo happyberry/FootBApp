@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,6 +33,8 @@ public class EditLigaController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM LIGI WHERE NAZWA_LIGI = '" + liga.getNazwaLigi().replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableLigi(), liga);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,6 +91,8 @@ public class EditLigaController {
             Ligi nowaLiga = new Ligi(name, country);
             controller.removeFromTable(controller.getTableLigi(), liga);
             controller.addToTable(controller.getTableLigi(), nowaLiga);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

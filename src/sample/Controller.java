@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,15 +18,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.beans.ExceptionListener;
 import java.io.IOException;
 import java.math.RoundingMode;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Optional;
 
 public class Controller {
 
@@ -182,6 +182,8 @@ public class Controller {
             while (rs.next()) {
                 comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
             }
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error on Picking Ligue Names");
@@ -226,8 +228,9 @@ public class Controller {
                 //System.out.println(rekord.nazwaKlubu);
                 tableRanking.getItems().add(rekord);
             }
-        }
-        catch(SQLException e) {
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
+        } catch(SQLException e) {
             e.printStackTrace();
             System.out.println("Error on Picking Ligue Names");
         }
@@ -268,8 +271,9 @@ public class Controller {
                 RekordStrzelcow rekord = new RekordStrzelcow(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 tableStrzelcy.getItems().add(rekord);
             }
-        }
-        catch(SQLException e) {
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
+        } catch(SQLException e) {
             e.printStackTrace();
             System.out.println("Error on Picking Ligue Names");
         }
@@ -294,6 +298,8 @@ public class Controller {
                         //System.out.println(Arrays.toString(rowdata));
                         tableKluby.getItems().add(klub);
                     }
+                }  catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -385,6 +391,8 @@ public class Controller {
 
                         moreKlubController.tablePilkarze.getItems().add(kopacz);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -412,8 +420,9 @@ public class Controller {
                 moreKlubController.labelTrener.setText(resultSet.getString(1));
             }
 
-        }
-        catch (Exception e) {
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
+        } catch (Exception e) {
             System.out.println("Error on building data");
         }
 
@@ -439,6 +448,8 @@ public class Controller {
 
                         tablePilkarze.getItems().add(kopacz);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -547,6 +558,8 @@ public class Controller {
                                 rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         tableMecze.getItems().add(mecz);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -646,8 +659,9 @@ public class Controller {
                 moreMeczController.labelData.setText("Mecz towarzyski, " + mecz.getData().toString());
             }
 
-        }
-        catch (Exception e) {
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
+        } catch (Exception e) {
             System.out.println("Error on building data");
         }
 
@@ -659,8 +673,9 @@ public class Controller {
                 moreMeczController.labelMiasto.setText(miejsce);
                 moreMeczController.labelMiasto.setVisible(true);
             }
-        }
-        catch (Exception e) {
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
+        } catch (Exception e) {
             System.out.println("Error on building data");
         }
 
@@ -704,6 +719,8 @@ public class Controller {
                 System.out.println(translateGospodarze + " " + translateGoscie);
                 moreMeczController.box.getChildren().add(labelNowyGol);
             }
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
@@ -728,6 +745,8 @@ public class Controller {
                         Ligi liga = new Ligi(rs.getString(1), rs.getString(2));
                         tableLigi.getItems().add(liga);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -804,6 +823,8 @@ public class Controller {
                         Kluby klub = new Kluby(rs.getString("nazwa_klubu"), rs.getInt("rok_zalozenia"), rs.getString("nazwa_ligi"));
                         moreLigaController.tableKluby.getItems().add(klub);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -830,6 +851,8 @@ public class Controller {
                                 rs.getInt(4), rs.getString(5));
                         tableSedziowie.getItems().add(sedzia);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -906,6 +929,8 @@ public class Controller {
                         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         moreSedziaController.tableMecze.getItems().add(mecz);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -942,6 +967,8 @@ public class Controller {
                                 rs.getString(8), rs.getString(9), rs.getDate(10));
                         tableGole.getItems().add(gol);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -969,33 +996,36 @@ public class Controller {
         editGolController.gol = gol;
 
         Statement statement = mainConnection.createStatement();
-        ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE where ID_PILKARZA = " + gol.getIdPilkarza());
-        rs.next();
-        editGolController.textFieldPilkarz.setText(rs.getString(1));
-        editGolController.idPilkarza = gol.getIdPilkarza();
-        rs = statement.executeQuery("select gospodarze || '-' || goscie from MECZE where MECZ_ID = " + gol.getMeczId());
-        rs.next();
-        rs = statement.executeQuery("SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
-                " from MECZE left outer join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
-        rs.next();
-        Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
-                rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
-        editGolController.textFieldMecz.setText(mecz.getGospodarze() + "-" + mecz.getGoscie());
-        editGolController.mecz = mecz;
-        editGolController.textFieldMinuta.setText(gol.getMinuta().toString());
-        if (gol.getCzySamobojczy() == 1) {
-            editGolController.checkBoxSamobojczy.setSelected(true);
-        } else {
-            editGolController.checkBoxSamobojczy.setSelected(false);
+        try {
+            ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE where ID_PILKARZA = " + gol.getIdPilkarza());
+            rs.next();
+            editGolController.textFieldPilkarz.setText(rs.getString(1));
+            editGolController.idPilkarza = gol.getIdPilkarza();
+            rs = statement.executeQuery("select gospodarze || '-' || goscie from MECZE where MECZ_ID = " + gol.getMeczId());
+            rs.next();
+            rs = statement.executeQuery("SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
+                    " from MECZE left outer join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
+            rs.next();
+            Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4),
+                    rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
+            editGolController.textFieldMecz.setText(mecz.getGospodarze() + "-" + mecz.getGoscie());
+            editGolController.mecz = mecz;
+            editGolController.textFieldMinuta.setText(gol.getMinuta().toString());
+            if (gol.getCzySamobojczy() == 1) {
+                editGolController.checkBoxSamobojczy.setSelected(true);
+            } else {
+                editGolController.checkBoxSamobojczy.setSelected(false);
+            }
+            if (gol.getCzyDlaGospodarzy() == 1) {
+                editGolController.radioButtonGoscie.setSelected(false);
+                editGolController.radioButtonGospodarze.setSelected(true);
+            } else {
+                editGolController.radioButtonGospodarze.setSelected(false);
+                editGolController.radioButtonGoscie.setSelected(true);
+            }
+        } catch (SQLRecoverableException e) {
+            showConnectionLostDialogAndExitApp();
         }
-        if (gol.getCzyDlaGospodarzy() == 1) {
-            editGolController.radioButtonGoscie.setSelected(false);
-            editGolController.radioButtonGospodarze.setSelected(true);
-        } else {
-            editGolController.radioButtonGospodarze.setSelected(false);
-            editGolController.radioButtonGoscie.setSelected(true);
-        }
-
         stage.showAndWait();
     }
 
@@ -1030,6 +1060,8 @@ public class Controller {
                                 rs.getString(4), rs.getString(5));
                         tableStadiony.getItems().add(stadion);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -1099,6 +1131,8 @@ public class Controller {
                                 rs.getString(4), rs.getString(5));
                         tableTrenerzy.getItems().add(trener);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -1169,6 +1203,8 @@ public class Controller {
                                 rs.getDouble(4), rs.getString(5));
                         tableWlasciciele.getItems().add(wlasciciel);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -1239,6 +1275,8 @@ public class Controller {
                                 rs.getDate(4), rs.getString(5), rs.getString(6));
                         tableTransfery.getItems().add(transfer);
                     }
+                } catch (SQLRecoverableException e) {
+                    showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
@@ -1497,6 +1535,8 @@ public class Controller {
                     Kluby klub = new Kluby(rs.getString(1), rs.getInt(2), rs.getString(3));
                     tableSearch.getItems().add(klub);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1520,6 +1560,8 @@ public class Controller {
                     Ligi liga = new Ligi(rs.getString(1), rs.getString(2));
                     tableSearch.getItems().add(liga);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1564,6 +1606,8 @@ public class Controller {
                             rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                     tableSearch.getItems().add(mecz);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1620,6 +1664,8 @@ public class Controller {
                             rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                     tableSearch.getItems().add(pilkarz);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1643,6 +1689,8 @@ public class Controller {
                             rs.getInt(4), rs.getString(5));
                     tableSearch.getItems().add(sedzia);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1668,6 +1716,8 @@ public class Controller {
                     Stadiony stadion = new Stadiony(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
                     tableSearch.getItems().add(stadion);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1697,6 +1747,8 @@ public class Controller {
                     Trenerzy trener = new Trenerzy(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                     tableSearch.getItems().add(trener);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
@@ -1721,12 +1773,14 @@ public class Controller {
                             rs.getString(3), rs.getDouble(4), rs.getString(5));
                     tableSearch.getItems().add(wlasciciel);
                 }
+            } catch (SQLRecoverableException e) {
+                showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error on Building Data");
             }
         }
-        tableSearch.setPlaceholder(new Label("Nie znaleziono pasujących rekordów"));
+        tableSearch.setPlaceholder(new Label("Brak wyników"));
     }
 
     public void initializeTableColumns(TableView source) {
@@ -1741,5 +1795,16 @@ public class Controller {
             };
             tableSearch.getColumns().add(newCol);
         }
+    }
+
+    public void showConnectionLostDialogAndExitApp() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Połączenie utracone");
+            alert.setHeaderText("Utracono połączenie z bazą danych :(");
+            alert.setContentText("Spróbuj ponownie uruchomić aplikację");
+            alert.showAndWait();
+            System.exit(0);
+        });
     }
 }

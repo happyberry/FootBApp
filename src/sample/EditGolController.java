@@ -14,10 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class EditGolController {
 
@@ -101,26 +98,35 @@ public class EditGolController {
         if (dlaGospodarzy == 1) {
             Integer policzoneGole = 0;
             Statement policzGole = connection.createStatement();
-            ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 1 AND MECZ_ID = " + mecz.getMeczId());
-            while (liczbaGoli.next()) {
-                policzoneGole = liczbaGoli.getInt(1);
+            try {
+                ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 1 AND MECZ_ID = " + mecz.getMeczId());
+                while (liczbaGoli.next()) {
+                    policzoneGole = liczbaGoli.getInt(1);
+                }
+                if (policzoneGole == mecz.getWynikGospodarzy()) {
+                    labelWarning.setText("Wszystkie gole gospodarzy są już wpisane");
+                    labelWarning.setVisible(true);
+                    return;
+                }
+            } catch (SQLRecoverableException e) {
+                controller.showConnectionLostDialogAndExitApp();
             }
-            if (policzoneGole == mecz.getWynikGospodarzy()) {
-                labelWarning.setText("Wszystkie gole gospodarzy są już wpisane");
-                labelWarning.setVisible(true);
-                return;
-            }
+
         } else {
             Integer policzoneGole = 0;
             Statement policzGole = connection.createStatement();
-            ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 0 AND MECZ_ID = " + mecz.getMeczId());
-            while (liczbaGoli.next()) {
-                policzoneGole = liczbaGoli.getInt(1);
-            }
-            if (policzoneGole == mecz.getWynikGosci()) {
-                labelWarning.setText("Wszystkie gole gosci są już wpisane");
-                labelWarning.setVisible(true);
-                return;
+            try {
+                ResultSet liczbaGoli = policzGole.executeQuery("Select count(*) from gole where CZY_DLA_GOSPODARZY = 0 AND MECZ_ID = " + mecz.getMeczId());
+                while (liczbaGoli.next()) {
+                    policzoneGole = liczbaGoli.getInt(1);
+                }
+                if (policzoneGole == mecz.getWynikGosci()) {
+                    labelWarning.setText("Wszystkie gole gosci są już wpisane");
+                    labelWarning.setVisible(true);
+                    return;
+                }
+            } catch (SQLRecoverableException e) {
+                controller.showConnectionLostDialogAndExitApp();
             }
         }
 
@@ -136,6 +142,8 @@ public class EditGolController {
             Gole nowyGol = new Gole(gol.getGolId(), mecz.getMeczId(), idPilkarza, minuta, czySamobojczy, dlaGospodarzy, pilkarz,
                     okolicznosci, mecz.getGospodarze(), mecz.getGoscie(), mecz.getData());
             controller.addToTable(controller.getTableGole(), nowyGol);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-02290") && (minuta < 1 || minuta > 130)) {
                 labelWarning.setText("[MINUTA] Podaj poprawną wartość");
@@ -159,6 +167,8 @@ public class EditGolController {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM GOLE WHERE GOL_ID = " + gol.getGolId());
             controller.removeFromTable(controller.getTableGole(), gol);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

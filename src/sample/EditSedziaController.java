@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLRecoverableException;
 import java.sql.Statement;
 
 public class EditSedziaController {
@@ -80,6 +81,8 @@ public class EditSedziaController {
             Sedziowie nowySedzia = new Sedziowie(sedzia.getIdSedziego(), imie, nazwisko, Integer.parseInt(wiek), kraj);
             controller.removeFromTable(controller.getTableSedziowie(), sedzia);
             controller.addToTable(controller.getTableSedziowie(), nowySedzia);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +98,8 @@ public class EditSedziaController {
             statement.executeUpdate("DELETE FROM SEDZIOWIE WHERE ID_SEDZIEGO = " + sedzia.getIdSedziego());
             controller.removeFromTable(controller.getTableSedziowie(), sedzia);
             controller.meczeJuzWczytane = false;
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -7,10 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class InsertKlubController {
 
@@ -39,8 +36,9 @@ public class InsertKlubController {
                     while (rs.next()) {
                         comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
                     }
-                }
-                catch(SQLException e) {
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
+                } catch(SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Ligue Names");
                 }
@@ -90,6 +88,8 @@ public class InsertKlubController {
             if (league != null) league = league.substring(1, league.length()-1);
             Kluby addedClub = new Kluby(name, yearInt, league);
             controller.addToTable(controller.getTableKluby(), addedClub);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             if (e.getMessage().contains("ORA-00001")) {
                 labelWarning.setText("Taki klub już istnieje. Zmień dane i spróbuj ponownie");

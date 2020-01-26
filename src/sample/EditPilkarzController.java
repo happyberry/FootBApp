@@ -54,8 +54,9 @@ public class EditPilkarzController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
-                }
-                catch(SQLException e) {
+                } catch (SQLRecoverableException e) {
+                    controller.showConnectionLostDialogAndExitApp();
+                } catch(SQLException e) {
                     e.printStackTrace();
                     System.out.println("Error on Picking Club Names");
                 }
@@ -80,6 +81,8 @@ public class EditPilkarzController {
             controller.removeFromTable(controller.getTablePilkarze(), pilkarz);
             controller.transferyJuzWczytane = false;
             controller.goleJuzWczytane = false;
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -221,6 +224,8 @@ public class EditPilkarzController {
             Pilkarze nowyPilkarz = new Pilkarze(pilkarz.getIdPilkarza(), imie, nazwisko, date, pozycja, wartoscRynkowa, Double.parseDouble(pensja), klub.substring(1,klub.length()-1));
             controller.removeFromTable(controller.getTablePilkarze(), pilkarz);
             controller.addToTable(controller.getTablePilkarze(), nowyPilkarz);
+        } catch (SQLRecoverableException e) {
+            controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
             e.printStackTrace();
         }
