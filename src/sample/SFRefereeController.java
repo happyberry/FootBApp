@@ -28,7 +28,7 @@ public class SFRefereeController {
     public void fetchInitialData() {
 
         tableSearch.getItems().clear();
-        String SQL = "SELECT * from SEDZIOWIE";
+        String SQL = "SELECT * from SEDZIOWIE ORDER BY NAZWISKO";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -60,7 +60,7 @@ public class SFRefereeController {
         tableSearch.getItems().clear();
 
         String SQL = "SELECT * from SEDZIOWIE where POCHODZENIE like '%" + kraj.replaceAll("'", "''") +
-                "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%'";
+                "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%' ORDER BY NAZWISKO";
         //found[0] = false;
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);

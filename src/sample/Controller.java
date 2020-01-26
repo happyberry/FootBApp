@@ -74,6 +74,10 @@ public class Controller {
     private Label labelA, labelB, labelC, labelD, labelWarning;
     @FXML
     private TextField textFieldA, textFieldB, textFieldC, textFieldD;
+    @FXML
+    private Button refreshGole, refreshLigi, refreshMecze, refreshPilkarze, refreshSedziowie, refreshStadiony;
+    @FXML
+    private Button refreshTransfery, refreshTrenerzy, refreshWlasciciele, refreshKluby;
     public Stage primaryStage;
 
     private DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance();
@@ -545,7 +549,7 @@ public class Controller {
         if (meczeJuzWczytane) return;
         tableMecze.getItems().clear();
         meczeJuzWczytane = true;
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, NVL(ID_SEDZIEGO, -1), IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) ORDER BY DATA";
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, NVL(ID_SEDZIEGO, -1), IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) ORDER BY DATA DESC";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -946,7 +950,7 @@ public class Controller {
         tableGole.getItems().clear();
         goleJuzWczytane = true;
         String SQL = "SELECT CZY_SAMOBOJCZY, CZY_DLA_GOSPODARZY, GOL_ID, MECZ_ID, ID_PILKARZA, MINUTA, IMIE || ' ' || NAZWISKO, " +
-                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id)";
+                "GOSPODARZE, GOSCIE, DATA from GOLE join PILKARZE using(id_pilkarza) join MECZE using(mecz_id) ORDER BY DATA DESC";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -1781,6 +1785,51 @@ public class Controller {
             }
         }
         tableSearch.setPlaceholder(new Label("Brak wyników"));
+    }
+
+    public void refreshHandler(ActionEvent event) throws SQLException {
+        String eventSourceId = ((Node)(event.getSource())).getId();
+        if (eventSourceId.equals("refreshLigi")) {
+            System.out.println("Ligi");
+            ligiJuzWczytane = false;
+            fillLigi();
+        } else if (eventSourceId.equals("refreshGole")) {
+            System.out.println("Gole");
+            goleJuzWczytane = false;
+            fillGole();
+        } else if (eventSourceId.equals("refreshKluby")) {
+            System.out.println("Kluby");
+            klubyJuzWczytane = false;
+            fillKluby();
+        } else if (eventSourceId.equals("refreshMecze")) {
+            System.out.println("Mecze");
+            meczeJuzWczytane = false;
+            fillMecze();
+        } else if (eventSourceId.equals("refreshPilkarze")) {
+            System.out.println("Pilkarze");
+            pilkarzeJuzWczytani = false;
+            fillPilkarze();
+        } else if (eventSourceId.equals("refreshSedziowie")) {
+            System.out.println("Sedziowie");
+            sedziowieJuzWczytani = false;
+            fillSedziowie();
+        } else if (eventSourceId.equals("refreshStadiony")) {
+            System.out.println("Stadiony");
+            stadionyJuzWczytane = false;
+            fillStadiony();
+        } else if (eventSourceId.equals("refreshTransfery")) {
+            System.out.println("Transfery");
+            transferyJuzWczytane = false;
+            fillTransfery();
+        } else if (eventSourceId.equals("refreshTrenerzy")) {
+            System.out.println("Trenerzy");
+            trenerzyJuzWczytani = false;
+            fillTrenerzy();
+        } else if (eventSourceId.equals("refreshWlasciciele")) {
+            System.out.println("Wlasciciele");
+            wlascicieleJuzWczytani = false;
+            fillWlasciciele();
+        }
     }
 
     public void initializeTableColumns(TableView source) {

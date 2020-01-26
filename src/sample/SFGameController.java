@@ -27,7 +27,7 @@ public class SFGameController {
     public void initializeOptions() {
         tableSearch.getItems().clear();
 
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego)";
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO from MECZE left outer join sedziowie using(id_sedziego) ORDER BY DATA DESC";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -62,7 +62,7 @@ public class SFGameController {
         String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
                 "from MECZE left outer join sedziowie using(id_sedziego)" +
                 "where data = DATE '" + data + "' OR GOSCIE like '%" + nazwa.replaceAll("'", "''") +
-                "%' OR GOSPODARZE like '%" + nazwa.replaceAll("'", "''") + "%'";
+                "%' OR GOSPODARZE like '%" + nazwa.replaceAll("'", "''") + "%' ORDER BY DATA DESC";
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);
             while (rs.next()) {

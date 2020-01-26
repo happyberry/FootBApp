@@ -29,7 +29,7 @@
          </font>
       </Label>
       <VBox fx:id="box" layoutX="70.0" layoutY="172.0" prefHeight="259.0" prefWidth="556.0" />
-      <Label fx:id="labelMiasto" alignment="CENTER" layoutX="253.0" layoutY="410.0" prefHeight="27.0" prefWidth="189.0" text="Miasto, Stadion">
+      <Label fx:id="labelMiasto" alignment="CENTER" layoutX="195.0" layoutY="410.0" prefHeight="27.0" prefWidth="303.0" text="Miasto, Stadion">
          <font>
             <Font name="System" size="14.0" />
          </font>

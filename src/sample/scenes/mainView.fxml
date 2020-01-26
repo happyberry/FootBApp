@@ -201,6 +201,11 @@
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertLiga" text="Dodaj nową ligę" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditLiga" text="Edytuj wpis" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreLiga" text="Pokaż dodatkowe informacje" />
+                  <Button fx:id="refreshLigi" layoutX="119.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -230,6 +235,11 @@
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditKlub" text="Edytuj wpis" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertKlub" text="Dodaj nowy klub" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreKlub" text="Pokaż dodatkowe informacje" />
+                  <Button fx:id="refreshKluby" layoutX="123.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -282,6 +292,11 @@
                      </columns></TableView>
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditPilkarz" text="Edytuj wpis" />
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertPilkarz" text="Dodaj piłkarza" />
+                  <Button fx:id="refreshPilkarze" layoutX="109.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -324,6 +339,11 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertTransfer" text="Dodaj nowy transfer" />
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditTransfer" text="Edytuj wpis" />
+                  <Button fx:id="refreshTransfery" layoutX="140.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -361,6 +381,11 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertTrener" text="Dodaj trenera" />
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditTrener" text="Edytuj wpis" />
+                  <Button fx:id="refreshTrenerzy" layoutX="105.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -419,6 +444,11 @@
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertMecz" text="Dodaj mecz" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditMecz" text="Edytuj wpis" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreMecz" text="Pokaż dodatkowe informacje" />
+                  <Button fx:id="refreshMecze" layoutX="95.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -486,6 +516,11 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertGol" text="Dodaj gol" />
                   <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditGol" text="Edytuj wpis" />
+                  <Button fx:id="refreshGole" layoutX="85.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -524,6 +559,11 @@
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertSedzia" text="Dodaj sędziego" />
                   <Button layoutX="425.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditSedzia" text="Edytuj wpis" />
                   <Button layoutX="515.0" layoutY="15.0" mnemonicParsing="false" onAction="#openMoreSedzia" text="Pokaż dodatkowe informacje" />
+                  <Button fx:id="refreshSedziowie" layoutX="116.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -561,6 +601,11 @@
                      </columns></TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertWlasciciel" text="Dodaj właściciela" />
                   <Button layoutX="607.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditWlasciciel" text="Edytuj wpis" />
+                  <Button fx:id="refreshWlasciciele" layoutX="125.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </content>
       </Tab>
@@ -599,6 +644,11 @@
                   </TableView>
                   <Button layoutX="9.0" layoutY="15.0" mnemonicParsing="false" onAction="#openInsertStadion" text="Dodaj nowy stadion" />
                   <Button layoutX="608.0" layoutY="15.0" mnemonicParsing="false" onAction="#openEditStadion" text="Edytuj wpis" />
+                  <Button fx:id="refreshStadiony" layoutX="139.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="⟲" onAction="#refreshHandler">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </content>

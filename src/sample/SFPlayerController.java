@@ -35,7 +35,7 @@ public class SFPlayerController {
 
     public void fetchInitialData(){
         tableSearch.getItems().clear();
-        String SQL = "SELECT * from PILKARZE";
+        String SQL = "SELECT * from PILKARZE ORDER BY POZYCJA";
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -73,7 +73,7 @@ public class SFPlayerController {
         tableSearch.getItems().clear();
 
         String SQL = "SELECT * from PILKARZE where DATA_URODZENIA = DATE '" + dataUrodzenia + "' OR NAZWA_KLUBU like '%" + nazwaKlubu.replaceAll("'", "''") +
-                "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%' OR POZYCJA like '%" + pozycja + "%'";
+                "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%' OR POZYCJA like '%" + pozycja + "%' ORDER BY POZYCJA";
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);
             while (rs.next()) {
