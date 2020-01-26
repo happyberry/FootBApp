@@ -47,6 +47,7 @@ public class SFPlayerController {
                                 rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                         tableSearch.getItems().add(pilkarz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     insertGolController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -82,6 +83,7 @@ public class SFPlayerController {
                         rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                 tableSearch.getItems().add(pilkarz);
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             insertGolController.controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {

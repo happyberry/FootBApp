@@ -79,6 +79,7 @@ public class InsertSedziaController {
             rs.next();
             Sedziowie addedSedzia = new Sedziowie(rs.getString(1), imie, nazwisko, Integer.parseInt(wiek), kraj);
             controller.addToTable(controller.getTableSedziowie(), addedSedzia);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

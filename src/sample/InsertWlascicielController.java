@@ -40,6 +40,7 @@ public class InsertWlascicielController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
@@ -112,6 +113,7 @@ public class InsertWlascicielController {
             rs.next();
             Wlasciciele addedWlasciciel = new Wlasciciele(rs.getString(1), imie, nazwisko, doubleMajatek, klub);
             controller.addToTable(controller.getTableWlasciciele(), addedWlasciciel);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

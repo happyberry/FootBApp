@@ -56,6 +56,7 @@ public class EditMeczController {
                         comboBoxGosc.getItems().add(nazwaKlubu);
                         comboBoxGosp.getItems().add(nazwaKlubu);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch(SQLException e) {
@@ -83,7 +84,7 @@ public class EditMeczController {
         if (day == null) {
             day = comboBoxDay.getPromptText();
         }
-        System.out.println(year + " " + month + " " + day);
+        //System.out.println(year + " " + month + " " + day);
         Date date = new Date(Integer.parseInt(year)-1900, Integer.parseInt(month)-1, Integer.parseInt(day));
         String completeDate = year + '-' + month + '-' + day;
 
@@ -138,7 +139,6 @@ public class EditMeczController {
         if (Integer.parseInt(month) == 2) {
             if (Integer.parseInt(day) > 28) {
                 if (Integer.parseInt(day) > 29 || Integer.parseInt(year) % 4 != 0) {
-                    System.out.println("[DATA] Luty ma mniej niż 30 dni");
                     labelWarning.setText("[DATA] Luty ma mniej niż 30 dni");
                     labelWarning.setVisible(true);
                     return;
@@ -147,7 +147,6 @@ public class EditMeczController {
         }
         if (Integer.parseInt(month) == 4 || Integer.parseInt(month) == 6 || Integer.parseInt(month) == 9 || Integer.parseInt(month) == 11) {
             if (day.equals("31")) {
-                System.out.println("[DATA] Błędny dzień miesiąca");
                 labelWarning.setText("[DATA] Błędny dzień miesiąca");
                 labelWarning.setVisible(true);
                 return;
@@ -172,6 +171,7 @@ public class EditMeczController {
                 ResultSet rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + sedziaId);
                 rs.next();
                 daneSedziego = rs.getString(1);
+                rs.close();
             }
             Mecze nowyMecz = new Mecze(mecz.getMeczId(), date, gospodarze, goscie,
                     wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);

@@ -186,6 +186,7 @@ public class Controller {
             while (rs.next()) {
                 comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
@@ -212,7 +213,7 @@ public class Controller {
         }
         else {
             Integer rokPoczatku = Integer.parseInt(comboBoxYear.getSelectionModel().getSelectedItem().toString().substring(0,4));
-            System.out.println(rokPoczatku);
+            //System.out.println(rokPoczatku);
             poczatek = "DATE '" + String.valueOf(rokPoczatku) +"-07-01'";
             koniec = "DATE '" + String.valueOf(rokPoczatku+1) + "-06-30' ";
         }
@@ -232,6 +233,7 @@ public class Controller {
                 //System.out.println(rekord.nazwaKlubu);
                 tableRanking.getItems().add(rekord);
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
         } catch(SQLException e) {
@@ -254,7 +256,7 @@ public class Controller {
         }
         else {
             Integer rokPoczatku = Integer.parseInt(comboBoxYear.getSelectionModel().getSelectedItem().toString().substring(0,4));
-            System.out.println(rokPoczatku);
+            //System.out.println(rokPoczatku);
             poczatek = "DATE '" + String.valueOf(rokPoczatku) +"-07-01'";
             koniec = "DATE '" + String.valueOf(rokPoczatku+1) + "-06-30' ";
         }
@@ -275,6 +277,7 @@ public class Controller {
                 RekordStrzelcow rekord = new RekordStrzelcow(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 tableStrzelcy.getItems().add(rekord);
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
         } catch(SQLException e) {
@@ -293,6 +296,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshKluby.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -302,12 +306,14 @@ public class Controller {
                         //System.out.println(Arrays.toString(rowdata));
                         tableKluby.getItems().add(klub);
                     }
+                    rs.close();
                 }  catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshKluby.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -395,6 +401,7 @@ public class Controller {
 
                         moreKlubController.tablePilkarze.getItems().add(kopacz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -415,14 +422,17 @@ public class Controller {
                 moreKlubController.labelStadion.setText(resultSet.getString(1));
                 moreKlubController.labelMiasto.setText(resultSet.getString(2));
             }
+            resultSet.close();
             resultSet = statement.executeQuery("select imie || ' ' || nazwisko from WLASCICIELE where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "'");
             while(resultSet.next()) {
                 moreKlubController.labelWlasciciel.setText(resultSet.getString(1));
             }
+            resultSet.close();
             resultSet = statement.executeQuery("select imie || ' ' || nazwisko from TRENERZY where NAZWA_KLUBU = '" + klub.getNazwaKlubu().replaceAll("'", "''") + "'");
             while(resultSet.next()) {
                 moreKlubController.labelTrener.setText(resultSet.getString(1));
             }
+            resultSet.close();
 
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
@@ -442,22 +452,25 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshPilkarze.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
-                        System.out.println(rs.getString("imie"));
+                        //System.out.println(rs.getString("imie"));
                         Pilkarze kopacz = new Pilkarze(rs.getString("id_pilkarza"), rs.getString("imie"),
                                 rs.getString("nazwisko"), rs.getDate("data_urodzenia"), rs.getString("pozycja"),
                                 rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
 
                         tablePilkarze.getItems().add(kopacz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshPilkarze.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -553,21 +566,24 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshMecze.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
                         //Iterate Row
-                        System.out.println(rs.getString(8));
+                        //System.out.println(rs.getString(8));
                         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3),
                                 rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         tableMecze.getItems().add(mecz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshMecze.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -654,9 +670,11 @@ public class Controller {
             ResultSet resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGospodarze().replaceAll("'", "''") + "'");
             resultSet.next();
             String ligaGospodarzy = resultSet.getString(1);
+            resultSet.close();
             resultSet = statement.executeQuery("select NAZWA_LIGI from kluby where NAZWA_KLUBU = '" + mecz.getGoscie().replaceAll("'", "''") + "'");
             resultSet.next();
             String ligaGosci = resultSet.getString(1);
+            resultSet.close();
             if (ligaGosci.equals(ligaGospodarzy)) {
                 moreMeczController.labelData.setText(ligaGosci + ", " + mecz.getData().toString());
             } else {
@@ -677,6 +695,7 @@ public class Controller {
                 moreMeczController.labelMiasto.setText(miejsce);
                 moreMeczController.labelMiasto.setVisible(true);
             }
+            resultSet.close();
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
@@ -706,13 +725,13 @@ public class Controller {
                 Label labelNowyGol = new Label();
                 labelNowyGol.setPrefWidth(200);
                 String text = gol.getDaneStrzelca() + " " + gol.getMinuta().toString() + "'";
-                System.out.println(text);
+                //System.out.println(text);
                 if (samobojczy == 1) {
                     text += "(S)";
                 }
                 labelNowyGol.setText(text);
                 if (czyGospodarze == 1) {
-                    System.out.println("Gospodarze");
+                    //System.out.println("Gospodarze");
                     labelNowyGol.setTranslateX(0);
                     labelNowyGol.setTranslateY(translateGospodarze += 10);
                 } else {
@@ -720,9 +739,10 @@ public class Controller {
                     labelNowyGol.setAlignment(Pos.CENTER_RIGHT);
                     labelNowyGol.setTranslateY(translateGoscie += 10);
                 }
-                System.out.println(translateGospodarze + " " + translateGoscie);
+                //System.out.println(translateGospodarze + " " + translateGoscie);
                 moreMeczController.box.getChildren().add(labelNowyGol);
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             showConnectionLostDialogAndExitApp();
         } catch (Exception e) {
@@ -738,10 +758,11 @@ public class Controller {
         if (ligiJuzWczytane) return;
         tableLigi.getItems().clear();
         ligiJuzWczytane = true;
-        String SQL = "SELECT * from LIGI ORDER BY NAZWA_LIGI";
+        String SQL = "SELECT * from LIGI ORDER BY KRAJ, NAZWA_LIGI";
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshLigi.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -749,12 +770,14 @@ public class Controller {
                         Ligi liga = new Ligi(rs.getString(1), rs.getString(2));
                         tableLigi.getItems().add(liga);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshLigi.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -827,6 +850,7 @@ public class Controller {
                         Kluby klub = new Kluby(rs.getString("nazwa_klubu"), rs.getInt("rok_zalozenia"), rs.getString("nazwa_ligi"));
                         moreLigaController.tableKluby.getItems().add(klub);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -847,6 +871,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshSedziowie.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -855,12 +880,14 @@ public class Controller {
                                 rs.getInt(4), rs.getString(5));
                         tableSedziowie.getItems().add(sedzia);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshSedziowie.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -933,6 +960,7 @@ public class Controller {
                         Mecze mecz = new Mecze(rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         moreSedziaController.tableMecze.getItems().add(mecz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -954,6 +982,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshGole.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -971,12 +1000,14 @@ public class Controller {
                                 rs.getString(8), rs.getString(9), rs.getDate(10));
                         tableGole.getItems().add(gol);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshGole.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -1005,8 +1036,10 @@ public class Controller {
             rs.next();
             editGolController.textFieldPilkarz.setText(rs.getString(1));
             editGolController.idPilkarza = gol.getIdPilkarza();
+            rs.close();
             rs = statement.executeQuery("select gospodarze || '-' || goscie from MECZE where MECZ_ID = " + gol.getMeczId());
             rs.next();
+            rs.close();
             rs = statement.executeQuery("SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
                     " from MECZE left outer join sedziowie using(id_sedziego) WHERE MECZ_ID = " + gol.getMeczId());
             rs.next();
@@ -1015,6 +1048,7 @@ public class Controller {
             editGolController.textFieldMecz.setText(mecz.getGospodarze() + "-" + mecz.getGoscie());
             editGolController.mecz = mecz;
             editGolController.textFieldMinuta.setText(gol.getMinuta().toString());
+            rs.close();
             if (gol.getCzySamobojczy() == 1) {
                 editGolController.checkBoxSamobojczy.setSelected(true);
             } else {
@@ -1057,6 +1091,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshStadiony.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -1064,12 +1099,14 @@ public class Controller {
                                 rs.getString(4), rs.getString(5));
                         tableStadiony.getItems().add(stadion);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshStadiony.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -1128,6 +1165,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshTrenerzy.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -1135,12 +1173,14 @@ public class Controller {
                                 rs.getString(4), rs.getString(5));
                         tableTrenerzy.getItems().add(trener);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshTrenerzy.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -1200,6 +1240,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshWlasciciele.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -1207,12 +1248,14 @@ public class Controller {
                                 rs.getDouble(4), rs.getString(5));
                         tableWlasciciele.getItems().add(wlasciciel);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshWlasciciele.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -1272,6 +1315,7 @@ public class Controller {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                refreshTransfery.setDisable(true);
                 try {
                     ResultSet rs = mainConnection.createStatement().executeQuery(SQL);
                     while (rs.next()) {
@@ -1279,12 +1323,14 @@ public class Controller {
                                 rs.getDate(4), rs.getString(5), rs.getString(6));
                         tableTransfery.getItems().add(transfer);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error on Building Data");
                 }
+                refreshTransfery.setDisable(false);
             }
         };
         new Thread(r).start();
@@ -1539,6 +1585,7 @@ public class Controller {
                     Kluby klub = new Kluby(rs.getString(1), rs.getInt(2), rs.getString(3));
                     tableSearch.getItems().add(klub);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1564,6 +1611,7 @@ public class Controller {
                     Ligi liga = new Ligi(rs.getString(1), rs.getString(2));
                     tableSearch.getItems().add(liga);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1610,6 +1658,7 @@ public class Controller {
                             rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                     tableSearch.getItems().add(mecz);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1668,6 +1717,7 @@ public class Controller {
                             rs.getDouble("wartosc_rynkowa"), rs.getDouble("pensja"), rs.getString("nazwa_klubu"));
                     tableSearch.getItems().add(pilkarz);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1693,6 +1743,7 @@ public class Controller {
                             rs.getInt(4), rs.getString(5));
                     tableSearch.getItems().add(sedzia);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1720,6 +1771,7 @@ public class Controller {
                     Stadiony stadion = new Stadiony(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
                     tableSearch.getItems().add(stadion);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1751,6 +1803,7 @@ public class Controller {
                     Trenerzy trener = new Trenerzy(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                     tableSearch.getItems().add(trener);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1777,6 +1830,7 @@ public class Controller {
                             rs.getString(3), rs.getDouble(4), rs.getString(5));
                     tableSearch.getItems().add(wlasciciel);
                 }
+                rs.close();
             } catch (SQLRecoverableException e) {
                 showConnectionLostDialogAndExitApp();
             } catch (Exception e) {
@@ -1790,43 +1844,43 @@ public class Controller {
     public void refreshHandler(ActionEvent event) throws SQLException {
         String eventSourceId = ((Node)(event.getSource())).getId();
         if (eventSourceId.equals("refreshLigi")) {
-            System.out.println("Ligi");
+            //System.out.println("Ligi");
             ligiJuzWczytane = false;
             fillLigi();
         } else if (eventSourceId.equals("refreshGole")) {
-            System.out.println("Gole");
+            //System.out.println("Gole");
             goleJuzWczytane = false;
             fillGole();
         } else if (eventSourceId.equals("refreshKluby")) {
-            System.out.println("Kluby");
+            //System.out.println("Kluby");
             klubyJuzWczytane = false;
             fillKluby();
         } else if (eventSourceId.equals("refreshMecze")) {
-            System.out.println("Mecze");
+            //System.out.println("Mecze");
             meczeJuzWczytane = false;
             fillMecze();
         } else if (eventSourceId.equals("refreshPilkarze")) {
-            System.out.println("Pilkarze");
+            //System.out.println("Pilkarze");
             pilkarzeJuzWczytani = false;
             fillPilkarze();
         } else if (eventSourceId.equals("refreshSedziowie")) {
-            System.out.println("Sedziowie");
+            //System.out.println("Sedziowie");
             sedziowieJuzWczytani = false;
             fillSedziowie();
         } else if (eventSourceId.equals("refreshStadiony")) {
-            System.out.println("Stadiony");
+            //System.out.println("Stadiony");
             stadionyJuzWczytane = false;
             fillStadiony();
         } else if (eventSourceId.equals("refreshTransfery")) {
-            System.out.println("Transfery");
+            //System.out.println("Transfery");
             transferyJuzWczytane = false;
             fillTransfery();
         } else if (eventSourceId.equals("refreshTrenerzy")) {
-            System.out.println("Trenerzy");
+            //System.out.println("Trenerzy");
             trenerzyJuzWczytani = false;
             fillTrenerzy();
         } else if (eventSourceId.equals("refreshWlasciciele")) {
-            System.out.println("Wlasciciele");
+            //System.out.println("Wlasciciele");
             wlascicieleJuzWczytani = false;
             fillWlasciciele();
         }

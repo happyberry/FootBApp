@@ -49,6 +49,7 @@ public class InsertPilkarzController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 }
@@ -179,6 +180,7 @@ public class InsertPilkarzController {
             Pilkarze addedPilkarz = new Pilkarze(rs.getString(1), imie, nazwisko, date, pozycje, Double.parseDouble(wartosc),
                     Double.parseDouble(pensja), klub.substring(1, klub.length() - 1));
             controller.addToTable(controller.getTablePilkarze(), addedPilkarz);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

@@ -42,6 +42,7 @@ public class InsertTrenerController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
@@ -103,6 +104,7 @@ public class InsertTrenerController {
             if (klub != null) klub = klub.substring(1, klub.length()-1);
             Trenerzy addedTrener = new Trenerzy(rs.getString(1), imie, nazwisko, kraj, klub);
             controller.addToTable(controller.getTableTrenerzy(), addedTrener);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

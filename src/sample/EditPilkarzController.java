@@ -54,6 +54,7 @@ public class EditPilkarzController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch(SQLException e) {
@@ -213,7 +214,7 @@ public class EditPilkarzController {
             }
         }
 
-        System.out.println(imie + " " + nazwisko + " " + year + "-" + month + "-" + day + " " + pozycja + " " + wartosc + " " + pensja + " " + klub);
+        //System.out.println(imie + " " + nazwisko + " " + year + "-" + month + "-" + day + " " + pozycja + " " + wartosc + " " + pensja + " " + klub);
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("UPDATE PILKARZE SET imie = '" + imie.replaceAll("'", "''") + "', nazwisko = '" + nazwisko.replaceAll("'", "''") + "', DATA_URODZENIA = DATE '"

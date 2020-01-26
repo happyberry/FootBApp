@@ -38,6 +38,7 @@ public class SFGameController {
                                 rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                         tableSearch.getItems().add(mecz);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     insertGolController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -70,6 +71,7 @@ public class SFGameController {
                         rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8));
                 tableSearch.getItems().add(mecz);
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             insertGolController.controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {

@@ -56,6 +56,7 @@ public class InsertMeczController {
                         comboBoxGosc.getItems().add(nazwaKlubu);
                         comboBoxGosp.getItems().add(nazwaKlubu);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch(SQLException e) {
@@ -137,7 +138,6 @@ public class InsertMeczController {
         if (Integer.parseInt(month) == 2) {
             if (Integer.parseInt(day) > 28) {
                 if (Integer.parseInt(day) > 29 || Integer.parseInt(year) % 4 != 0) {
-                    System.out.println("[DATA] Luty ma mniej niż 30 dni");
                     labelWarning.setText("[DATA] Luty ma mniej niż 30 dni");
                     labelWarning.setVisible(true);
                     return;
@@ -146,7 +146,6 @@ public class InsertMeczController {
         }
         if (Integer.parseInt(month) == 4 || Integer.parseInt(month) == 6 || Integer.parseInt(month) == 9 || Integer.parseInt(month) == 11) {
             if (day.equals("31")) {
-                System.out.println("[DATA] Błędny dzień miesiąca");
                 labelWarning.setText("[DATA] Błędny dzień miesiąca");
                 labelWarning.setVisible(true);
                 return;
@@ -165,7 +164,7 @@ public class InsertMeczController {
             rs.next();
             String idMeczu = rs.getString(1);
             String daneSedziego;
-            System.out.println("IDSEDZIEGO: " + sedziaId);
+            rs.close();
             if (sedziaId == null) {
                 daneSedziego = "";
                 sedziaId = "-1";
@@ -174,6 +173,7 @@ public class InsertMeczController {
                 rs = statement.executeQuery("select imie || ' ' || nazwisko from SEDZIOWIE where ID_SEDZIEGO = " + sedziaId);
                 rs.next();
                 daneSedziego = rs.getString(1);
+                rs.close();
             }
             Mecze addedMecz = new Mecze(idMeczu, date, gospodarze, goscie,
                     wynikGospodarzy, wynikGosci, sedziaId, daneSedziego);

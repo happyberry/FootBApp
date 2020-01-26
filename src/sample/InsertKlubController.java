@@ -36,6 +36,7 @@ public class InsertKlubController {
                     while (rs.next()) {
                         comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch(SQLException e) {
@@ -53,7 +54,7 @@ public class InsertKlubController {
         String name = clubName.getText();
         String year = clubYear.getText();
         String league = (String) comboBoxLeague.getSelectionModel().getSelectedItem();
-        System.out.println(name + " " + year + " " + league);
+        //System.out.println(name + " " + year + " " + league);
         int yearInt;
         try {
             yearInt = Integer.parseInt(year);
