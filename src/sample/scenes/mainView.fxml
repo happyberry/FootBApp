@@ -119,7 +119,7 @@
                   </ComboBox>
                   <!--<Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#fillSearchEngine" text="Pokaż wyszukiwarkę" />-->
                   <TableView fx:id="tableSearch" layoutX="11.0" layoutY="221.0" prefHeight="334.0" prefWidth="675.0" />
-                  <Button layoutX="283.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" style="-fx-background-color: #00c000;" text="Wyszukaj" />
+                  <Button layoutX="283.0" layoutY="14.0" mnemonicParsing="false" onAction="#showResults" text="Wyszukaj" />
                   <Label fx:id="labelA" layoutX="15.0" layoutY="60.0" text="Label" visible="false" />
                   <Label fx:id="labelB" layoutX="15.0" layoutY="100.0" text="Data" visible="false" />
                   <Label fx:id="labelC" layoutX="15.0" layoutY="140.0" text="Label" visible="false" />

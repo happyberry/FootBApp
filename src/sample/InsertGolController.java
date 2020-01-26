@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -164,8 +165,10 @@ public class InsertGolController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForPlayer.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        //stage.show();
 
         SFPlayerController sfPlayerController = loader.<SFPlayerController>getController();
         sfPlayerController.connection = connection;
@@ -174,20 +177,24 @@ public class InsertGolController {
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnWartosc);
         controller.<Pilkarze>reformatDoubleCell(sfPlayerController.tableColumnPensja);
         sfPlayerController.fetchInitialData();
+        stage.showAndWait();
     }
 
     public void findMecz(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForGame.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        //stage.show();
 
         SFGameController sfGameController = loader.<SFGameController>getController();
         sfGameController.connection = connection;
         sfGameController.insertGolController = this;
         sfGameController.operation = "wstawianie";
         sfGameController.initializeOptions();
+        stage.showAndWait();
     }
 
 }

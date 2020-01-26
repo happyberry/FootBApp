@@ -182,7 +182,10 @@ public class InsertPilkarzController {
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
+            labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
+            labelWarning.setVisible(true);
             e.printStackTrace();
+            return;
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
 

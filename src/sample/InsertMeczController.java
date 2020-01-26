@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -206,14 +207,17 @@ public class InsertMeczController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForReferee.fxml"));
 
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
-        stage.show();
+        //stage.show();
 
         SFRefereeController sfRefereeController = loader.<SFRefereeController>getController();
         sfRefereeController.connection = connection;
         sfRefereeController.insertMeczController = this;
         sfRefereeController.operation = "Wstawianie";
         sfRefereeController.fetchInitialData();
+        stage.showAndWait();
     }
 
 }
