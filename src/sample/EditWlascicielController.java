@@ -39,6 +39,7 @@ public class EditWlascicielController {
                     while (rs.next()) {
                         comboBoxClub.getItems().add(rs.getString("nazwa_klubu"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
@@ -80,7 +81,7 @@ public class EditWlascicielController {
         int toCut = majatek.length() - majatek.indexOf(".") - 3;
         if (toCut > 0 && majatek.contains(".")) majatek = majatek.substring(0, majatek.length() - toCut);
 
-        System.out.println(majatek);
+        //System.out.println(majatek);
         double doubleMajatek;
         try {
             doubleMajatek = Double.parseDouble(majatek);

@@ -38,6 +38,7 @@ public class EditKlubController {
                     while (rs.next()) {
                         comboBoxLeague.getItems().add(rs.getString("nazwa_ligi"));
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {

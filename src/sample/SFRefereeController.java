@@ -38,6 +38,7 @@ public class SFRefereeController {
                         Sedziowie sedzia = new Sedziowie(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
                         tableSearch.getItems().add(sedzia);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     insertMeczController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
@@ -69,6 +70,7 @@ public class SFRefereeController {
                 tableSearch.getItems().add(sedzia);
                 //found[0] = true;
             }
+            rs.close();
         } catch (SQLRecoverableException e) {
             insertMeczController.controller.showConnectionLostDialogAndExitApp();
         } catch (Exception e) {

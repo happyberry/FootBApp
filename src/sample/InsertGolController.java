@@ -104,6 +104,7 @@ public class InsertGolController {
                     labelWarning.setVisible(true);
                     return;
                 }
+                liczbaGoli.close();
             } catch (SQLRecoverableException e) {
                 controller.showConnectionLostDialogAndExitApp();
             }
@@ -121,6 +122,7 @@ public class InsertGolController {
                     labelWarning.setVisible(true);
                     return;
                 }
+                liczbaGoli.close();
             } catch (SQLRecoverableException e) {
                 controller.showConnectionLostDialogAndExitApp();
             }
@@ -137,6 +139,7 @@ public class InsertGolController {
             rs.next();
             Gole addedGol = new Gole(id, mecz.getMeczId(), idPilkarza, minuta, czySamobojczy, dlaGospodarzy, rs.getString(1), okolicznosci, mecz.getGospodarze(), mecz.getGoscie(), mecz.getData());
             controller.addToTable(controller.getTableGole(), addedGol);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

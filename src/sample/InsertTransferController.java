@@ -56,6 +56,7 @@ public class InsertTransferController {
                         comboBoxSell.getItems().add(nazwa);
                         comboBoxBuy.getItems().add(nazwa);
                     }
+                    rs.close();
                 } catch (SQLRecoverableException e) {
                     controller.showConnectionLostDialogAndExitApp();
                 } catch (SQLException e) {
@@ -127,6 +128,7 @@ public class InsertTransferController {
             if (klubSprzedajacy != null) klubSprzedajacy = klubSprzedajacy.substring(1, klubSprzedajacy.length() - 1);
             Transfery addedTransfer = new Transfery(kwotaTransferu, klubSprzedajacy, idPilkarza, dataTransferu, klubKupujacy, rs.getString(1));
             controller.addToTable(controller.getTableTransfery(), addedTransfer);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {

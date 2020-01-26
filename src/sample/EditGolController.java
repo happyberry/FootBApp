@@ -95,7 +95,7 @@ public class EditGolController {
         } else {
             okolicznosci = "Tak";
         }
-        if (dlaGospodarzy == 1) {
+        if (dlaGospodarzy == 1 && gol.getCzyDlaGospodarzy() == 0) {
             Integer policzoneGole = 0;
             Statement policzGole = connection.createStatement();
             try {
@@ -108,11 +108,12 @@ public class EditGolController {
                     labelWarning.setVisible(true);
                     return;
                 }
+                liczbaGoli.close();
             } catch (SQLRecoverableException e) {
                 controller.showConnectionLostDialogAndExitApp();
             }
 
-        } else {
+        } else if (dlaGospodarzy == 0 && gol.getCzyDlaGospodarzy() == 1){
             Integer policzoneGole = 0;
             Statement policzGole = connection.createStatement();
             try {
@@ -125,6 +126,7 @@ public class EditGolController {
                     labelWarning.setVisible(true);
                     return;
                 }
+                liczbaGoli.close();
             } catch (SQLRecoverableException e) {
                 controller.showConnectionLostDialogAndExitApp();
             }
@@ -142,6 +144,7 @@ public class EditGolController {
             Gole nowyGol = new Gole(gol.getGolId(), mecz.getMeczId(), idPilkarza, minuta, czySamobojczy, dlaGospodarzy, pilkarz,
                     okolicznosci, mecz.getGospodarze(), mecz.getGoscie(), mecz.getData());
             controller.addToTable(controller.getTableGole(), nowyGol);
+            rs.close();
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
