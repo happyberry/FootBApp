@@ -596,7 +596,6 @@ public class Controller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/editMecz.fxml"));
 
         Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Edytuj");
         stage.setScene(new Scene((AnchorPane) loader.load()));
@@ -1417,6 +1416,7 @@ public class Controller {
         comboBoxBYear.getItems().clear();
         comboBoxCYear.getItems().clear();
         comboBoxPozycja.setVisible(false);
+        comboBoxPozycja.getSelectionModel().clearSelection();
 
         if(table.equals("Klub")){
 
@@ -1672,6 +1672,7 @@ public class Controller {
             String nazwaKlubu = textFieldB.getText();
             //String dataUrodzenia = textFieldC.getText();
             String pozycja = (String) comboBoxPozycja.getSelectionModel().getSelectedItem();
+            System.out.println(pozycja);
             String wyszukajKlub;
             if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
             //if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}

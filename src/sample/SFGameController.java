@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLRecoverableException;
+import java.util.Random;
 
 public class SFGameController {
 
@@ -60,8 +61,8 @@ public class SFGameController {
 
         tableSearch.getItems().clear();
 
-        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO" +
-                "from MECZE left outer join sedziowie using(id_sedziego)" +
+        String SQL = "SELECT MECZ_ID, DATA, GOSPODARZE, GOSCIE, WYNIK_GOSPODARZY, WYNIK_GOSCI, ID_SEDZIEGO, IMIE || ' ' || NAZWISKO " +
+                "from MECZE left outer join sedziowie using(id_sedziego) " +
                 "where data = DATE '" + data + "' OR GOSCIE like '%" + nazwa.replaceAll("'", "''") +
                 "%' OR GOSPODARZE like '%" + nazwa.replaceAll("'", "''") + "%' ORDER BY DATA DESC";
         try {
@@ -73,8 +74,21 @@ public class SFGameController {
             }
             rs.close();
         } catch (SQLRecoverableException e) {
-            insertGolController.controller.showConnectionLostDialogAndExitApp();
+            if (operation.equals("Edycja")) {
+                editGolController.controller.showConnectionLostDialogAndExitApp();
+            }
+            else {
+                insertGolController.controller.showConnectionLostDialogAndExitApp();
+            }
+
         } catch (Exception e) {
+            Label label = new Label("Brak wyników");
+            String[] kek = new String[7];
+            kek[0] = "red"; kek[1] = "blue"; kek[2] = "green"; kek[3] = "black"; kek[4] = "yellow"; kek[5] = "brown"; kek[6] = "magenta";
+            Random r = new Random();
+            int ind = r.nextInt(7);
+            label.setStyle("-fx-text-fill: " + kek[ind]);
+            tableSearch.setPlaceholder(label);
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }

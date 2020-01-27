@@ -67,10 +67,10 @@ public class EditKlubController {
             statement.executeUpdate("DELETE FROM KLUBY WHERE nazwa_klubu = '" + oldName.replaceAll("'", "''") + "'");
             controller.removeFromTable(controller.getTableKluby(), klub);
             controller.goleJuzWczytane = false;
+            controller.wlascicieleJuzWczytani = false;
             controller.meczeJuzWczytane = false;
             controller.transferyJuzWczytane = false;
             controller.stadionyJuzWczytane = false;
-            controller.wlascicieleJuzWczytani = false;
             controller.trenerzyJuzWczytani = false;
             controller.pilkarzeJuzWczytani = false;
         } catch (SQLRecoverableException e) {

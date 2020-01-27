@@ -136,6 +136,7 @@ public class InsertGolController {
             ResultSet rs = statement.executeQuery("select GOLE_GOL_ID_SEQ.currval from dual");
             rs.next();
             String id = rs.getString(1);
+            rs.close();
             rs = statement.executeQuery("select imie || ' ' || nazwisko from PILKARZE where ID_PILKARZA = " + idPilkarza);
             rs.next();
             Gole addedGol = new Gole(id, mecz.getMeczId(), idPilkarza, minuta, czySamobojczy, dlaGospodarzy, rs.getString(1), okolicznosci, mecz.getGospodarze(), mecz.getGoscie(), mecz.getData());
@@ -149,7 +150,11 @@ public class InsertGolController {
                 labelWarning.setVisible(true);
                 return;
             }
-            else {
+            else if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("[MECZ, PIŁKARZ, MINUTA] Posiadasz już informacje o tym golu");
+                labelWarning.setVisible(true);
+                return;
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();
@@ -168,7 +173,7 @@ public class InsertGolController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForPlayer.fxml"));
 
         Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
+        //stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         //stage.show();
@@ -187,7 +192,7 @@ public class InsertGolController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForGame.fxml"));
 
         Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
+        //stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         //stage.show();

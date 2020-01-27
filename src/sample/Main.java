@@ -32,7 +32,7 @@ public class Main extends Application {
         try {
             connection = DriverManager.getConnection(
                     "jdbc:oracle:thin:@//admlab2.cs.put.poznan.pl:1521/dblab02_students.cs.put.poznan.pl",
-                    "inf136820", "inf136820");
+                    "inf136820", "inf136787");
             controller.mainConnection = connection;
             controller.primaryStage = primaryStage;
             controller.fillRanking();

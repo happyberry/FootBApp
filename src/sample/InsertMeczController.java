@@ -182,12 +182,17 @@ public class InsertMeczController {
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             if (e.getMessage().contains("ORA-02290")) {
                 labelWarning.setText("Wybierz dwa różne kluby");
                 labelWarning.setVisible(true);
                 return;
-            }
-            else {
+            } else if (e.getMessage().contains("ORA-00001")){
+                labelWarning.setText("[DATA, GOSPODARZE, GOŚCIE] Posiadasz już dane o tym meczu");
+                labelWarning.setVisible(true);
+                e.printStackTrace();
+                return;
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();
@@ -207,7 +212,7 @@ public class InsertMeczController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/searchForReferee.fxml"));
 
         Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
+        //stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene((AnchorPane) loader.load()));
         //stage.show();

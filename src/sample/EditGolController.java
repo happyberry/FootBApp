@@ -153,7 +153,11 @@ public class EditGolController {
                 labelWarning.setVisible(true);
                 return;
             }
-            else {
+            else if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("[MECZ, PIŁKARZ, MINUTA] Posiadasz już informacje o tym golu");
+                labelWarning.setVisible(true);
+                return;
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();

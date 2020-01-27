@@ -113,7 +113,6 @@ public class InsertStadionController {
         }
 
         String klub = (String) comboBoxClub.getSelectionModel().getSelectedItem();
-
         if (klub == null) {
             labelWarning.setText("[KLUB] Wybierz klub, do którego nalezy stadion. Jeśli nie ma go na liście, najpierw dodaj klub.");
             labelWarning.setVisible(true);
@@ -123,18 +122,25 @@ public class InsertStadionController {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO STADIONY VALUES('" + nazwa.replaceAll("'", "''") + "', " + rokZbudowania + ", " + pojemnosc + ", '"
-                    + miasto.replaceAll("'", "''") + "', '" + klub + "')");
+                    + miasto.replaceAll("'", "''") + "', '" + klub.replaceAll("'", "''") + "')");
             Stadiony addedStadion = new Stadiony(nazwa, rokZbudowania, pojemnosc, miasto, klub);
             controller.addToTable(controller.getTableStadiony(), addedStadion);
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
-            if (e.getMessage().contains("ORA-00001")) {
-                labelWarning.setText("Ten klub ma już stadion. Usuń go i spróbuj ponownie");
-                labelWarning.setVisible(true);
-                return;
-            }
-            else {
+            String message = e.getMessage();
+            System.out.println(e.getMessage());
+            if (message.contains("ORA-00001")) {
+                if(message.contains("INF136820.STADION_PK")){
+                    labelWarning.setText("[NAZWA] Posiadasz już dane na temat stadionu o takiej nazwie");
+                    labelWarning.setVisible(true);
+                    return;
+                } else {
+                    labelWarning.setText("[KLUB] Ten klub ma już stadion. Usuń go i spróbuj ponownie");
+                    labelWarning.setVisible(true);
+                    return;
+                }
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();

@@ -129,12 +129,18 @@ public class EditStadionController {
         } catch (SQLRecoverableException e) {
             controller.showConnectionLostDialogAndExitApp();
         } catch (SQLException e) {
-            if (e.getMessage().contains("ORA-00001")) {
-                labelWarning.setText("Ten klub ma już stadion. Usuń go i spróbuj ponownie");
-                labelWarning.setVisible(true);
-                return;
-            }
-            else {
+            String message = e.getMessage();
+            if (message.contains("ORA-00001")) {
+                if(message.contains("INF136820.STADION_PK")){
+                    labelWarning.setText("[NAZWA] Posiadasz już dane na temat stadionu o takiej nazwie");
+                    labelWarning.setVisible(true);
+                    return;
+                } else {
+                    labelWarning.setText("[KLUB] Ten klub ma już stadion. Usuń go i spróbuj ponownie");
+                    labelWarning.setVisible(true);
+                    return;
+                }
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();

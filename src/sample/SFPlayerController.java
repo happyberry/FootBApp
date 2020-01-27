@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLRecoverableException;
+import java.util.Random;
 
 public class SFPlayerController {
 
@@ -68,12 +69,11 @@ public class SFPlayerController {
         String pozycja = (String) comboBoxPozycja.getSelectionModel().getSelectedItem();
         if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
         if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
-        if (dataUrodzenia == null || dataUrodzenia.equals("")) {dataUrodzenia = "1800-01-01";}
         if (pozycja == null || pozycja.equals("")) {pozycja = "#123456789";}
 
         tableSearch.getItems().clear();
 
-        String SQL = "SELECT * from PILKARZE where DATA_URODZENIA = DATE '" + dataUrodzenia + "' OR NAZWA_KLUBU like '%" + nazwaKlubu.replaceAll("'", "''") +
+        String SQL = "SELECT * from PILKARZE where NAZWA_KLUBU like '%" + nazwaKlubu.replaceAll("'", "''") +
                 "%' OR nazwisko like '%" + nazwisko.replaceAll("'", "''") + "%' OR POZYCJA like '%" + pozycja + "%' ORDER BY POZYCJA";
         try {
             ResultSet rs = connection.createStatement().executeQuery(SQL);
@@ -85,8 +85,23 @@ public class SFPlayerController {
             }
             rs.close();
         } catch (SQLRecoverableException e) {
-            insertGolController.controller.showConnectionLostDialogAndExitApp();
+            if (opcja.equals("wstawianieTransfer")) {
+                insertTransferController.controller.showConnectionLostDialogAndExitApp();
+            } else if (opcja.equals("wstawianieGol")) {
+                insertGolController.controller.showConnectionLostDialogAndExitApp();
+            } else if (opcja.equals("edycjaGol")) {
+                editGolController.controller.showConnectionLostDialogAndExitApp();
+            } else {
+                editTransferController.controller.showConnectionLostDialogAndExitApp();
+            }
         } catch (Exception e) {
+            Label label = new Label("Brak wyników");
+            String[] kek = new String[7];
+            kek[0] = "red"; kek[1] = "blue"; kek[2] = "green"; kek[3] = "black"; kek[4] = "yellow"; kek[5] = "brown"; kek[6] = "magenta";
+            Random r = new Random();
+            int ind = r.nextInt(7);
+            label.setStyle("-fx-text-fill: " + kek[ind]);
+            tableSearch.setPlaceholder(label);
             e.printStackTrace();
             System.out.println("Error on Building Data");
         }

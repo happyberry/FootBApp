@@ -40,6 +40,7 @@ public class SFRefereeController {
                     }
                     rs.close();
                 } catch (SQLRecoverableException e) {
+
                     insertMeczController.controller.showConnectionLostDialogAndExitApp();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -72,7 +73,12 @@ public class SFRefereeController {
             }
             rs.close();
         } catch (SQLRecoverableException e) {
-            insertMeczController.controller.showConnectionLostDialogAndExitApp();
+            if (operation.equals("Edycja")) {
+                editMeczController.controller.showConnectionLostDialogAndExitApp();
+            }
+            else {
+                insertMeczController.controller.showConnectionLostDialogAndExitApp();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");

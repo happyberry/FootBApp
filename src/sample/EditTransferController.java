@@ -167,8 +167,11 @@ public class EditTransferController {
                 labelWarning.setText("Wybierz dwa różne kluby");
                 labelWarning.setVisible(true);
                 return;
-            }
-            else {
+            } else if (e.getMessage().contains("ORA-00001")) {
+                labelWarning.setText("[PIŁKARZ, DATA] Posiadasz już informacje o tym transferze");
+                labelWarning.setVisible(true);
+                return;
+            } else {
                 labelWarning.setText("Dane nieprawidłowe. Spróbuj ponownie");
                 labelWarning.setVisible(true);
                 e.printStackTrace();

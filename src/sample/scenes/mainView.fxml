@@ -38,7 +38,7 @@
                   </TableView>
                   <TableView fx:id="tableStrzelcy" layoutX="359.0" layoutY="84.0" prefHeight="466.0" prefWidth="327.0">
                     <columns>
-                        <TableColumn prefWidth="85.0" text="Imie">
+                        <TableColumn prefWidth="80.0" text="Imie">
                             <cellValueFactory>
                                 <PropertyValueFactory property="imie" />
                             </cellValueFactory>
@@ -48,7 +48,7 @@
                               <PropertyValueFactory property="nazwisko" />
                           </cellValueFactory>
                       </TableColumn>
-                      <TableColumn prefWidth="85.0" text="Klub">
+                      <TableColumn prefWidth="90.0" text="Aktualny klub">
                           <cellValueFactory>
                               <PropertyValueFactory property="nazwaKlubu" />
                           </cellValueFactory>

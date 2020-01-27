@@ -23,7 +23,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="labelData" alignment="CENTER" layoutX="272.0" layoutY="111.0" prefHeight="27.0" prefWidth="151.0" text="Liga, data">
+      <Label fx:id="labelData" alignment="CENTER" layoutX="257.0" layoutY="111.0" prefHeight="27.0" prefWidth="180.0" text="Liga, data">
          <font>
             <Font name="System" size="14.0" />
          </font>
