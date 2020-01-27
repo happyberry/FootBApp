@@ -22,8 +22,6 @@ public class SFPlayerController {
     @FXML
     public TextField textFieldKlub;
     @FXML
-    public TextField textFieldData;
-    @FXML
     public ComboBox comboBoxPozycja;
     @FXML
     public TableView tableSearch;
@@ -65,7 +63,6 @@ public class SFPlayerController {
 
         String nazwisko = textFieldNazwisko.getText();
         String nazwaKlubu = textFieldKlub.getText();
-        String dataUrodzenia = textFieldData.getText();
         String pozycja = (String) comboBoxPozycja.getSelectionModel().getSelectedItem();
         if (nazwisko == null || nazwisko.equals("")) {nazwisko = "#123456789";}
         if (nazwaKlubu == null || nazwaKlubu.equals("")) {nazwaKlubu = "#123456789";}
